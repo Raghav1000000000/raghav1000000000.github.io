@@ -3,6 +3,11 @@
 Every update to the site is logged here and published as a [GitHub Release](https://github.com/Raghav1000000000/raghav1000000000.github.io/releases).
 Versions follow [semantic versioning](https://semver.org/): **major** for a redesign, **minor** for new features or sections, **patch** for fixes.
 
+## [2.1.1] - 2026-11-11
+
+### Changed
+- **Lead sheet connected.** The contact form now saves every SEND IT to the Google Sheet (and emails a copy), as well as opening WhatsApp.
+
 ## [2.1.0] - 2026-11-11
 
 ### Added
@@ -120,6 +125,7 @@ First public release.
 - Real-mouse detection for touchscreen laptops; reduced-motion support.
 - GitHub Pages deploy, README with screenshots, all-rights-reserved license.
 
+[2.1.1]: https://github.com/Raghav1000000000/raghav1000000000.github.io/compare/v2.1.0...v2.1.1
 [2.1.0]: https://github.com/Raghav1000000000/raghav1000000000.github.io/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/Raghav1000000000/raghav1000000000.github.io/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/Raghav1000000000/raghav1000000000.github.io/compare/v1.3.2...v2.0.0

@@ -3,6 +3,28 @@
 Every update to the site is logged here and published as a [GitHub Release](https://github.com/Raghav1000000000/root-directory-project/releases).
 Versions follow [semantic versioning](https://semver.org/): **major** for a redesign, **minor** for new features or sections, **patch** for fixes.
 
+## [1.2.0] - 2026-11-10
+
+Performance and smoothness pass, plus friendlier WhatsApp messages.
+
+Measured with a 12-second scripted scroll in headless Chrome (software rendering, so real devices with a GPU do better than these numbers). Results vary run to run; ranges are from two runs after the change.
+
+| | Before | After |
+|---|---|---|
+| Desktop frame rate | ~12 fps | ~23–31 fps |
+| Desktop time frozen in long tasks | 4.7 s | 0.8–5.5 s (noisy) |
+| Phone (CPU slowed 4×) frame rate | ~16 fps | ~27–33 fps |
+| First paint, desktop | 4.4 s | 1.3–1.8 s |
+
+### Changed
+- **Mouse effects no longer re-style the whole page.** The motion values behind the parallax and tilt are now written only to sections on screen; writing them at the page root forced every element to be re-checked on every mouse move.
+- **Letters that dodge the cursor** use positions measured once, instead of re-measuring the page on every mouse move.
+- **Looping animations pause** when their section is off screen (banners, badge, work scenes, process pills).
+- **Work panels:** only the panel in view animates its scene; the blur on the other panels is gone (expensive while sliding).
+- **Fonts load without blocking** the first paint; the boot screen covers the swap.
+- **Phones:** the film-grain overlay is static instead of animated, which saves battery.
+- **WhatsApp messages read like a real hello.** The tile opens with "Hey Root Directory Project 👋 Just came across your website and I'd love to chat about a project." The contact form writes the idea and email into a friendly message. The greeting and the mention of the website still make them easy to spot in your chats.
+
 ## [1.1.0] - 2026-11-10
 
 Phone pass, based on testing on a Samsung Galaxy S23 FE.
@@ -37,5 +59,6 @@ First public release.
 - Real-mouse detection for touchscreen laptops; reduced-motion support.
 - GitHub Pages deploy, README with screenshots, all-rights-reserved license.
 
+[1.2.0]: https://github.com/Raghav1000000000/root-directory-project/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/Raghav1000000000/root-directory-project/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/Raghav1000000000/root-directory-project/releases/tag/v1.0.0

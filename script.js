@@ -190,20 +190,38 @@
   // Letters jump away from the cursor
   whenMouse(() => {
     if (still) return;
+    // Letter centres are cached in page coordinates from layout (offsetLeft/Top ignore transforms),
+    // so moving the mouse never forces the browser to re-measure the page.
     const chars = $$(".mega .ch, .mega2 .ch");
+    let pos = [];
+    const measureChars = () => {
+      pos = chars.map((ch) => {
+        let x = 0, y = 0, el = ch;
+        while (el) { x += el.offsetLeft; y += el.offsetTop; el = el.offsetParent; }
+        return { ch, cx: x + ch.offsetWidth / 2, cy: y + ch.offsetHeight / 2, on: false };
+      });
+    };
+    measureChars();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureChars);
+    { let w = innerWidth; addEventListener("resize", () => { if (innerWidth !== w) { w = innerWidth; measureChars(); } }); }
     let mx = -999, my = -999, raf = 0;
     addEventListener("mousemove", (e) => {
-      mx = e.clientX; my = e.clientY;
+      mx = e.clientX + scrollX; my = e.clientY + scrollY;
       if (!raf) raf = requestAnimationFrame(() => {
         raf = 0;
-        chars.forEach((ch) => {
-          const r = ch.getBoundingClientRect();
-          const dx = r.left + r.width / 2 - mx, dy = r.top + r.height / 2 - my;
-          const d = Math.hypot(dx, dy), R = 160;
-          if (d < R) {
-            const f = (1 - d / R);
-            ch.style.transform = `translate(${dx / d * f * 18 || 0}px, ${dy / d * f * 30 || 0}px) rotate(${dx / d * f * 12 || 0}deg)`;
-          } else if (ch.style.transform) ch.style.transform = "";
+        const R = 160;
+        pos.forEach((p) => {
+          const dx = p.cx - mx, dy = p.cy - my;
+          if (Math.abs(dx) < R && Math.abs(dy) < R) {
+            const d = Math.hypot(dx, dy);
+            if (d < R) {
+              const f = 1 - d / R;
+              p.ch.style.transform = `translate(${(dx / d * f * 18 || 0).toFixed(1)}px, ${(dy / d * f * 30 || 0).toFixed(1)}px) rotate(${(dx / d * f * 12 || 0).toFixed(1)}deg)`;
+              p.on = true;
+              return;
+            }
+          }
+          if (p.on) { p.ch.style.transform = ""; p.on = false; }
         });
       });
     }, { passive: true });
@@ -330,13 +348,27 @@
   }
 
   // Motion: --mx / --my in [-1, 1]. Mouse on desktop; phone tilt (very sensitive) on touch.
-  const rootStyle = document.documentElement.style;
+  // Performance: the values are written only to sections currently on screen. Writing them at the
+  // page root made the browser re-check every element on every mouse move.
   let mxT = 0, myT = 0, mxC = 0, myC = 0, mRaf = 0, gyroOn = false;
+  const motionZones = $$(".hero, .work-pin, .proc, .doors, .hello, .foot");
+  const liveZones = new Set();
+  if ("IntersectionObserver" in window) {
+    const zio = new IntersectionObserver((es) => es.forEach((en) => {
+      if (en.isIntersecting) liveZones.add(en.target);
+      else liveZones.delete(en.target);
+    }));
+    motionZones.forEach((z) => zio.observe(z));
+  } else motionZones.forEach((z) => liveZones.add(z));
+  let lastMx = "", lastMy = "";
   const mFrame = () => {
     mxC += (mxT - mxC) * 0.25; myC += (myT - myC) * 0.25;
-    rootStyle.setProperty("--mx", mxC.toFixed(3));
-    rootStyle.setProperty("--my", myC.toFixed(3));
-    mRaf = Math.abs(mxT - mxC) + Math.abs(myT - myC) > 0.002 ? requestAnimationFrame(mFrame) : 0;
+    const sx = mxC.toFixed(2), sy = myC.toFixed(2);
+    if (sx !== lastMx || sy !== lastMy) {
+      lastMx = sx; lastMy = sy;
+      liveZones.forEach((z) => { z.style.setProperty("--mx", sx); z.style.setProperty("--my", sy); });
+    }
+    mRaf = Math.abs(mxT - mxC) + Math.abs(myT - myC) > 0.004 ? requestAnimationFrame(mFrame) : 0;
   };
   const setM = (x, y) => {
     mxT = Math.max(-1, Math.min(1, x)); myT = Math.max(-1, Math.min(1, y));
@@ -594,11 +626,12 @@
 
   // Contact: quick picks, email, send
   const MAIL = "hello@rootdirectoryproject.com";
-  // WhatsApp: every message from the site starts with WA_TAG so it's easy to spot in your chats
+  // WhatsApp: messages from the site open with "Hey Root Directory Project 👋" and mention the
+  // website, so they're easy to spot in your chats while still reading like a normal hello.
   const WA = "917777016553";
-  const WA_TAG = "🟠 [Root Directory Project · website]";
   const waLink = (text) => `https://wa.me/${WA}?text=${encodeURIComponent(text)}`;
-  $$("a[data-wa]").forEach((a) => (a.href = waLink(`${WA_TAG}\n\nHi! I'd like to talk about: `)));
+  const WA_HELLO = "Hey Root Directory Project 👋\nJust came across your website and I'd love to chat about a project.\n\n";
+  $$("a[data-wa]").forEach((a) => (a.href = waLink(WA_HELLO)));
   const form = $("#ask"), q = $("#q"), em = $("#em"), log = $("#ask-log"), send = $("#send");
   $$(".quick button").forEach((b) => b.addEventListener("click", () => {
     $$(".quick button").forEach((x) => x.classList.toggle("on", x === b));
@@ -644,7 +677,7 @@
     send.classList.add("sent");
     $(".send-t", send).textContent = "SENDING…";
     buzz(30);
-    const url = waLink(`${WA_TAG}\n\nProject: ${idea}\nEmail: ${mail}\n\n(sent from the website contact form)`);
+    const url = waLink(`Hey Root Directory Project 👋\nFound you through your website. Here's what I have in mind:\n\n✦ ${idea}\n\nYou can also reach me at ${mail}. Looking forward to it!`);
     // desktop: open WhatsApp Web in a new tab right away (browsers block pop-ups opened later)
     const opened = hasMouse ? window.open(url, "_blank", "noopener") : null;
     typeLog(["> packing your idea ......... ok", `> reply-to: ${mail} ...... ok`, "> opening WhatsApp .......... ✓  hit send there"], () => {
@@ -759,4 +792,10 @@
     const pick = $$(".quick button").find((b) => b.dataset.q === d.dataset.pick);
     setTimeout(() => pick && pick.click(), still ? 0 : 650);
   }));
+
+  // ---------- Performance: pause looping animations in sections that are off screen ----------
+  if ("IntersectionObserver" in window) {
+    const offIo = new IntersectionObserver((es) => es.forEach((en) => en.target.classList.toggle("off", !en.isIntersecting)), { rootMargin: "120px 0px" });
+    $$(".hero, .bands, .work, .proc, .fun, .doors, .hello, .foot").forEach((s) => offIo.observe(s));
+  }
 })();

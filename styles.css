@@ -29,7 +29,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 .boot.done { transform: translateY(-100%); }
 
 /* grain + cursor */
-.grain { position: fixed; inset: -50%; z-index: 90; pointer-events: none; opacity: .07;
+.grain { position: fixed; inset: -50%; z-index: 90; pointer-events: none; opacity: .07; will-change: transform;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   animation: grain 1s steps(4) infinite; }
 @keyframes grain { 25% { transform: translate(-3%, 2%); } 50% { transform: translate(2%, -3%); } 75% { transform: translate(-2%, -1%); } }
@@ -91,7 +91,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 .b1 { top: 50%; background: var(--hot); color: var(--bg); transform: translateY(-50%) rotate(-4deg); z-index: 2; }
 .b2 { top: 50%; background: var(--acid); color: var(--bg); transform: translateY(-18%) rotate(3deg); }
 .b2 span { font-family: var(--mono); font-weight: 700; font-size: clamp(18px, 2.6vw, 34px); text-transform: none; }
-.track { display: flex; width: max-content; animation: marq 22s linear infinite; }
+.track { display: flex; width: max-content; animation: marq 22s linear infinite; will-change: transform; }
 .track.rev { animation-direction: reverse; animation-duration: 30s; }
 @keyframes marq { to { transform: translateX(-50%); } }
 
@@ -367,10 +367,11 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 /* work panels: the panel in view animates its title and illustration in */
 .js .panel .p-copy h3 { clip-path: inset(0 0 100% 0); translate: 0 40px; transition: clip-path .8s cubic-bezier(.7,0,.2,1), translate .8s cubic-bezier(.2,.9,.1,1); }
 .js .panel .p-copy p { opacity: 0; translate: 0 16px; transition: opacity .5s .25s, translate .6s .25s; }
-.js .panel .viz { opacity: .15; filter: blur(6px); transition: opacity .6s .1s, filter .6s .1s; }
+.js .panel .viz { opacity: .12; transition: opacity .6s .1s; }
+.js .panel:not(.active) .viz * { animation-play-state: paused; }
 .js .panel.active .p-copy h3 { clip-path: inset(-10% -10% -20% -10%); translate: none; }
 .js .panel.active .p-copy p { opacity: 1; translate: none; }
-.js .panel.active .viz { opacity: 1; filter: none; }
+.js .panel.active .viz { opacity: 1; }
 
 
 /* work snap points: the page settles on each panel */
@@ -379,8 +380,12 @@ html { scroll-snap-type: y proximity; }
 .ask-log:empty { display: none; }
 .swipe-hint { display: none; }
 
+/* performance: looping animations pause while their section is off screen (class set by script.js) */
+.off, .off * { animation-play-state: paused !important; }
+
 /* small screens */
 @media (max-width: 760px) {
+  .grain { animation: none; inset: 0; }
   /* header: solid fade instead of blend-mode, so it never muddles content scrolling under it */
   .top { mix-blend-mode: normal; background: linear-gradient(var(--bg) 60%, rgba(11, 11, 10, 0)); padding-bottom: 26px; }
   .top nav a:not(.pill) { display: none; }

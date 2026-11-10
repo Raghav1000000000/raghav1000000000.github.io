@@ -60,6 +60,7 @@ Root Directory Project is a small tech studio for businesses that are **stuck in
 - **Phone motion**: hover is replaced by the gyroscope. Tilt to wobble the headline and slide the bugs, shake to scramble the page.
 - **Works on touchscreen laptops**: mouse effects switch on when a real mouse moves, not from CSS media queries, which many touch laptops get wrong.
 - **Respects reduced motion**: everything stays readable and still for people who turn animation off.
+- **Leads land on WhatsApp**: the contact form opens WhatsApp with the project and email filled in, tagged so they stand out.
 - **No tracking, no cookies, no framework**: one HTML file, one stylesheet, one script.
 
 ## `$ npx serve .`
@@ -95,11 +96,16 @@ Then open `http://localhost:3000`. (Opening `index.html` directly also works, bu
 | Number of bugs in the game | `BUGS` in `script.js` |
 | Game sounds (pitch, length, volume) | the `SFX` block in `script.js` |
 | How sensitive phone tilt is | `SENS` in `script.js` (lower = more sensitive) |
-| Email / WhatsApp | `MAIL` in `script.js` and the links in `index.html` |
+| WhatsApp number and message tag | `WA` and `WA_TAG` in `script.js` |
+| Email | `MAIL` in `script.js` |
 
 ## `$ git push` → live
 
 Every push to `main` deploys to **GitHub Pages** through [`.github/workflows/pages.yml`](.github/workflows/pages.yml). It also runs on any static host (Netlify, Vercel, Cloudflare Pages): point it at the repo root, with no build command.
+
+## `$ git log`
+
+Every update is listed in [CHANGELOG.md](CHANGELOG.md) and published as a [GitHub Release](https://github.com/Raghav1000000000/root-directory-project/releases).
 
 ## `$ uname -a`
 

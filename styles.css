@@ -315,7 +315,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 .send.sent { background: var(--ink); }
 .send.sent::before { transform: translateX(-101%); }
 .ask-log { margin: 0; min-height: 1.8em; font: 13px/1.8 var(--mono); color: var(--acid); white-space: pre-wrap; }
-.tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 36px; max-width: 920px; }
+.tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 24px; max-width: 920px; }
 .tile { display: grid; gap: 6px; align-content: start; text-align: left; padding: 22px 24px; border-radius: 22px; border: 2px solid var(--line); background: transparent; color: var(--ink); font: inherit; overflow-wrap: anywhere; transition: transform .35s cubic-bezier(.3,1.6,.5,1), border-color .2s; }
 .tile small { color: var(--dim); font-size: 12px; }
 .tile b { font: 400 clamp(26px, 3vw, 42px)/1 var(--display); }
@@ -372,34 +372,61 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 .js .panel.active .p-copy p { opacity: 1; translate: none; }
 .js .panel.active .viz { opacity: 1; filter: none; }
 
+
+/* work snap points: the page settles on each panel */
+html { scroll-snap-type: y proximity; }
+.snap-pt { position: absolute; left: 0; width: 1px; height: 1px; scroll-snap-align: start; pointer-events: none; }
+.ask-log:empty { display: none; }
+.swipe-hint { display: none; }
+
 /* small screens */
 @media (max-width: 760px) {
+  /* header: solid fade instead of blend-mode, so it never muddles content scrolling under it */
+  .top { mix-blend-mode: normal; background: linear-gradient(var(--bg) 60%, rgba(11, 11, 10, 0)); padding-bottom: 26px; }
   .top nav a:not(.pill) { display: none; }
-  .hero { min-height: 0; justify-content: flex-start; padding-bottom: 36px; }
-  .mega { font-size: 18.5vw; margin: 22px 0 30px; line-height: .84; }
+
+  /* hero: height follows content, so the banners sit right under it */
+  .hero { min-height: 0; justify-content: flex-start; padding-bottom: 22px; }
+  .mega { font-size: 18.5vw; margin: 22px 0 28px; line-height: .84; }
   .mega .outline { -webkit-text-stroke-width: 1.5px; }
-  .hook-big { min-height: 0; }
-  .hook { min-height: 196px; } /* spare room sits under the dots, not mid-message */
+  .hero-foot { align-items: center; }
+  .hook-dots { margin-top: 8px; }
+  .badge { width: 92px; }
+
+  /* work */
   .viz { left: 50%; right: auto; top: 44%; transform: translate(-50%, -50%) rotate(var(--r, -4deg)) scale(calc(var(--s, 1) * .82)); transform-origin: center; }
   .p-copy h3 { font-size: 19vw; }
   .ghost { font-size: 90vw; top: 40%; }
   .work-hud .cmd { font-size: 12px; }
-  .talk { grid-template-columns: 1fr; }
-  .hero-foot { align-items: center; }
+
+  /* process */
   .flow { flex-direction: column; align-items: flex-start; row-gap: 0; }
   .flow li + li { margin: 30px 0 0; }
   .flow li + li::before { content: "↓"; left: 20px; top: -27px; }
+
+  /* bug game */
   .arena { height: 62svh; min-height: 400px; }
-  .tiles { grid-template-columns: 1fr; }
+
+  /* choose --path: label sits under each strip, nothing overlaps */
+  .doors { padding-bottom: calc(var(--sec) * .5); }
+  .door { padding: 8px 0 14px; }
+  .door-track { font-size: 21vw; }
+  .door-tag { position: relative; display: inline-block; left: auto; right: auto; bottom: auto; margin: 4px 16px 0; max-width: calc(100% - 112px); white-space: normal; font-size: 12.5px; line-height: 1.35; rotate: -1.5deg; }
+  .door-b .door-tag { rotate: 1.5deg; }
+  .or { width: 64px; margin: -32px 18px -32px auto; font-size: 24px; box-shadow: 0 0 0 5px var(--bg); }
+
+  /* contact: quick picks become a 2-row swipeable strip */
+  .mega2 { margin-bottom: 28px; }
+  .ask { gap: 20px; }
+  .swipe-hint { display: inline; color: var(--dim); }
+  .quick { display: grid; grid-template-rows: repeat(2, auto); grid-auto-flow: column; justify-content: start; gap: 8px; overflow-x: auto; margin: -8px -16px 0; padding: 4px 16px 10px; scrollbar-width: none; overscroll-behavior-x: contain; -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent); }
+  .quick::-webkit-scrollbar { display: none; }
+  .quick button { white-space: nowrap; }
   .send { padding: 18px 24px 14px; }
+  .tiles { grid-template-columns: 1fr; gap: 10px; margin-top: 16px; }
+  .tile { padding: 18px 20px; }
+
   .foot-word { -webkit-text-stroke-width: 1.5px; }
-  .door { padding: 12px 0 58px; }
-  .door-track { font-size: 20vw; }
-  .door-tag { left: 16px; right: auto; bottom: 14px; rotate: -2deg; font-size: 12px; white-space: normal; max-width: calc(100% - 110px); line-height: 1.35; }
-  .door-b { padding: 40px 0 30px; }
-  .door-b .door-tag { top: 10px; bottom: auto; rotate: 2deg; }
-  .door-b .door-track { margin-top: 26px; }
-  .or { width: 72px; margin: -36px 16px -36px auto; font-size: 26px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -412,6 +439,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
   .work-hud, .work-bar { display: none; }
   .term p { opacity: 1; }
   .motion-btn { display: none; }
+  html { scroll-snap-type: none; }
   .js .rv, .js .wrv .w > span, .js .mega2 .ch, .js .panel .p-copy h3, .js .panel .p-copy p, .js .panel .viz { opacity: 1 !important; translate: none !important; scale: none !important; rotate: none !important; clip-path: none !important; filter: none !important; }
   .js .arena.rv-wipe, .js .door .door-track { clip-path: none !important; margin-left: 0 !important; }
   .bug { display: none; }

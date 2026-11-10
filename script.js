@@ -67,7 +67,7 @@
     });
   };
   fitMega();
-  addEventListener("resize", fitMega);
+  { let w = innerWidth; addEventListener("resize", () => { if (innerWidth !== w) { w = innerWidth; fitMega(); } }); }
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitMega);
 
   // Boot screen, then hero letters rise in
@@ -132,6 +132,29 @@
     hook.classList.add("swap");
     setTimeout(swapIn, 380);
   }
+  // Reserve exactly the room the longest message needs (no jumping, no dead gap under short ones)
+  function sizeHook() {
+    hookBig.style.minHeight = hookSub.style.minHeight = "";
+    const probe = hook.cloneNode(true);
+    probe.removeAttribute("id");
+    $$("[id]", probe).forEach((el) => el.removeAttribute("id"));
+    probe.classList.remove("swap");
+    probe.style.cssText = `position:absolute;left:-9999px;top:0;visibility:hidden;width:${hook.clientWidth}px`;
+    hook.parentElement.appendChild(probe);
+    const [pb, ps] = [probe.querySelector(".hook-big"), probe.querySelector(".hook-year")];
+    let hb = 0, hs = 0;
+    HOOKS.forEach(([big, sub]) => {
+      pb.innerHTML = big; ps.innerHTML = sub;
+      hb = Math.max(hb, pb.offsetHeight); hs = Math.max(hs, ps.offsetHeight);
+    });
+    probe.remove();
+    hookBig.style.minHeight = `${hb}px`;
+    hookSub.style.minHeight = `${hs}px`;
+  }
+  sizeHook();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(sizeHook);
+  { let w = innerWidth; addEventListener("resize", () => { if (innerWidth !== w) { w = innerWidth; sizeHook(); } }); }
+
   function startHook() {
     markDots();
     if (!still) hookTimer = setTimeout(() => showHook(1), HOOK_MS);
@@ -234,19 +257,49 @@
   // Work: vertical scroll drives the sideways track
   const work = $(".work"), track = $("#w-track"), panels = $$(".panel", track);
   const wDir = $("#w-dir"), wI = $("#w-i"), wBar = $("#w-bar");
+  const pin = $(".work-pin");
+  // Phones fire "resize" whenever the address bar shows/hides; only react to real width changes
+  // (this was a source of the judder on mobile).
+  let lastW = innerWidth;
+  const onWidth = (fn) => addEventListener("resize", () => { if (innerWidth !== lastW) { lastW = innerWidth; fn(); } });
+
   // Shrink the illustrations on short screens so they never hit the headline
   const fitViz = () => $$(".viz").forEach((v) => {
     v.style.setProperty("--s", 1);
     const h = v.offsetHeight;
-    v.style.setProperty("--s", Math.min(1, (innerHeight * 0.5) / h).toFixed(3));
+    v.style.setProperty("--s", Math.min(1, (pin.offsetHeight * 0.5) / h).toFixed(3));
   });
   fitViz();
-  addEventListener("resize", fitViz);
+  onWidth(fitViz);
+
+  // Snap points: each panel is a resting place the page settles on
+  const n = panels.length - 1;
+  const snaps = panels.map(() => {
+    const s = document.createElement("i");
+    s.className = "snap-pt";
+    s.setAttribute("aria-hidden", "true");
+    work.appendChild(s);
+    return s;
+  });
+  const placeSnaps = () => {
+    const total = work.offsetHeight - pin.offsetHeight;
+    snaps.forEach((s, i) => (s.style.top = `${Math.round((total * i) / n)}px`));
+  };
+  placeSnaps();
+  onWidth(placeSnaps);
+
+  // Each panel locks in place for most of its share of the scroll, then moves to the next
+  const HOLD = 0.55;
+  const lockStep = (p) => {
+    const P = p * n, i = Math.min(n, Math.floor(P)), f = P - i;
+    const t = Math.min(1, Math.max(0, (f - HOLD) / (1 - HOLD)));
+    return Math.min(n, i + t * t * (3 - 2 * t));
+  };
 
   if (!still) {
     let cur = 0, target = 0, last = -1, raf = 0;
     const measure = () => {
-      const total = work.offsetHeight - innerHeight;
+      const total = work.offsetHeight - pin.offsetHeight;
       target = Math.min(1, Math.max(0, -work.getBoundingClientRect().top / total));
       if (!raf) raf = requestAnimationFrame(frame);
     };
@@ -255,12 +308,13 @@
       raf = 0;
       const dt = prevT ? Math.min(t - prevT, 200) : 16;
       prevT = t;
-      cur += (target - cur) * (1 - Math.exp(-dt / 110));
+      // touch scrolling is already smooth, so follow it directly; ease only for mouse wheels
+      cur = hasMouse ? cur + (target - cur) * (1 - Math.exp(-dt / 110)) : target;
       if (Math.abs(target - cur) < 0.0005) cur = target;
-      const n = panels.length - 1;
-      track.style.transform = `translate3d(${-cur * n * 100}vw,0,0)`;
+      const g = lockStep(cur);
+      track.style.transform = `translate3d(${(-g * pin.offsetWidth).toFixed(1)}px,0,0)`;
       wBar.style.transform = `scaleX(${cur})`;
-      const idx = Math.round(cur * n);
+      const idx = Math.round(g);
       if (idx !== last) {
         last = idx;
         wDir.textContent = panels[idx].dataset.dir;
@@ -271,7 +325,7 @@
       else prevT = 0;
     };
     addEventListener("scroll", measure, { passive: true });
-    addEventListener("resize", measure);
+    onWidth(measure);
     measure();
   }
 
@@ -540,6 +594,11 @@
 
   // Contact: quick picks, email, send
   const MAIL = "hello@rootdirectoryproject.com";
+  // WhatsApp: every message from the site starts with WA_TAG so it's easy to spot in your chats
+  const WA = "917777016553";
+  const WA_TAG = "🟠 [Root Directory Project · website]";
+  const waLink = (text) => `https://wa.me/${WA}?text=${encodeURIComponent(text)}`;
+  $$("a[data-wa]").forEach((a) => (a.href = waLink(`${WA_TAG}\n\nHi! I'd like to talk about: `)));
   const form = $("#ask"), q = $("#q"), em = $("#em"), log = $("#ask-log"), send = $("#send");
   $$(".quick button").forEach((b) => b.addEventListener("click", () => {
     $$(".quick button").forEach((x) => x.classList.toggle("on", x === b));
@@ -585,9 +644,11 @@
     send.classList.add("sent");
     $(".send-t", send).textContent = "SENDING…";
     buzz(30);
-    typeLog(["> packing your idea ......... ok", `> reply-to: ${mail} ...... ok`, "> opening your email app ... ✓  hit send there"], () => {
-      const body = `${idea}\n\nReply to: ${mail}`;
-      location.href = `mailto:${MAIL}?subject=${encodeURIComponent("New project: " + idea.slice(0, 60))}&body=${encodeURIComponent(body)}`;
+    const url = waLink(`${WA_TAG}\n\nProject: ${idea}\nEmail: ${mail}\n\n(sent from the website contact form)`);
+    // desktop: open WhatsApp Web in a new tab right away (browsers block pop-ups opened later)
+    const opened = hasMouse ? window.open(url, "_blank", "noopener") : null;
+    typeLog(["> packing your idea ......... ok", `> reply-to: ${mail} ...... ok`, "> opening WhatsApp .......... ✓  hit send there"], () => {
+      if (!opened) location.href = url;
       $(".send-t", send).textContent = "SENT ✓";
       setTimeout(() => { send.classList.remove("sent"); $(".send-t", send).textContent = "SEND IT"; }, 4000);
     });

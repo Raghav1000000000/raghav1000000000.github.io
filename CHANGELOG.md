@@ -10,6 +10,7 @@ Versions follow [semantic versioning](https://semver.org/): **major** for a rede
 - **Spam protection:** a hidden trap field drops bot submissions, and the script stores anything that looks like a spreadsheet formula as plain text.
 
 ### Changed
+- **Contact box placeholder:** "what are we building?" now hints *you imagine, I build…*
 - **Clearer `$ whoami` intro in the footer.** It now says in plain words what Raghav does and who it's for: "I'm a developer who sorts out the tech side of businesses, so you can get on with running yours", then the common problems (dated website, software that keeps breaking, hours lost to copy-paste work), what gets done about them, and "You deal with me directly, in plain language… Based in India."
 
 ### Fixed

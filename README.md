@@ -1,6 +1,6 @@
 <div align="center">
 
-<a href="https://raghav1000000000.github.io/root-directory-project/">
+<a href="https://raghav1000000000.github.io/">
   <img src="docs/screens/hero.jpg" alt="Raghav Mittal: we redesign, remake and fix your business's existing websites and software" width="100%">
 </a>
 
@@ -9,13 +9,13 @@
 **We redesign, remake & fix your business's existing websites & software.**<br>
 Plus cloud software, consulting and startup collabs. Tech & automation studio, India first.
 
-[**→ Open the live site**](https://raghav1000000000.github.io/root-directory-project/) &nbsp;·&nbsp; [What's inside](#-cat-featuresmd) &nbsp;·&nbsp; [Run it](#-npx-serve-)
+[**→ Open the live site**](https://raghav1000000000.github.io/) &nbsp;·&nbsp; [What's inside](#-cat-featuresmd) &nbsp;·&nbsp; [Run it](#-npx-serve-)
 
 ![No build step](https://img.shields.io/badge/build-none-D7FF3A?style=flat-square&labelColor=0B0B0A)
 ![Zero dependencies](https://img.shields.io/badge/dependencies-0-D7FF3A?style=flat-square&labelColor=0B0B0A)
 ![Size](https://img.shields.io/badge/size-~80%20KB-FF5B1F?style=flat-square&labelColor=0B0B0A)
 ![HTML CSS JS](https://img.shields.io/badge/HTML%20·%20CSS%20·%20JS-vanilla-F1EEE6?style=flat-square&labelColor=0B0B0A)
-![Deploy](https://img.shields.io/github/actions/workflow/status/Raghav1000000000/root-directory-project/pages.yml?branch=main&label=deploy&style=flat-square&labelColor=0B0B0A)
+![Deploy](https://img.shields.io/github/actions/workflow/status/Raghav1000000000/raghav1000000000.github.io/pages.yml?branch=main&label=deploy&style=flat-square&labelColor=0B0B0A)
 ![Made in India](https://img.shields.io/badge/made%20in-India-FF5B1F?style=flat-square&labelColor=0B0B0A)
 
 </div>
@@ -108,7 +108,7 @@ Every push to `main` deploys to **GitHub Pages** through [`.github/workflows/pag
 
 ## `$ git log`
 
-Every update is listed in [CHANGELOG.md](CHANGELOG.md) and published as a [GitHub Release](https://github.com/Raghav1000000000/root-directory-project/releases).
+Every update is listed in [CHANGELOG.md](CHANGELOG.md) and published as a [GitHub Release](https://github.com/Raghav1000000000/raghav1000000000.github.io/releases).
 
 ## `$ uname -a`
 
@@ -119,7 +119,7 @@ Plain HTML, CSS and JavaScript · fonts: [Anton](https://fonts.google.com/specim
 <div align="center">
 
 **Got an old website, buggy software or a wild idea?**<br>
-[Say hi on the live site →](https://raghav1000000000.github.io/root-directory-project/#hello)
+[Say hi on the live site →](https://raghav1000000000.github.io/#hello)
 
 <sub>© 2026 Raghav Mittal. All rights reserved. The code is public to show how it's made; please don't reuse the site, brand or copy. See <a href="LICENSE">LICENSE</a>.</sub>
 

@@ -1,7 +1,14 @@
 # Changelog
 
-Every update to the site is logged here and published as a [GitHub Release](https://github.com/Raghav1000000000/root-directory-project/releases).
+Every update to the site is logged here and published as a [GitHub Release](https://github.com/Raghav1000000000/raghav1000000000.github.io/releases).
 Versions follow [semantic versioning](https://semver.org/): **major** for a redesign, **minor** for new features or sections, **patch** for fixes.
+
+## [2.0.1] - 2026-11-11
+
+### Changed
+- **New address:** the site moved from `raghav1000000000.github.io/root-directory-project/` to **https://raghav1000000000.github.io/** (no folder at the end). The repo is now `Raghav1000000000/raghav1000000000.github.io`.
+- **Old links still work:** a small `root-directory-project` repo now only forwards visitors to the new address, keeping any `#section` in the link.
+- Link previews, the README and this changelog point at the new address.
 
 ## [2.0.0] - 2026-11-11
 
@@ -100,10 +107,11 @@ First public release.
 - Real-mouse detection for touchscreen laptops; reduced-motion support.
 - GitHub Pages deploy, README with screenshots, all-rights-reserved license.
 
-[2.0.0]: https://github.com/Raghav1000000000/root-directory-project/compare/v1.3.2...v2.0.0
-[1.3.2]: https://github.com/Raghav1000000000/root-directory-project/compare/v1.3.1...v1.3.2
-[1.3.1]: https://github.com/Raghav1000000000/root-directory-project/compare/v1.3.0...v1.3.1
-[1.3.0]: https://github.com/Raghav1000000000/root-directory-project/compare/v1.2.0...v1.3.0
-[1.2.0]: https://github.com/Raghav1000000000/root-directory-project/compare/v1.1.0...v1.2.0
-[1.1.0]: https://github.com/Raghav1000000000/root-directory-project/compare/v1.0.0...v1.1.0
-[1.0.0]: https://github.com/Raghav1000000000/root-directory-project/releases/tag/v1.0.0
+[2.0.1]: https://github.com/Raghav1000000000/raghav1000000000.github.io/compare/v2.0.0...v2.0.1
+[2.0.0]: https://github.com/Raghav1000000000/raghav1000000000.github.io/compare/v1.3.2...v2.0.0
+[1.3.2]: https://github.com/Raghav1000000000/raghav1000000000.github.io/compare/v1.3.1...v1.3.2
+[1.3.1]: https://github.com/Raghav1000000000/raghav1000000000.github.io/compare/v1.3.0...v1.3.1
+[1.3.0]: https://github.com/Raghav1000000000/raghav1000000000.github.io/compare/v1.2.0...v1.3.0
+[1.2.0]: https://github.com/Raghav1000000000/raghav1000000000.github.io/compare/v1.1.0...v1.2.0
+[1.1.0]: https://github.com/Raghav1000000000/raghav1000000000.github.io/compare/v1.0.0...v1.1.0
+[1.0.0]: https://github.com/Raghav1000000000/raghav1000000000.github.io/releases/tag/v1.0.0

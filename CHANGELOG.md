@@ -9,6 +9,9 @@ Versions follow [semantic versioning](https://semver.org/): **major** for a rede
 - **Google Sheets backend for leads.** `backend/google-apps-script.gs` is a free Google Apps Script that saves every SEND IT to a "Leads" sheet (time in IST, project, email, quick pick, page, referrer, device, language) and emails you about it. Once its web-app URL is pasted into `<meta name="sheet-endpoint">`, the form saves each lead there as well as opening WhatsApp; until then the form works exactly as before. Setup steps are in the README.
 - **Spam protection:** a hidden trap field drops bot submissions, and the script stores anything that looks like a spreadsheet formula as plain text.
 
+### Changed
+- **Clearer `$ whoami` intro in the footer.** It now says in plain words what Raghav does and who it's for: "I'm a developer who sorts out the tech side of businesses, so you can get on with running yours", then the common problems (dated website, software that keeps breaking, hours lost to copy-paste work), what gets done about them, and "You deal with me directly, in plain language… Based in India."
+
 ### Fixed
 - **Desktop SEND IT no longer leaves your site.** It opened WhatsApp in a new tab and then also sent the site's own tab to WhatsApp. Now only the new tab opens.
 

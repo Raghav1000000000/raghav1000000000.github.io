@@ -342,6 +342,9 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 .avatar { flex: none; width: 56px; height: 56px; border-radius: 16px; background: var(--hot); color: var(--bg); display: grid; place-items: center; font: 400 24px/1 var(--display); rotate: -4deg; box-shadow: 4px 4px 0 var(--acid); }
 .me p { margin: 0; color: #b8b3a9; font-size: 14.5px; line-height: 1.6; max-width: 460px; }
 .me b { color: var(--ink); font: 400 22px/1.1 var(--display); display: block; margin-bottom: 6px; }
+.me-text p + p { margin-top: 10px; }
+.me-text p:first-of-type { color: var(--ink); font-size: 15.5px; }
+.me-note { font-size: 13px; color: var(--dim) !important; }
 .foot-col { display: flex; flex-direction: column; align-items: flex-start; gap: 9px; font-size: 14px; }
 .foot-col a { color: var(--ink); border-bottom: 1px solid transparent; transition: color .2s, border-color .2s, translate .25s; }
 .foot-col a:hover, .foot-col a:focus-visible { color: var(--acid); border-color: var(--acid); translate: 4px 0; }

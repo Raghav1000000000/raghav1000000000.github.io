@@ -109,7 +109,7 @@
     [`Got a <em>wild idea</em> or a <em>startup</em>? Let's build it together.`, `Co-build ✶ partner ✶ ship.`],
     [`Small business, big tech problem? <em>Pitch it</em> to us.`, `<a href="#hello">→ pitch it in one line</a>`],
   ];
-  const HOOK_MS = 5200;
+  const HOOK_MS = 3400; // how long each headline stays before the next one
   const hook = $("#hook"), hookBig = $("#hook-big"), hookSub = $("#hook-sub"), hookDots = $("#hook-dots");
   let hookI = 0, hookTimer = 0;
   const dots = HOOKS.map((_, i) => {
@@ -401,31 +401,42 @@
 
   // Phones: the carousel swipes itself while it's on screen. A touch pauses it; it carries on
   // a few seconds after you let go. Loops back to the first panel at the end.
-  const AUTO_MS = 3800, RESUME_MS = 6000;
+  // (It used to pause whenever a finger touched the cards, which includes simply scrolling the
+  // page past them, so on a real phone it rarely got going. Now only a sideways swipe pauses it.)
+  const AUTO_MS = 2600, FIRST_MS = 1200, RESUME_MS = 3500;
   let autoT = 0, workSeen = false, holdUntil = 0;
   const stepW = () => panels[1].offsetLeft - panels[0].offsetLeft;
-  const autoTick = () => {
+  const advance = () => {
+    const i = Math.round(track.scrollLeft / stepW());
+    const next = i >= n ? 0 : i + 1;
+    track.scrollTo({ left: next * stepW(), behavior: "smooth" });
+  };
+  const autoTick = (wait = AUTO_MS) => {
     clearTimeout(autoT);
     if (!phoneQ.matches || still) return;
     autoT = setTimeout(() => {
       const busy = !workSeen || document.hidden || !svcModal.hidden || Date.now() < holdUntil;
-      if (!busy) {
-        const i = Math.round(track.scrollLeft / stepW());
-        const next = i >= n ? 0 : i + 1;
-        track.scrollTo({ left: next * stepW(), behavior: "smooth" });
-      }
+      if (!busy) advance();
       autoTick();
-    }, AUTO_MS);
+    }, wait);
   };
-  const hold = () => { holdUntil = Date.now() + RESUME_MS; };
-  ["touchstart", "pointerdown", "wheel"].forEach((ev) => track.addEventListener(ev, hold, { passive: true }));
+  // pause only for a real sideways swipe on the cards
+  let tx = null, ty = 0;
+  track.addEventListener("touchstart", (e) => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+  track.addEventListener("touchmove", (e) => {
+    if (tx == null) return;
+    const dx = Math.abs(e.touches[0].clientX - tx), dy = Math.abs(e.touches[0].clientY - ty);
+    if (dx > 10 && dx > dy) { holdUntil = Date.now() + RESUME_MS; tx = null; }
+  }, { passive: true });
+  track.addEventListener("touchend", () => (tx = null), { passive: true });
   if ("IntersectionObserver" in window) {
     new IntersectionObserver(([en]) => {
-      workSeen = en.isIntersecting && en.intersectionRatio > 0.55;
-      if (workSeen) autoTick();
-    }, { threshold: [0, 0.55, 0.8] }).observe(track);
+      const was = workSeen;
+      workSeen = en.isIntersecting && en.intersectionRatio >= 0.45;
+      if (workSeen && !was) autoTick(FIRST_MS); // first move soon after it comes into view
+    }, { threshold: [0, 0.45, 0.8] }).observe(track);
   }
-  phoneQ.addEventListener ? phoneQ.addEventListener("change", autoTick) : phoneQ.addListener(autoTick);
+  phoneQ.addEventListener ? phoneQ.addEventListener("change", () => autoTick()) : phoneQ.addListener(() => autoTick());
   if (!still) {
     let cur = 0, target = 0, raf = 0;
     const measure = () => {

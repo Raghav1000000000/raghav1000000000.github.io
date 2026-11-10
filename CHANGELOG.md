@@ -3,6 +3,18 @@
 Every update to the site is logged here and published as a [GitHub Release](https://github.com/Raghav1000000000/root-directory-project/releases).
 Versions follow [semantic versioning](https://semver.org/): **major** for a redesign, **minor** for new features or sections, **patch** for fixes.
 
+## [1.3.0] - 2026-11-10
+
+### Added
+- **Service cards.** Each of the seven services (remake & redesign, fix bugs & speed, websites, cloud software, automation, consulting, startup collabs) has a card explaining it in plain, professional language: what it is, what you get, who it's a good fit for, and how to start. Each card has WhatsApp and Gmail buttons with a ready-written message, "or use the form", and a link to see it in action. Browse with ←/→, close with Esc or by clicking outside. On desktop it's a centred card; on phones it's a bottom sheet you can drag down to close, with the buttons always in reach.
+- **Nav:** **works · collab · consult · say hi**. "works" opens a list of all seven services; "collab" and "consult" open their cards. "works" also shows in the phone nav.
+- **Footer:** a short intro ("Hi, I'm Raghav…"), a services list that opens each service's card, contact links and social links (GitHub for now; LinkedIn, Instagram and X appear once their URLs are added to `SOCIALS` in `script.js`).
+
+### Changed
+- **Phones: no more scroll hijack.** The work section is a normal swipe carousel; the page scrolls freely and each panel snaps into place sideways. It also swipes itself every ~4 seconds while it's on screen, pauses when you touch it (carrying on 6 seconds after you let go), loops back to the start, and stops while a service card is open.
+- **Plainer words:** the boot screen now reads like a quick check of an old site, and "how fast" became "From hello to live. No jargon." with four plain steps.
+- **The ↓ badge** lists every service (remake, fix, web, cloud, automate) instead of only redesign.
+
 ## [1.2.0] - 2026-11-10
 
 Performance and smoothness pass, plus friendlier WhatsApp messages.
@@ -59,6 +71,7 @@ First public release.
 - Real-mouse detection for touchscreen laptops; reduced-motion support.
 - GitHub Pages deploy, README with screenshots, all-rights-reserved license.
 
+[1.3.0]: https://github.com/Raghav1000000000/root-directory-project/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/Raghav1000000000/root-directory-project/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/Raghav1000000000/root-directory-project/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/Raghav1000000000/root-directory-project/releases/tag/v1.0.0

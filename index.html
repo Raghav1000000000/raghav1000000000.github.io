@@ -33,9 +33,9 @@
   <header class="top">
     <a href="#root" class="logo" data-scramble>~/root</a>
     <nav>
-      <a href="#ls" data-scramble>work</a>
-      <a href="#talk" data-scramble>consult</a>
-      <a href="#talk" data-scramble>collab</a>
+      <a href="#ls" class="nav-svc" data-svc="list" aria-haspopup="dialog" data-scramble>works</a>
+      <a href="#talk" data-svc="collab" aria-haspopup="dialog" data-scramble>collab</a>
+      <a href="#talk" data-svc="consult" aria-haspopup="dialog" data-scramble>consult</a>
       <a href="#hello" class="pill" data-scramble>say hi</a>
     </nav>
   </header>
@@ -60,7 +60,7 @@
         <a href="#ls" class="badge" aria-label="See what we do">
           <svg viewBox="0 0 200 200" aria-hidden="true">
             <defs><path id="circ" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
-            <text><textPath href="#circ" textLength="486" lengthAdjust="spacing">REDESIGN ✶ REMAKE ✶ FIX ✶ UPDATE ✶ </textPath></text>
+            <text><textPath href="#circ" textLength="486" lengthAdjust="spacing">REMAKE ✶ FIX ✶ WEB ✶ CLOUD ✶ AUTOMATE ✶ </textPath></text>
           </svg>
           <span>↓</span>
         </a>
@@ -84,6 +84,7 @@
           <span class="cmd">$ cd /root/work/<b id="w-dir">remake</b></span>
           <span class="w-count"><b id="w-i">01</b>/05</span>
         </div>
+        <p class="work-swipe">swipe through what we do →</p>
         <div class="work-bar"><i id="w-bar"></i></div>
 
         <div class="work-track" id="w-track">
@@ -184,13 +185,14 @@
     <section class="proc" id="process" aria-labelledby="proc-h">
       <div class="proc-head">
         <p class="cmd">$ how --fast</p>
-        <h2 id="proc-h">Hello → live. <em>Easy.</em></h2>
+        <h2 id="proc-h">From hello to live. <em>No jargon.</em></h2>
+        <p class="proc-sub">Four simple steps. You always know the price, the date and who's working on it.</p>
       </div>
       <ol class="flow">
-        <li><b>1</b><span>Say hi<small>one line is enough</small></span></li>
-        <li><b>2</b><span>Free scan<small>we check what you have</small></span></li>
-        <li><b>3</b><span>Fixed price<small>no surprises later</small></span></li>
-        <li><b>4</b><span>Shipped<small>&amp; we stay on</small></span></li>
+        <li><b>1</b><span>Say hi<small>a WhatsApp or one line here is enough</small></span></li>
+        <li><b>2</b><span>We take a look<small>free check of your site or software</small></span></li>
+        <li><b>3</b><span>Fixed quote<small>price and date in writing, no surprises</small></span></li>
+        <li><b>4</b><span>We build &amp; launch<small>and stay on for fixes after</small></span></li>
       </ol>
     </section>
 
@@ -272,18 +274,57 @@
 
       <div class="tiles">
         <a class="tile t-wa" href="https://wa.me/917777016553" data-wa target="_blank" rel="noopener"><small>fastest reply</small><b>WhatsApp ↗</b></a>
-        <button class="tile t-mail" type="button" id="copy-mail" data-mail="hello@rootdirectoryproject.com"><small id="copy-note">tap to copy</small><b>hello@rootdirectoryproject.com</b></button>
+        <button class="tile t-mail" type="button" id="copy-mail" data-mail="raghavmittal595@gmail.com"><small id="copy-note">tap to copy</small><b>raghavmittal595@gmail.com</b></button>
       </div>
     </section>
   </main>
 
   <footer class="foot">
+    <div class="foot-grid">
+      <div class="foot-me">
+        <p class="cmd">$ whoami</p>
+        <div class="me">
+          <span class="avatar" aria-hidden="true">R/</span>
+          <p><b>Hi, I'm Raghav.</b> I started Root Directory Project to give Indian businesses tech that actually works. I redesign, rebuild and fix websites and software, build cloud tools and automate the boring bits. You talk to me directly, from the first hello to launch day.</p>
+        </div>
+      </div>
+      <nav class="foot-col" aria-label="Services">
+        <p class="cmd">ls ./services</p>
+        <a href="#ls" data-svc="remake" aria-haspopup="dialog">Remake &amp; redesign</a>
+        <a href="#ls" data-svc="fix" aria-haspopup="dialog">Fix bugs &amp; speed</a>
+        <a href="#ls" data-svc="web" aria-haspopup="dialog">Websites</a>
+        <a href="#ls" data-svc="cloud" aria-haspopup="dialog">Cloud software</a>
+        <a href="#ls" data-svc="automate" aria-haspopup="dialog">Automation</a>
+        <a href="#talk" data-svc="consult" aria-haspopup="dialog">Consulting</a>
+        <a href="#talk" data-svc="collab" aria-haspopup="dialog">Startup collabs</a>
+      </nav>
+      <div class="foot-col">
+        <p class="cmd">ls ./contact</p>
+        <a href="https://wa.me/917777016553" data-wa target="_blank" rel="noopener">WhatsApp ↗</a>
+        <a href="#hello">Send a project</a>
+        <span class="foot-note">Mon–Sat · IST</span>
+      </div>
+      <div class="foot-col">
+        <p class="cmd">ls ./social</p>
+        <div id="socials" class="socials"></div>
+      </div>
+    </div>
     <div class="foot-word" aria-hidden="true">ROOT/</div>
     <div class="foot-row">
       <span>© <span id="yr"></span> Root Directory Project</span>
-      <span>/root/india ✶ IST</span>
+      <span>Made in India ✶ /root/india</span>
     </div>
   </footer>
+
+  <!-- service popup: a card on desktop, a bottom sheet on phones (filled by script.js) -->
+  <div class="svc-modal" id="svc-modal" hidden>
+    <div class="svc-backdrop" data-close></div>
+    <div class="svc-sheet" role="dialog" aria-modal="true" aria-labelledby="svc-title" tabindex="-1">
+      <span class="svc-grab" aria-hidden="true"></span>
+      <button type="button" class="svc-x" data-close aria-label="Close">✕</button>
+      <div class="svc-body" id="svc-body"></div>
+    </div>
+  </div>
 
   <button class="motion-btn" id="motion-btn" type="button" hidden>✶ tap to tilt</button>
 

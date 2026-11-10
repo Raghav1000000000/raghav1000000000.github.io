@@ -21,6 +21,7 @@
   $("#yr").textContent = YEAR;
   document.documentElement.classList.add("js");
   $("#yr-now").textContent = YEAR;
+  $$(".yr").forEach((e) => (e.textContent = YEAR));
 
   // "Stuck in 2014 → updated to <this year>": the year rolls forward
   const rollYear = () => {
@@ -73,11 +74,11 @@
   // Boot screen, then hero letters rise in
   const boot = $(".boot");
   const lines = [
-    "> scanning your-business.in ..... design from 2014 found",
-    "> redesign ...................... ok",
-    "> remake ........................ ok",
-    "> fix 37 bugs ................... ok",
-    `> updated to ${YEAR}. welcome.`,
+    "> opening your-business.in ........ looks like 2014",
+    "> slow pages, broken checkout ..... found",
+    "> redesign · rebuild · fix ........ done",
+    "> plus apps, cloud & automation ... ready",
+    `> your business, updated for ${YEAR}. come in.`,
   ];
   const startHero = () => {
     $$(".mega .ch").forEach((c, i) => {
@@ -89,6 +90,8 @@
     setTimeout(rollYear, 700);
     startHook();
   };
+
+  let heroFocus = () => {}; // hook for anything in the hero that follows the rotating headline
 
   // Hero hook rotates through everything we do
   const HOOKS = [
@@ -125,6 +128,7 @@
       hookSub.innerHTML = HOOKS[hookI][1];
       hook.classList.remove("swap");
       markDots();
+      heroFocus(hookI);
       if (hookI === 0) rollYear();
       if (!still) hookTimer = setTimeout(() => showHook(hookI + 1), HOOK_MS);
     };
@@ -282,10 +286,12 @@
   const onWidth = (fn) => addEventListener("resize", () => { if (innerWidth !== lastW) { lastW = innerWidth; fn(); } });
 
   // Shrink the illustrations on short screens so they never hit the headline
+  const phoneQ = matchMedia("(max-width: 760px)");
   const fitViz = () => $$(".viz").forEach((v) => {
     v.style.setProperty("--s", 1);
     const h = v.offsetHeight;
-    v.style.setProperty("--s", Math.min(1, (pin.offsetHeight * 0.5) / h).toFixed(3));
+    const room = phoneQ.matches ? panels[0].offsetHeight * 0.55 : pin.offsetHeight * 0.5;
+    v.style.setProperty("--s", Math.min(1, room / h).toFixed(3));
   });
   fitViz();
   onWidth(fitViz);
@@ -314,9 +320,65 @@
     return Math.min(n, i + t * t * (3 - 2 * t));
   };
 
+  // which panel is showing: updates the "cd /root/work/…" label, counter, bar and animations
+  let lastIdx = -1;
+  const showPanel = (idx, progress) => {
+    wBar.style.transform = `scaleX(${progress})`;
+    if (idx === lastIdx) return;
+    lastIdx = idx;
+    wDir.textContent = panels[idx].dataset.dir;
+    wI.textContent = String(idx + 1).padStart(2, "0");
+    panels.forEach((p, i) => p.classList.toggle("active", i === idx));
+  };
+
+  // Phones: the panels are a native swipe carousel; the page scrolls normally
+  let swipeRaf = 0;
+  track.addEventListener("scroll", () => {
+    if (!phoneQ.matches || swipeRaf) return;
+    swipeRaf = requestAnimationFrame(() => {
+      swipeRaf = 0;
+      const step = panels[1].offsetLeft - panels[0].offsetLeft;
+      const p = Math.min(n, Math.max(0, track.scrollLeft / step));
+      showPanel(Math.round(p), (p + 1) / (n + 1));
+    });
+  }, { passive: true });
+  const enterMode = () => {
+    if (phoneQ.matches) { track.style.transform = ""; showPanel(Math.round(track.scrollLeft / Math.max(1, panels[1].offsetLeft - panels[0].offsetLeft)), 1 / (n + 1)); }
+  };
+  phoneQ.addEventListener ? phoneQ.addEventListener("change", enterMode) : phoneQ.addListener(enterMode);
+  enterMode();
+
+  // Phones: the carousel swipes itself while it's on screen. A touch pauses it; it carries on
+  // a few seconds after you let go. Loops back to the first panel at the end.
+  const AUTO_MS = 3800, RESUME_MS = 6000;
+  let autoT = 0, workSeen = false, holdUntil = 0;
+  const stepW = () => panels[1].offsetLeft - panels[0].offsetLeft;
+  const autoTick = () => {
+    clearTimeout(autoT);
+    if (!phoneQ.matches || still) return;
+    autoT = setTimeout(() => {
+      const busy = !workSeen || document.hidden || !svcModal.hidden || Date.now() < holdUntil;
+      if (!busy) {
+        const i = Math.round(track.scrollLeft / stepW());
+        const next = i >= n ? 0 : i + 1;
+        track.scrollTo({ left: next * stepW(), behavior: "smooth" });
+      }
+      autoTick();
+    }, AUTO_MS);
+  };
+  const hold = () => { holdUntil = Date.now() + RESUME_MS; };
+  ["touchstart", "pointerdown", "wheel"].forEach((ev) => track.addEventListener(ev, hold, { passive: true }));
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(([en]) => {
+      workSeen = en.isIntersecting && en.intersectionRatio > 0.55;
+      if (workSeen) autoTick();
+    }, { threshold: [0, 0.55, 0.8] }).observe(track);
+  }
+  phoneQ.addEventListener ? phoneQ.addEventListener("change", autoTick) : phoneQ.addListener(autoTick);
   if (!still) {
-    let cur = 0, target = 0, last = -1, raf = 0;
+    let cur = 0, target = 0, raf = 0;
     const measure = () => {
+      if (phoneQ.matches) return; // phones use the swipe carousel
       const total = work.offsetHeight - pin.offsetHeight;
       target = Math.min(1, Math.max(0, -work.getBoundingClientRect().top / total));
       if (!raf) raf = requestAnimationFrame(frame);
@@ -330,15 +392,9 @@
       cur = hasMouse ? cur + (target - cur) * (1 - Math.exp(-dt / 110)) : target;
       if (Math.abs(target - cur) < 0.0005) cur = target;
       const g = lockStep(cur);
+      if (phoneQ.matches) return;
       track.style.transform = `translate3d(${(-g * pin.offsetWidth).toFixed(1)}px,0,0)`;
-      wBar.style.transform = `scaleX(${cur})`;
-      const idx = Math.round(g);
-      if (idx !== last) {
-        last = idx;
-        wDir.textContent = panels[idx].dataset.dir;
-        wI.textContent = String(idx + 1).padStart(2, "0");
-        panels.forEach((p, i) => p.classList.toggle("active", i === idx));
-      }
+      showPanel(Math.round(g), cur);
       if (cur !== target) raf = requestAnimationFrame(frame);
       else prevT = 0;
     };
@@ -509,6 +565,14 @@
         burst(a, t, { type: "bandpass", freq: 3200, q: 4, vol: 0.35, len: 0.025 });
         tone(a, t, { from: 900, to: 600, vol: 0.06, len: 0.03 });
       },
+      // rubber stamp hitting a desk
+      thunk() {
+        const a = get(); if (!a) return;
+        const t = a.currentTime;
+        burst(a, t, { type: "lowpass", freq: 380, vol: 0.8, len: 0.14 });
+        tone(a, t, { type: "sine", from: 140, to: 55, vol: 0.35, len: 0.16 });
+        burst(a, t, { type: "bandpass", freq: 2200, q: 2, vol: 0.15, len: 0.03 });
+      },
       // 8-bit victory jingle
       win() {
         const a = get(); if (!a) return;
@@ -625,7 +689,7 @@
   }
 
   // Contact: quick picks, email, send
-  const MAIL = "hello@rootdirectoryproject.com";
+  const MAIL = "raghavmittal595@gmail.com";
   // WhatsApp: messages from the site open with "Hey Root Directory Project 👋" and mention the
   // website, so they're easy to spot in your chats while still reading like a normal hello.
   const WA = "917777016553";
@@ -792,6 +856,200 @@
     const pick = $$(".quick button").find((b) => b.dataset.q === d.dataset.pick);
     setTimeout(() => pick && pick.click(), still ? 0 : 650);
   }));
+
+  // ---------- Footer: social links (fill in a URL to show it) + service links ----------
+  const SOCIALS = [
+    ["GitHub", "https://github.com/Raghav1000000000", "M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.7 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"],
+    ["LinkedIn", "", "M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.3V9h3.4v1.6c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.5H3.5V9h3.6v11.5zM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0z"],
+    ["Instagram", "", "M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zM17.3 5.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4zM23.9 7c-.1-1.9-.5-3.6-1.9-5S18.9.2 17 .1C15 0 9 0 7 .1 5.1.2 3.4.6 2 2S.2 5.1.1 7C0 9 0 15 .1 17c.1 1.9.5 3.6 1.9 5s3.1 1.8 5 1.9c2 .1 8 .1 10 0 1.9-.1 3.6-.5 5-1.9s1.8-3.1 1.9-5c.1-2 .1-8 0-10zm-2.6 12.4a4 4 0 0 1-2.3 2.3c-1.6.6-5.3.5-7 .5s-5.4.1-7-.5a4 4 0 0 1-2.3-2.3C2.1 17.8 2.2 14 2.2 12s-.1-5.8.5-7a4 4 0 0 1 2.3-2.4C6.6 2 10.3 2.2 12 2.2s5.4-.1 7 .5a4 4 0 0 1 2.3 2.3c.6 1.6.5 5.4.5 7s.1 5.4-.5 7z"],
+    ["X", "", "M18.2 2.3h3.4l-7.4 8.4 8.7 11.5h-6.8l-5.3-7-6.1 7H1.3l7.9-9L.9 2.3h7l4.8 6.4 5.5-6.4zm-1.2 17.9h1.9L7 4.2H5z"],
+  ];
+  const socialsEl = $("#socials");
+  SOCIALS.filter(([, url]) => url).forEach(([name, url, path]) => {
+    const a = document.createElement("a");
+    a.href = url; a.target = "_blank"; a.rel = "noopener";
+    a.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${path}"/></svg>${name}`;
+    socialsEl.appendChild(a);
+  });
+
+  // jump straight to one of the work panels
+  const goPanel = (i) => {
+    if (phoneQ.matches) {
+      work.scrollIntoView({ behavior: still ? "auto" : "smooth" });
+      track.scrollTo({ left: panels[i].offsetLeft - panels[0].offsetLeft, behavior: still ? "auto" : "smooth" });
+    } else {
+      const total = work.offsetHeight - pin.offsetHeight;
+      scrollTo({ top: work.offsetTop + (total * i) / n, behavior: still ? "auto" : "smooth" });
+    }
+  };
+
+  // ---------- Service popups: opened from the nav ("services", "consult", "collab") and the footer ----------
+  const SERVICES = [
+    { id: "remake", tag: "remake/", name: "Remake & redesign", acc: "#3D35FF", panel: 0, pick: "Redesign my old website",
+      short: "Old site or software, rebuilt for today",
+      lede: "Your old website or software, rebuilt for the way your customers use it today.",
+      gets: ["A fresh, modern design that works beautifully on phones first", "Faster pages and better visibility on Google", "Your content, products and data moved over safely", "A site your team can update without calling a developer"],
+      fit: "businesses whose website looks dated, loads slowly, or feels embarrassing to share on WhatsApp.",
+      meta: ["Fixed quote after a free check", "Keep your domain & data"] },
+    { id: "fix", tag: "fix/", name: "Fix bugs & speed", acc: "#FF5B1F", panel: 1, pick: "Fix my website",
+      short: "Broken, slow or buggy, found and fixed",
+      lede: "Something broken, slow or unsafe? We find the real cause and fix it properly.",
+      gets: ["A plain-language report of what's wrong and why", "Fixes for errors, crashes, broken forms and checkouts", "Speed improvements you can feel", "Security updates and backups, so it doesn't happen again"],
+      fit: "urgent problems: a site that's down, losing orders, flagged as unsafe, or too slow to use.",
+      meta: ["Urgent issues first", "Clear before/after"] },
+    { id: "web", tag: "web/", name: "Websites", acc: "#FF5B1F", panel: 2, pick: "", q: "A new website for my business",
+      short: "Fast websites that turn visitors into customers",
+      lede: "A website that loads fast, looks sharp and turns visitors into customers.",
+      gets: ["A custom design made for your brand, not a template", "Mobile-first and ready for Google from day one", "WhatsApp chat, UPI/Razorpay payments and enquiry forms built in", "Domain, hosting and launch handled for you"],
+      fit: "new businesses, launches, shops and service providers who need to look credible online.",
+      meta: ["Fixed price", "You own everything"] },
+    { id: "cloud", tag: "cloud/", name: "Cloud software", acc: "#D7FF3A", panel: 3, pick: "Build cloud software / a dashboard",
+      short: "Dashboards, portals and SaaS that never sleep",
+      lede: "Custom dashboards, portals and software that run reliably, around the clock.",
+      gets: ["Web apps, admin dashboards and customer portals", "Secure logins with roles for your team", "APIs and databases designed to grow with you", "Hosting, monitoring and backups on reliable cloud"],
+      fit: "teams outgrowing spreadsheets, and startups turning an idea into a real product.",
+      meta: ["Built to scale", "Hosted in India when needed"] },
+    { id: "automate", tag: "automate/", name: "Automation", acc: "#D7FF3A", panel: 4, pick: "", q: "Automate a workflow in my business",
+      short: "Busywork that runs itself",
+      lede: "Hand the repetitive work to software, so your team can focus on customers.",
+      gets: ["Workflows that connect the tools you already use: WhatsApp, Sheets, Tally, email", "Automatic invoices, reminders and reports", "Data kept in sync between your systems", "Fewer manual errors and hours saved every week"],
+      fit: "teams that spend hours copying data, sending the same messages, or building the same reports.",
+      meta: ["Works with your tools", "Small wins first"] },
+    { id: "consult", tag: "consult/", name: "Consulting", acc: "#F1EEE6", panel: -1, pick: "Need tech advice (consultation)",
+      short: "Honest tech advice before you spend",
+      lede: "Clear, honest tech advice before you spend money on the wrong thing.",
+      gets: ["A review of your current website, software and tools", "Recommendations in plain language, no jargon", "Build-vs-buy guidance and a second opinion on vendor quotes", "A step-by-step roadmap you can act on"],
+      fit: "owners who aren't sure what to build, what it should cost, or whom to trust.",
+      meta: ["First call is free", "No obligation"] },
+    { id: "collab", tag: "collab/", name: "Startup collabs", acc: "#FF5B1F", panel: -1, pick: "Collab on a startup idea",
+      short: "Your idea, built together, sketch to launch",
+      lede: "Got an idea? We build it with you, from first sketch to launch day.",
+      gets: ["Scoping your MVP so you build only what matters first", "Design and development as one team", "Flexible ways to work: fixed scope or a longer partnership", "Support after launch while you learn from real users"],
+      fit: "founders, side projects and early-stage startups who want a hands-on tech partner.",
+      meta: ["Fixed scope or partnership", "Founder-friendly"] },
+  ];
+  const ICON_WA = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.7-1.2 2.2 2.2 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3z"/></svg>';
+  const ICON_MAIL = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1 2.4V17h16V7.4l-8 5.3-8-5.3zM5.6 7l6.4 4.2L18.4 7H5.6z"/></svg>';
+  const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const svcModal = $("#svc-modal"), svcBody = $("#svc-body"), svcSheet = $(".svc-sheet", svcModal);
+  let svcOpen = false, svcIdx = -1, svcLastFocus = null;
+
+  const waFor = (s) => waLink(`Hey Root Directory Project 👋\nI came across your ${s.name.toLowerCase()} service on the website and I'd like to know more.\n\nHere's what I need: `);
+  const gmailFor = (s) => `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(MAIL)}&su=${encodeURIComponent(`Enquiry: ${s.name} · via rootdirectoryproject`)}&body=${encodeURIComponent(`Hi Root Directory Project,\n\nI came across your ${s.name.toLowerCase()} service on the website and I'd like to know more.\n\nHere's what I need:\n\n`)}`;
+
+  const renderCard = (i, dir = 0) => {
+    const s = SERVICES[i];
+    svcIdx = i;
+    svcSheet.style.setProperty("--acc", s.acc);
+    svcSheet.setAttribute("aria-labelledby", "svc-title");
+    svcBody.innerHTML = `
+      <div class="svc-top"><span class="svc-tag">${s.tag}</span><span class="svc-count">${i + 1}/${SERVICES.length}</span>
+        <div class="svc-nav"><button type="button" data-step="-1" aria-label="Previous service">←</button><button type="button" data-step="1" aria-label="Next service">→</button></div></div>
+      <h2 id="svc-title">${esc(s.name)}</h2>
+      <p class="svc-lede">${esc(s.lede)}</p>
+      <p class="svc-h">What you get</p>
+      <ul class="svc-list">${s.gets.map((g) => `<li>${esc(g)}</li>`).join("")}</ul>
+      <p class="svc-for"><b>A good fit for</b> ${esc(s.fit)}</p>
+      <div class="svc-meta">${s.meta.map((m) => `<span>${esc(m)}</span>`).join("")}</div>
+      <div class="svc-cta">
+        <a class="svc-btn wa" href="${waFor(s)}" target="_blank" rel="noopener">${ICON_WA}WhatsApp</a>
+        <a class="svc-btn gm" href="${gmailFor(s)}" target="_blank" rel="noopener">${ICON_MAIL}Gmail</a>
+        <div class="svc-more"><button type="button" data-form>or use the form</button>${s.panel >= 0 ? `<button type="button" data-see="${s.panel}">see it in action →</button>` : `<button type="button" data-doors>see both paths →</button>`}</div>
+      </div>`;
+    svcBody.scrollTop = 0;
+    if (dir && !still) { svcBody.style.setProperty("--dir", `${dir * 18}px`); svcBody.classList.remove("swap"); void svcBody.offsetWidth; svcBody.classList.add("swap"); }
+  };
+  const renderList = () => {
+    svcIdx = -1;
+    svcSheet.style.setProperty("--acc", "#D7FF3A");
+    svcSheet.setAttribute("aria-labelledby", "svc-title");
+    svcBody.innerHTML = `
+      <div class="svc-top"><span class="svc-tag">ls /root/services</span></div>
+      <h2 id="svc-title">What we do</h2>
+      <p class="svc-lede">Pick a service to see what's included and how to start.</p>
+      <ul class="svc-pick">${SERVICES.map((s, i) => `<li><button type="button" data-open="${i}"><span class="n">0${i + 1}</span><span class="t"><b>${esc(s.name)}</b><small>${esc(s.short)}</small></span><span class="a">→</span></button></li>`).join("")}</ul>`;
+    svcBody.scrollTop = 0;
+  };
+  const openSvc = (key) => {
+    svcLastFocus = document.activeElement;
+    if (key === "list") renderList();
+    else renderCard(Math.max(0, SERVICES.findIndex((s) => s.id === key)));
+    svcModal.hidden = false;
+    svcModal.classList.remove("closing");
+    svcSheet.style.transform = "";
+    document.documentElement.style.overflow = "hidden";
+    svcOpen = true;
+    requestAnimationFrame(() => svcSheet.focus({ preventScroll: true }));
+  };
+  const closeSvc = (then) => {
+    if (!svcOpen) return;
+    svcOpen = false;
+    svcModal.classList.add("closing");
+    setTimeout(() => {
+      svcModal.hidden = true;
+      svcModal.classList.remove("closing");
+      document.documentElement.style.overflow = "";
+      if (then) then(); else if (svcLastFocus) svcLastFocus.focus({ preventScroll: true });
+    }, still ? 0 : 230);
+  };
+
+  // open from the nav + footer
+  document.addEventListener("click", (e) => {
+    const t = e.target.closest("[data-svc]");
+    if (!t || svcModal.contains(t)) return;
+    e.preventDefault();
+    openSvc(t.dataset.svc);
+  });
+  // inside the popup
+  svcModal.addEventListener("click", (e) => {
+    if (e.target.closest("[data-close]")) return closeSvc();
+    const open = e.target.closest("[data-open]");
+    if (open) return renderCard(+open.dataset.open, 1);
+    const step = e.target.closest("[data-step]");
+    if (step) return renderCard((svcIdx + +step.dataset.step + SERVICES.length) % SERVICES.length, +step.dataset.step);
+    const see = e.target.closest("[data-see]");
+    if (see) return closeSvc(() => goPanel(+see.dataset.see));
+    if (e.target.closest("[data-doors]")) return closeSvc(() => $("#talk").scrollIntoView({ behavior: still ? "auto" : "smooth" }));
+    if (e.target.closest("[data-form]")) {
+      const s = SERVICES[svcIdx];
+      return closeSvc(() => {
+        $("#hello").scrollIntoView({ behavior: still ? "auto" : "smooth" });
+        const pick = $$(".quick button").find((b) => b.dataset.q === s.pick);
+        setTimeout(() => { if (pick) pick.click(); else { q.value = s.q || s.name; (em.value ? send : em).focus({ preventScroll: true }); } }, still ? 0 : 650);
+      });
+    }
+  });
+  // keyboard: Esc closes, arrows browse, Tab stays inside
+  document.addEventListener("keydown", (e) => {
+    if (!svcOpen) return;
+    if (e.key === "Escape") { e.preventDefault(); closeSvc(); }
+    else if ((e.key === "ArrowRight" || e.key === "ArrowLeft") && svcIdx >= 0 && !/input|textarea/i.test(document.activeElement.tagName)) {
+      const d = e.key === "ArrowRight" ? 1 : -1;
+      renderCard((svcIdx + d + SERVICES.length) % SERVICES.length, d);
+    } else if (e.key === "Tab") {
+      const f = $$("button, a[href]", svcSheet).filter((x) => x.offsetParent);
+      if (!f.length) return;
+      if (e.shiftKey && (document.activeElement === f[0] || document.activeElement === svcSheet)) { e.preventDefault(); f[f.length - 1].focus(); }
+      else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+    }
+  });
+  // phones: drag the sheet down to close
+  {
+    let y0 = null, dy = 0;
+    svcSheet.addEventListener("touchstart", (e) => { if (!phoneQ.matches || svcBody.scrollTop > 0) return; y0 = e.touches[0].clientY; dy = 0; }, { passive: true });
+    svcSheet.addEventListener("touchmove", (e) => {
+      if (y0 == null) return;
+      dy = Math.max(0, e.touches[0].clientY - y0);
+      if (dy > 0) { svcSheet.style.transition = "none"; svcSheet.style.transform = `translateY(${dy}px)`; }
+    }, { passive: true });
+    svcSheet.addEventListener("touchend", () => {
+      if (y0 == null) return;
+      y0 = null;
+      svcSheet.style.transition = "transform .25s ease";
+      if (dy > 110) { svcSheet.style.transform = "translateY(100%)"; setTimeout(() => { svcSheet.style.transition = ""; closeSvc(); }, 200); }
+      else { svcSheet.style.transform = ""; setTimeout(() => (svcSheet.style.transition = ""), 260); }
+    });
+  }
 
   // ---------- Performance: pause looping animations in sections that are off screen ----------
   if ("IntersectionObserver" in window) {

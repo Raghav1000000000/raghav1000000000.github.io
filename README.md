@@ -53,7 +53,8 @@ Root Directory Project is a small tech studio for businesses that are **stuck in
 
 - **Boot screen**: a quick terminal "upgrade" log plays out before the page appears.
 - **Rotating headline**: cycles through what we do: remakes, websites, cloud software, consulting, startups, pitches.
-- **Sideways work section**: scrolling down moves five full-screen panels sideways, each with a CSS-only scene (a 2000s site wiping into a new one, a terminal fixing bugs, servers passing packets, a conveyor belt of tasks).
+- **Work section**: on desktop, scrolling moves five full-screen panels sideways, each locking in place with a CSS-only scene (a 2000s site wiping into a new one, a terminal fixing bugs, servers passing packets, a conveyor belt of tasks). On phones it's a swipe carousel that also moves by itself, so the page never hijacks your scroll.
+- **Service cards**: every service in the nav and footer opens a card explaining it in plain language, with WhatsApp and Gmail buttons. A centred card on desktop, a drag-to-close bottom sheet on phones.
 - **Bug-squash game**: toy-pistol sound effects made in the browser with the Web Audio API (no audio files), "POW!" stickers, recoil and a crosshair cursor.
 - **Scroll reveals**: titles rise word by word, pills pop in, boxes open from the centre.
 - **Desktop hover**: letters dodge the cursor, a custom blend-mode cursor, a magnetic send button, labels that follow the mouse.
@@ -97,6 +98,8 @@ Then open `http://localhost:3000`. (Opening `index.html` directly also works, bu
 | Game sounds (pitch, length, volume) | the `SFX` block in `script.js` |
 | How sensitive phone tilt is | `SENS` in `script.js` (lower = more sensitive) |
 | WhatsApp number and greeting | `WA` and `WA_HELLO` in `script.js` |
+| Service card text | `SERVICES` in `script.js` |
+| Footer social links | `SOCIALS` in `script.js` (a link shows once its URL is filled in) |
 | Email | `MAIL` in `script.js` |
 
 ## `$ git push` → live

@@ -3,6 +3,15 @@
 Every update to the site is logged here and published as a [GitHub Release](https://github.com/Raghav1000000000/raghav1000000000.github.io/releases).
 Versions follow [semantic versioning](https://semver.org/): **major** for a redesign, **minor** for new features or sections, **patch** for fixes.
 
+## [2.1.0] - 2026-11-11
+
+### Added
+- **Google Sheets backend for leads.** `backend/google-apps-script.gs` is a free Google Apps Script that saves every SEND IT to a "Leads" sheet (time in IST, project, email, quick pick, page, referrer, device, language) and emails you about it. Once its web-app URL is pasted into `<meta name="sheet-endpoint">`, the form saves each lead there as well as opening WhatsApp; until then the form works exactly as before. Setup steps are in the README.
+- **Spam protection:** a hidden trap field drops bot submissions, and the script stores anything that looks like a spreadsheet formula as plain text.
+
+### Fixed
+- **Desktop SEND IT no longer leaves your site.** It opened WhatsApp in a new tab and then also sent the site's own tab to WhatsApp. Now only the new tab opens.
+
 ## [2.0.1] - 2026-11-11
 
 ### Changed
@@ -107,6 +116,7 @@ First public release.
 - Real-mouse detection for touchscreen laptops; reduced-motion support.
 - GitHub Pages deploy, README with screenshots, all-rights-reserved license.
 
+[2.1.0]: https://github.com/Raghav1000000000/raghav1000000000.github.io/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/Raghav1000000000/raghav1000000000.github.io/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/Raghav1000000000/raghav1000000000.github.io/compare/v1.3.2...v2.0.0
 [1.3.2]: https://github.com/Raghav1000000000/raghav1000000000.github.io/compare/v1.3.1...v1.3.2

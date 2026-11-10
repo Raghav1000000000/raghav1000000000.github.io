@@ -788,6 +788,26 @@
     };
     next();
   };
+  // Google Sheets backend: the Apps Script web-app URL goes in <meta name="sheet-endpoint"> in
+  // index.html (see backend/google-apps-script.gs). Empty = leads only go to WhatsApp.
+  // sendBeacon keeps working even when the phone leaves the page for the WhatsApp app.
+  const saveLead = (data) => {
+    const endpoint = (($('meta[name="sheet-endpoint"]') || {}).content || "").trim();
+    if (!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec$/.test(endpoint)) return false;
+    const body = new URLSearchParams({
+      ...data,
+      page: location.href.split("#")[0],
+      ref: document.referrer || "",
+      device: `${/Mobi|Android|iPhone/i.test(navigator.userAgent) ? "phone" : "desktop"} · ${innerWidth}×${innerHeight}`,
+      lang: navigator.language || "",
+    });
+    try {
+      if (navigator.sendBeacon && navigator.sendBeacon(endpoint, body)) return true;
+      fetch(endpoint, { method: "POST", mode: "no-cors", body, keepalive: true }).catch(() => {});
+      return true;
+    } catch (_) { return false; }
+  };
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const idea = q.value.trim(), mail = em.value.trim();
@@ -800,13 +820,21 @@
       (badIdea ? q : em).focus();
       return;
     }
+    // honeypot: a hidden field real people never see; if it's filled, it's a bot
+    if ($("#hp-company") && $("#hp-company").value) return;
     send.classList.add("sent");
     $(".send-t", send).textContent = "SENDING…";
     buzz(30);
+    const saved = saveLead({ project: idea, email: mail, pick: ($(".quick button.on") || {}).textContent || "", source: "contact form" });
     const url = waLink(`Hey Raghav 👋\nFound you through your website. Here's what I have in mind:\n\n✦ ${idea}\n\nYou can also reach me at ${mail}. Looking forward to it!`);
-    // desktop: open WhatsApp Web in a new tab right away (browsers block pop-ups opened later)
-    const opened = hasMouse ? window.open(url, "_blank", "noopener") : null;
-    typeLog(["> packing your idea ......... ok", `> reply-to: ${mail} ...... ok`, "> opening WhatsApp .......... ✓  hit send there"], () => {
+    // desktop: open WhatsApp Web in a new tab right away (browsers block pop-ups opened later).
+    // ("noopener" would make window.open return null, which also sent this tab away.)
+    let opened = null;
+    if (hasMouse) { opened = window.open(url, "_blank"); if (opened) opened.opener = null; }
+    const lines = ["> packing your idea ......... ok", `> reply-to: ${mail} ...... ok`];
+    if (saved) lines.push("> saved to the lead sheet .... ok");
+    lines.push("> opening WhatsApp .......... ✓  hit send there");
+    typeLog(lines, () => {
       if (!opened) location.href = url;
       $(".send-t", send).textContent = "SENT ✓";
       setTimeout(() => { send.classList.remove("sent"); $(".send-t", send).textContent = "SEND IT"; }, 4000);

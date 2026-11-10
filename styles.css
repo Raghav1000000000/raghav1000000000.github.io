@@ -481,6 +481,9 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
   .svc-nav button { width: 38px; height: 38px; }
 }
 
+/* spam trap field: invisible to people and screen readers */
+.hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+
 /* small screens */
 @media (max-width: 760px) {
   .grain { animation: none; inset: 0; }

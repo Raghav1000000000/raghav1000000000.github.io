@@ -12,6 +12,8 @@
   <meta property="og:url" content="https://raghav1000000000.github.io/" />
   <meta property="og:image" content="https://raw.githubusercontent.com/Raghav1000000000/raghav1000000000.github.io/main/docs/screens/hero.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
+  <!-- Google Sheets backend: paste your Apps Script web-app URL here (ends in /exec). Empty = WhatsApp only. -->
+  <meta name="sheet-endpoint" content="" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -262,6 +264,8 @@
           <span>what are we building?</span>
           <input id="q" name="q" required placeholder="redesign my old website…" />
         </label>
+        <!-- honeypot: hidden from people, bots fill it in -->
+        <input type="text" id="hp-company" name="company" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
         <label class="field">
           <span>your email</span>
           <input id="em" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="you@yourbusiness.in" />

@@ -101,6 +101,21 @@ Then open `http://localhost:3000`. (Opening `index.html` directly also works, bu
 | Service card text | `SERVICES` in `script.js` |
 | Footer social links | `SOCIALS` in `script.js` (a link shows once its URL is filled in) |
 | Email | `MAIL` in `script.js` |
+| Google Sheet for leads | `<meta name="sheet-endpoint">` in `index.html` (see the backend section) |
+
+## `$ cat backend.md`: Google Sheets backend
+
+Every **SEND IT** can also land as a row in a Google Sheet (and email you), on top of opening WhatsApp. It's free and has no server: a small Google Apps Script, [`backend/google-apps-script.gs`](backend/google-apps-script.gs), receives the form.
+
+**Set it up once (about 5 minutes):**
+
+1. Create a new Google Sheet (e.g. "Website leads").
+2. In the sheet: **Extensions → Apps Script**. Delete what's there, paste the whole of `backend/google-apps-script.gs`, and **Save**.
+3. Pick `setup` in the function dropdown and press **Run ▶**. Allow the permissions it asks for. This creates the **Leads** tab and sets the time zone to IST.
+4. **Deploy → New deployment →** type **Web app**. *Execute as:* **Me**. *Who has access:* **Anyone**. Press **Deploy** and copy the **Web app URL** (it ends in `/exec`).
+5. In `index.html`, paste it into `<meta name="sheet-endpoint" content="…">` and push.
+
+Each lead row has: time (IST), project, email, which quick pick they tapped, source, page, referrer, device and language. A hidden spam-trap field drops bot submissions, and anything that looks like a spreadsheet formula is stored as plain text. Turn the email alert off with `NOTIFY_ME = false` in the script. If you change the script later, use **Deploy → Manage deployments → Edit → New version** so the URL stays the same.
 
 ## `$ git push` → live
 

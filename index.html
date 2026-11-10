@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Root Directory Project — Redesign, remake &amp; fix your software</title>
+  <meta name="description" content="Old website? Buggy software? We redesign, remake and fix existing business websites and software — updated for today. Plus cloud software, consulting and startup collabs. India first." />
+  <meta name="theme-color" content="#0B0B0A" />
+  <meta property="og:title" content="Root Directory Project" />
+  <meta property="og:description" content="We redesign, remake and fix your existing websites and software — updated for today. India first." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://raghav1000000000.github.io/root-directory-project/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/Raghav1000000000/root-directory-project/main/docs/screens/hero.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;700&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- boot screen -->
+  <div class="boot" aria-hidden="true">
+    <pre id="boot-log"></pre>
+  </div>
+
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <header class="top">
+    <a href="#root" class="logo" data-scramble>~/root</a>
+    <nav>
+      <a href="#ls" data-scramble>work</a>
+      <a href="#talk" data-scramble>consult</a>
+      <a href="#talk" data-scramble>collab</a>
+      <a href="#hello" class="pill" data-scramble>say hi</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="root">
+      <p class="prompt"><span class="u">india@root</span>:<span class="p">~</span>$ <span id="typed"></span><span class="caret">▍</span></p>
+
+      <h1 class="mega" aria-label="Root Directory Project">
+        <span class="line" data-split>ROOT/</span>
+        <span class="line outline" data-split>DIRECTORY/</span>
+        <span class="line" data-split>PROJECT<i class="dot">.</i></span>
+      </h1>
+
+      <div class="hero-foot">
+        <div class="hook" id="hook">
+          <p class="hook-big" id="hook-big">We <em>redesign</em>, <em>remake</em> &amp; <em>fix</em> your business's existing websites &amp; software.</p>
+          <p class="hook-year" id="hook-sub">Stuck in <s>2014</s> → updated to <b id="yr-now">2026</b>.</p>
+          <div class="hook-dots" id="hook-dots" role="group" aria-label="Messages"></div>
+        </div>
+        <a href="#ls" class="badge" aria-label="See what we do">
+          <svg viewBox="0 0 200 200" aria-hidden="true">
+            <defs><path id="circ" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
+            <text><textPath href="#circ" textLength="486" lengthAdjust="spacing">REDESIGN ✶ REMAKE ✶ FIX ✶ UPDATE ✶ </textPath></text>
+          </svg>
+          <span>↓</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- BANDS -->
+    <div class="bands" aria-hidden="true">
+      <div class="band b1"><div class="track">
+        <span>OLD → NEW ✶ REDESIGN ✶ REMAKE ✶ FIX ✶ UPDATE ✶ INDIA FIRST ✶&nbsp;</span><span>OLD → NEW ✶ REDESIGN ✶ REMAKE ✶ FIX ✶ UPDATE ✶ INDIA FIRST ✶&nbsp;</span>
+      </div></div>
+      <div class="band b2"><div class="track rev">
+        <span>rm -rf old-design ✶ git pull --upgrade your-business ✶ fix --all ✶&nbsp;</span><span>rm -rf old-design ✶ git pull --upgrade your-business ✶ fix --all ✶&nbsp;</span>
+      </div></div>
+    </div>
+
+    <!-- LS -->
+    <section class="work" id="ls" aria-label="What we do">
+      <div class="work-pin">
+        <div class="work-hud">
+          <span class="cmd">$ cd /root/work/<b id="w-dir">remake</b></span>
+          <span class="w-count"><b id="w-i">01</b>/05</span>
+        </div>
+        <div class="work-bar"><i id="w-bar"></i></div>
+
+        <div class="work-track" id="w-track">
+          <!-- 01 remake -->
+          <article class="panel p-remake" data-dir="remake">
+            <span class="ghost" aria-hidden="true">01</span>
+            <div class="p-copy">
+              <h3>REMAKE/</h3>
+              <p>Old website or software? Redesigned &amp; rebuilt for today.</p>
+            </div>
+            <div class="viz" aria-hidden="true">
+              <div class="ba">
+                <div class="old"><b>Welcome to My Website!!</b><u>click here</u><marquee>★ best prices ★</marquee><small>best viewed in IE6</small></div>
+                <div class="new"><b>NEW.</b><span></span><span class="s"></span></div>
+                <div class="split"><i>⇆</i></div>
+              </div>
+            </div>
+          </article>
+          <!-- 02 fix -->
+          <article class="panel p-fix" data-dir="fix">
+            <span class="ghost" aria-hidden="true">02</span>
+            <div class="p-copy">
+              <h3>FIX/</h3>
+              <p>Broken, slow or buggy? Found and fixed.</p>
+            </div>
+            <div class="viz" aria-hidden="true">
+              <div class="term">
+                <p class="e">✗ Error 500: checkout failed</p>
+                <p class="e d2">✗ page load 9.4s</p>
+                <p class="r">$ root fix --all</p>
+                <p class="ok">✓ checkout patched</p>
+                <p class="ok d2">✓ page load 0.8s</p>
+                <span class="bug">🪲</span>
+              </div>
+            </div>
+          </article>
+          <!-- 03 web -->
+          <article class="panel p-web" data-dir="web">
+            <span class="ghost" aria-hidden="true">03</span>
+            <div class="p-copy">
+              <h3>WEB/</h3>
+              <p>Websites that load fast and sell harder.</p>
+            </div>
+            <div class="viz" aria-hidden="true">
+              <div class="browser">
+                <div class="bar"><span></span><span></span><span></span><em>yourbrand.in</em></div>
+                <div class="page">
+                  <div class="h">BIG IDEA.</div>
+                  <div class="ln"></div><div class="ln s"></div>
+                  <div class="cta">BUY NOW</div>
+                  <div class="ptr">↖</div>
+                </div>
+              </div>
+            </div>
+          </article>
+          <!-- 04 cloud -->
+          <article class="panel p-cloud" data-dir="cloud">
+            <span class="ghost" aria-hidden="true">04</span>
+            <div class="p-copy">
+              <h3>CLOUD/</h3>
+              <p>SaaS, dashboards, backends that don't sleep.</p>
+            </div>
+            <div class="viz" aria-hidden="true">
+              <div class="nodes">
+                <svg viewBox="0 0 300 220">
+                  <path class="wire" id="w1" d="M150 40 L50 170" />
+                  <path class="wire" id="w2" d="M150 40 L250 170" />
+                  <path class="wire" id="w3" d="M50 170 L250 170" />
+                  <circle r="5" class="pkt"><animateMotion dur="1.6s" repeatCount="indefinite"><mpath href="#w1"/></animateMotion></circle>
+                  <circle r="5" class="pkt"><animateMotion dur="2s" repeatCount="indefinite" begin=".5s"><mpath href="#w2"/></animateMotion></circle>
+                  <circle r="5" class="pkt"><animateMotion dur="2.4s" repeatCount="indefinite" begin=".2s"><mpath href="#w3"/></animateMotion></circle>
+                </svg>
+                <span class="node n1">api</span><span class="node n2">db</span><span class="node n3">web</span>
+                <span class="region">ap-south-1 · 99.9% up</span>
+              </div>
+            </div>
+          </article>
+          <!-- 05 automate -->
+          <article class="panel p-auto" data-dir="automate">
+            <span class="ghost" aria-hidden="true">05</span>
+            <div class="p-copy">
+              <h3>AUTOMATE/</h3>
+              <p>Busywork that runs itself while you sleep.</p>
+            </div>
+            <div class="viz" aria-hidden="true">
+              <div class="belt">
+                <div class="machine"><span class="gear">✶</span></div>
+                <div class="items"><span>order</span><span>invoice</span><span>gst</span><span>remind</span><span>order</span><span>invoice</span><span>gst</span><span>remind</span></div>
+                <div class="hrs">0 hrs <small>of manual work</small></div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS: small and fast -->
+    <section class="proc" id="process" aria-labelledby="proc-h">
+      <div class="proc-head">
+        <p class="cmd">$ how --fast</p>
+        <h2 id="proc-h">Hello → live. <em>Easy.</em></h2>
+      </div>
+      <ol class="flow">
+        <li><b>1</b><span>Say hi<small>one line is enough</small></span></li>
+        <li><b>2</b><span>Free scan<small>we check what you have</small></span></li>
+        <li><b>3</b><span>Fixed price<small>no surprises later</small></span></li>
+        <li><b>4</b><span>Shipped<small>&amp; we stay on</small></span></li>
+      </ol>
+    </section>
+
+    <!-- FUN: squash the bugs -->
+    <section class="fun" id="fun" aria-labelledby="fun-h">
+      <p class="cmd">$ root play --bugs</p>
+      <h2 id="fun-h" class="sec-title">SQUASH <em>the bugs.</em></h2>
+      <p class="fun-sub">Tap them all. (Honestly, this is most of our job.) <span class="tilt-hint">Tilt your phone to make them slide.</span></p>
+
+      <div class="arena" id="arena">
+        <div class="site site-old" aria-hidden="true">
+          <b>Welcome to My Shop!!</b>
+          <span class="uc">🚧 under construction 🚧</span>
+          <u>click here for prices</u>
+          <span class="hits">visitors: <i>000137</i></span>
+        </div>
+        <div class="site site-new" aria-hidden="true">
+          <b>MY SHOP.</b>
+          <span class="l"></span><span class="l s"></span>
+          <span class="btn">Shop now →</span>
+        </div>
+        <div class="arena-hud"><span>bugs fixed <b id="bug-n">0</b>/<span id="bug-total">8</span></span><button type="button" class="snd" id="bug-sound" aria-label="Game sound" aria-pressed="true">♪ on</button><span id="bug-t">0.0s</span></div>
+        <div class="arena-win" id="arena-win" hidden>
+          <p>FIXED in <b id="bug-final">0.0s</b>.</p>
+          <div>
+            <button type="button" id="bug-again">play again</button>
+            <a href="#hello">got real bugs? →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONSULT / COLLAB: two doors -->
+    <section class="doors" id="talk" aria-label="Consult or collaborate">
+      <p class="cmd doors-cmd">$ choose --path</p>
+      <a class="door door-a" href="#hello" data-pick="Need tech advice (consultation)">
+        <span class="door-track" aria-hidden="true"><span>THINK FIRST ✶ CONSULT ✶ THINK FIRST ✶ CONSULT ✶&nbsp;</span><span>THINK FIRST ✶ CONSULT ✶ THINK FIRST ✶ CONSULT ✶&nbsp;</span></span>
+        <span class="door-tag">Talk to us before you spend a rupee →</span>
+        <span class="sr">Consult: talk to us before you spend a rupee</span>
+      </a>
+      <div class="or" aria-hidden="true"><span>OR</span></div>
+      <a class="door door-b" href="#hello" data-pick="Collab on a startup idea">
+        <span class="door-track" aria-hidden="true"><span>WILD IDEA? ✶ COLLAB ✶ STARTUPS ✶ WILD IDEA? ✶ COLLAB ✶&nbsp;</span><span>WILD IDEA? ✶ COLLAB ✶ STARTUPS ✶ WILD IDEA? ✶ COLLAB ✶&nbsp;</span></span>
+        <span class="door-tag">Startup or side project? Let's git init it →</span>
+        <span class="sr">Collaborate: startup or side project, let's build it together</span>
+      </a>
+    </section>
+
+
+    <!-- HELLO -->
+    <section class="hello" id="hello">
+      <p class="cmd">$ sudo make it happen</p>
+      <h2 class="mega2"><span data-split>LET'S</span> <em>build.</em></h2>
+
+      <form id="ask" class="ask" novalidate autocomplete="on">
+        <p class="ask-label">&gt; tap one — or type your own</p>
+        <div class="quick" role="group" aria-label="Quick picks">
+          <button type="button" data-q="Fix my website">fix my website</button>
+          <button type="button" data-q="Redesign my old website">redesign my old site</button>
+          <button type="button" data-q="Remake our old software">remake our software</button>
+          <button type="button" data-q="Build cloud software / a dashboard">cloud software</button>
+          <button type="button" data-q="Need tech advice (consultation)">need advice</button>
+          <button type="button" data-q="Collab on a startup idea">startup collab</button>
+          <button type="button" data-q="Pitch: my small business needs tech">pitch my business</button>
+        </div>
+
+        <label class="field">
+          <span>what are we building?</span>
+          <input id="q" name="q" required placeholder="redesign my old website…" />
+        </label>
+        <label class="field">
+          <span>your email</span>
+          <input id="em" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="you@yourbusiness.in" />
+        </label>
+
+        <button class="send" id="send" type="submit"><span class="send-t">SEND IT</span><span class="send-i" aria-hidden="true">⏎</span></button>
+        <pre class="ask-log" id="ask-log" aria-live="polite"></pre>
+      </form>
+
+      <div class="tiles">
+        <a class="tile t-wa" href="https://wa.me/910000000000" target="_blank" rel="noopener"><small>fastest reply</small><b>WhatsApp ↗</b></a>
+        <button class="tile t-mail" type="button" id="copy-mail" data-mail="hello@rootdirectoryproject.com"><small id="copy-note">tap to copy</small><b>hello@rootdirectoryproject.com</b></button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="foot-word" aria-hidden="true">ROOT/</div>
+    <div class="foot-row">
+      <span>© <span id="yr"></span> Root Directory Project</span>
+      <span>/root/india ✶ IST</span>
+    </div>
+  </footer>
+
+  <button class="motion-btn" id="motion-btn" type="button" hidden>✶ tap to tilt</button>
+
+  <script src="script.js"></script>
+</body>
+</html>

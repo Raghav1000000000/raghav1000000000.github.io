@@ -13,6 +13,7 @@ Rebrand: the site is now **Raghav Mittal**, your personal brand, instead of "Roo
 - **WhatsApp and Gmail messages** open with "Hey Raghav 👋" / "Hi Raghav,"; the Gmail subject ends "via raghavmittal site".
 - **Footer intro** reads "Hi, I'm Raghav Mittal. I help Indian businesses get tech that actually works…"
 - **README and LICENSE** use the new name. The repo name and web address stay the same for now.
+- **LinkedIn** added to the footer's social links, next to GitHub.
 - **Faster headline:** the rotating line under the name changes every ~3.4 seconds (was ~5).
 
 ### Fixed

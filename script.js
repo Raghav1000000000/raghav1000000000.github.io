@@ -1,4 +1,4 @@
-// Root Directory Project — no build, no dependencies.
+// Raghav Mittal — site script. No build, no dependencies.
 (() => {
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -741,11 +741,11 @@
 
   // Contact: quick picks, email, send
   const MAIL = "raghavmittal.founder@gmail.com";
-  // WhatsApp: messages from the site open with "Hey Root Directory Project 👋" and mention the
+  // WhatsApp: messages from the site open with "Hey Raghav 👋" and mention the
   // website, so they're easy to spot in your chats while still reading like a normal hello.
   const WA = "917777016553";
   const waLink = (text) => `https://wa.me/${WA}?text=${encodeURIComponent(text)}`;
-  const WA_HELLO = "Hey Root Directory Project 👋\nJust came across your website and I'd love to chat about a project.\n\n";
+  const WA_HELLO = "Hey Raghav 👋\nJust came across your website and I'd love to chat about a project.\n\n";
   $$("a[data-wa]").forEach((a) => (a.href = waLink(WA_HELLO)));
   const form = $("#ask"), q = $("#q"), em = $("#em"), log = $("#ask-log"), send = $("#send");
   $$(".quick button").forEach((b) => b.addEventListener("click", () => {
@@ -792,7 +792,7 @@
     send.classList.add("sent");
     $(".send-t", send).textContent = "SENDING…";
     buzz(30);
-    const url = waLink(`Hey Root Directory Project 👋\nFound you through your website. Here's what I have in mind:\n\n✦ ${idea}\n\nYou can also reach me at ${mail}. Looking forward to it!`);
+    const url = waLink(`Hey Raghav 👋\nFound you through your website. Here's what I have in mind:\n\n✦ ${idea}\n\nYou can also reach me at ${mail}. Looking forward to it!`);
     // desktop: open WhatsApp Web in a new tab right away (browsers block pop-ups opened later)
     const opened = hasMouse ? window.open(url, "_blank", "noopener") : null;
     typeLog(["> packing your idea ......... ok", `> reply-to: ${mail} ...... ok`, "> opening WhatsApp .......... ✓  hit send there"], () => {
@@ -985,8 +985,8 @@
   const svcModal = $("#svc-modal"), svcBody = $("#svc-body"), svcSheet = $(".svc-sheet", svcModal);
   let svcOpen = false, svcIdx = -1, svcLastFocus = null;
 
-  const waFor = (s) => waLink(`Hey Root Directory Project 👋\nI came across your ${s.name.toLowerCase()} service on the website and I'd like to know more.\n\nHere's what I need: `);
-  const gmailFor = (s) => `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(MAIL)}&su=${encodeURIComponent(`Enquiry: ${s.name} · via rootdirectoryproject`)}&body=${encodeURIComponent(`Hi Root Directory Project,\n\nI came across your ${s.name.toLowerCase()} service on the website and I'd like to know more.\n\nHere's what I need:\n\n`)}`;
+  const waFor = (s) => waLink(`Hey Raghav 👋\nI came across your ${s.name.toLowerCase()} service on the website and I'd like to know more.\n\nHere's what I need: `);
+  const gmailFor = (s) => `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(MAIL)}&su=${encodeURIComponent(`Enquiry: ${s.name} · via raghavmittal site`)}&body=${encodeURIComponent(`Hi Raghav,\n\nI came across your ${s.name.toLowerCase()} service on the website and I'd like to know more.\n\nHere's what I need:\n\n`)}`;
 
   const renderCard = (i, dir = 0) => {
     const s = SERVICES[i];

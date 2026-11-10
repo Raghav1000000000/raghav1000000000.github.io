@@ -3,6 +3,17 @@
 Every update to the site is logged here and published as a [GitHub Release](https://github.com/Raghav1000000000/root-directory-project/releases).
 Versions follow [semantic versioning](https://semver.org/): **major** for a redesign, **minor** for new features or sections, **patch** for fixes.
 
+## [2.0.0] - 2026-11-11
+
+Rebrand: the site is now **Raghav Mittal**, your personal brand, instead of "Root Directory Project".
+
+### Changed
+- **Hero title:** the giant ROOT/ DIRECTORY/ PROJECT. is now **RAGHAV/ MITTAL.**, two taller lines.
+- **Browser tab, link previews, logo (`~/raghav`), terminal prompt (`raghav@india`), footer wordmark and copyright** use the new name.
+- **WhatsApp and Gmail messages** open with "Hey Raghav 👋" / "Hi Raghav,"; the Gmail subject ends "via raghavmittal site".
+- **Footer intro** reads "Hi, I'm Raghav Mittal. I help Indian businesses get tech that actually works…"
+- **README and LICENSE** use the new name. The repo name and web address stay the same for now.
+
 ## [1.3.2] - 2026-11-10
 
 ### Added
@@ -84,6 +95,7 @@ First public release.
 - Real-mouse detection for touchscreen laptops; reduced-motion support.
 - GitHub Pages deploy, README with screenshots, all-rights-reserved license.
 
+[2.0.0]: https://github.com/Raghav1000000000/root-directory-project/compare/v1.3.2...v2.0.0
 [1.3.2]: https://github.com/Raghav1000000000/root-directory-project/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/Raghav1000000000/root-directory-project/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/Raghav1000000000/root-directory-project/compare/v1.2.0...v1.3.0

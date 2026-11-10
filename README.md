@@ -1,10 +1,10 @@
 <div align="center">
 
 <a href="https://raghav1000000000.github.io/root-directory-project/">
-  <img src="docs/screens/hero.jpg" alt="Root Directory Project: we redesign, remake and fix your business's existing websites and software" width="100%">
+  <img src="docs/screens/hero.jpg" alt="Raghav Mittal: we redesign, remake and fix your business's existing websites and software" width="100%">
 </a>
 
-# `ROOT/` `DIRECTORY/` `PROJECT.`
+# `RAGHAV/` `MITTAL.`
 
 **We redesign, remake & fix your business's existing websites & software.**<br>
 Plus cloud software, consulting and startup collabs. Tech & automation studio, India first.
@@ -24,7 +24,7 @@ Plus cloud software, consulting and startup collabs. Tech & automation studio, I
 
 ## `$ whoami`
 
-Root Directory Project is a small tech studio for businesses that are **stuck in 2014**: slow websites, clunky internal software, things held together with tape. We go to the root of it, then redesign, remake or fix it so it works the way business works **today**.
+I'm Raghav Mittal, and I help businesses that are **stuck in 2014**: slow websites, clunky internal software, things held together with tape. I go to the root of it, then redesign, remake or fix it so it works the way business works **today**.
 
 | `ls ./work` | |
 |---|---|
@@ -121,6 +121,6 @@ Plain HTML, CSS and JavaScript · fonts: [Anton](https://fonts.google.com/specim
 **Got an old website, buggy software or a wild idea?**<br>
 [Say hi on the live site →](https://raghav1000000000.github.io/root-directory-project/#hello)
 
-<sub>© 2026 Root Directory Project. All rights reserved. The code is public to show how it's made; please don't reuse the site, brand or copy. See <a href="LICENSE">LICENSE</a>.</sub>
+<sub>© 2026 Raghav Mittal. All rights reserved. The code is public to show how it's made; please don't reuse the site, brand or copy. See <a href="LICENSE">LICENSE</a>.</sub>
 
 </div>

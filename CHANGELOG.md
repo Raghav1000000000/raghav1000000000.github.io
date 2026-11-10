@@ -3,6 +3,14 @@
 Every update to the site is logged here and published as a [GitHub Release](https://github.com/Raghav1000000000/root-directory-project/releases).
 Versions follow [semantic versioning](https://semver.org/): **major** for a redesign, **minor** for new features or sections, **patch** for fixes.
 
+## [1.3.2] - 2026-11-10
+
+### Added
+- **Intro cursor on the title.** On every visit and reload, a cursor glides across ROOT/ DIRECTORY/ PROJECT. so the letters dodge it. It hands over the moment the real mouse moves; on phones it plays once and fades.
+
+### Changed
+- **Always land on the title:** every visit and reload starts at the top of the page (unless a link points to a section).
+
 ## [1.3.1] - 2026-11-10
 
 ### Changed
@@ -76,6 +84,7 @@ First public release.
 - Real-mouse detection for touchscreen laptops; reduced-motion support.
 - GitHub Pages deploy, README with screenshots, all-rights-reserved license.
 
+[1.3.2]: https://github.com/Raghav1000000000/root-directory-project/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/Raghav1000000000/root-directory-project/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/Raghav1000000000/root-directory-project/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/Raghav1000000000/root-directory-project/compare/v1.1.0...v1.2.0

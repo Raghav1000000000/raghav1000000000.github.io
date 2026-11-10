@@ -43,6 +43,9 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
 .cursor.aim::after { width: 2px; height: 64px; }
 /* .mouse is set by script.js the moment a real mouse moves (works on touchscreen laptops too) */
 .mouse .cursor { display: block; }
+/* intro cursor that glides over the title on load (all devices) */
+.ghosting .cursor { display: block; transition: width .25s, height .25s, margin .25s, opacity .45s; }
+.cursor.ghost-out { opacity: 0; }
 .mouse, .mouse * { cursor: none !important; }
 
 /* header */

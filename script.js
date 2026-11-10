@@ -17,6 +17,12 @@
   };
   addEventListener("pointermove", goMouse, { passive: true });
 
+  // Every visit (and every reload) starts at the top, on the title, unless a link asked for a section
+  if (!location.hash) {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    scrollTo(0, 0);
+  }
+
   const YEAR = new Date().getFullYear();
   $("#yr").textContent = YEAR;
   document.documentElement.classList.add("js");
@@ -89,6 +95,7 @@
     typeLoop();
     setTimeout(rollYear, 700);
     startHook();
+    setTimeout(() => playGhost(), still ? 0 : 1500); // once the letters have risen in
   };
 
   let heroFocus = () => {}; // hook for anything in the hero that follows the rotating headline
@@ -191,45 +198,89 @@
     step();
   }
 
-  // Letters jump away from the cursor
+  // Letters jump away from the cursor.
+  // Letter centres are cached in page coordinates from layout (offsetLeft/Top ignore transforms),
+  // so moving the mouse never forces the browser to re-measure the page.
+  const dodgeChars = $$(".mega .ch, .mega2 .ch");
+  let dodgePos = [];
+  const measureChars = () => {
+    dodgePos = dodgeChars.map((ch) => {
+      let x = 0, y = 0, el = ch;
+      while (el) { x += el.offsetLeft; y += el.offsetTop; el = el.offsetParent; }
+      return { ch, cx: x + ch.offsetWidth / 2, cy: y + ch.offsetHeight / 2, on: false };
+    });
+  };
+  measureChars();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureChars);
+  { let w = innerWidth; addEventListener("resize", () => { if (innerWidth !== w) { w = innerWidth; measureChars(); } }); }
+  // push letters away from a point (page coordinates)
+  const dodgeAt = (mx, my) => {
+    const R = 160;
+    dodgePos.forEach((p) => {
+      const dx = p.cx - mx, dy = p.cy - my;
+      if (Math.abs(dx) < R && Math.abs(dy) < R) {
+        const d = Math.hypot(dx, dy);
+        if (d < R) {
+          const f = 1 - d / R;
+          p.ch.style.transform = `translate(${(dx / d * f * 18 || 0).toFixed(1)}px, ${(dy / d * f * 30 || 0).toFixed(1)}px) rotate(${(dx / d * f * 12 || 0).toFixed(1)}deg)`;
+          p.on = true;
+          return;
+        }
+      }
+      if (p.on) { p.ch.style.transform = ""; p.on = false; }
+    });
+  };
+  let ghostOn = false; // the intro cursor (below) owns the letters until a real mouse moves
   whenMouse(() => {
     if (still) return;
-    // Letter centres are cached in page coordinates from layout (offsetLeft/Top ignore transforms),
-    // so moving the mouse never forces the browser to re-measure the page.
-    const chars = $$(".mega .ch, .mega2 .ch");
-    let pos = [];
-    const measureChars = () => {
-      pos = chars.map((ch) => {
-        let x = 0, y = 0, el = ch;
-        while (el) { x += el.offsetLeft; y += el.offsetTop; el = el.offsetParent; }
-        return { ch, cx: x + ch.offsetWidth / 2, cy: y + ch.offsetHeight / 2, on: false };
-      });
-    };
-    measureChars();
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureChars);
-    { let w = innerWidth; addEventListener("resize", () => { if (innerWidth !== w) { w = innerWidth; measureChars(); } }); }
     let mx = -999, my = -999, raf = 0;
     addEventListener("mousemove", (e) => {
       mx = e.clientX + scrollX; my = e.clientY + scrollY;
-      if (!raf) raf = requestAnimationFrame(() => {
-        raf = 0;
-        const R = 160;
-        pos.forEach((p) => {
-          const dx = p.cx - mx, dy = p.cy - my;
-          if (Math.abs(dx) < R && Math.abs(dy) < R) {
-            const d = Math.hypot(dx, dy);
-            if (d < R) {
-              const f = 1 - d / R;
-              p.ch.style.transform = `translate(${(dx / d * f * 18 || 0).toFixed(1)}px, ${(dy / d * f * 30 || 0).toFixed(1)}px) rotate(${(dx / d * f * 12 || 0).toFixed(1)}deg)`;
-              p.on = true;
-              return;
-            }
-          }
-          if (p.on) { p.ch.style.transform = ""; p.on = false; }
-        });
-      });
+      if (!raf) raf = requestAnimationFrame(() => { raf = 0; if (!ghostOn) dodgeAt(mx, my); });
     }, { passive: true });
   });
+
+  // Intro: on every visit/reload a cursor glides across the title so the letters show off.
+  // It hands over the moment the real mouse moves; on phones it plays once and fades.
+  const playGhost = () => {
+    if (still || scrollY > innerHeight * 0.5 || !dodgePos.length) return;
+    const curEl = $(".cursor");
+    const title = dodgePos.filter((p) => p.ch.closest(".mega"));
+    if (!title.length) return;
+    const minX = Math.min(...title.map((p) => p.cx)), maxX = Math.max(...title.map((p) => p.cx));
+    const minY = Math.min(...title.map((p) => p.cy)), maxY = Math.max(...title.map((p) => p.cy));
+    const DUR = 3400;
+    let t0 = 0, stop = false;
+    ghostOn = true;
+    document.documentElement.classList.add("ghosting");
+    const end = (fade) => {
+      if (stop) return;
+      stop = true;
+      ghostOn = false;
+      removeEventListener("pointermove", realMove);
+      if (fade) {
+        dodgePos.forEach((p) => { if (p.on) { p.ch.style.transform = ""; p.on = false; } });
+        curEl.classList.add("ghost-out");
+        setTimeout(() => { document.documentElement.classList.remove("ghosting"); curEl.classList.remove("ghost-out"); }, 500);
+      } else document.documentElement.classList.remove("ghosting");
+    };
+    const realMove = (e) => { if (e.pointerType === "mouse" || e.pointerType === "pen") end(false); };
+    addEventListener("pointermove", realMove, { passive: true });
+    const ease = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+    const frame = (now) => {
+      if (stop) return;
+      if (!t0) t0 = now;
+      const t = Math.min(1, (now - t0) / DUR);
+      // left → right along the title, weaving through the three lines
+      const x = minX - 40 + (maxX - minX + 80) * ease(t);
+      const y = minY + (maxY - minY) * (0.5 - 0.5 * Math.cos(t * Math.PI * 3));
+      curEl.style.transform = `translate(${(x - scrollX).toFixed(1)}px, ${(y - scrollY).toFixed(1)}px)`;
+      dodgeAt(x, y);
+      if (t < 1) requestAnimationFrame(frame);
+      else setTimeout(() => end(true), hasMouse ? 900 : 300);
+    };
+    requestAnimationFrame(frame);
+  };
 
   // Custom cursor (grows over anything clickable, including bugs added later)
   const cur = $(".cursor");

@@ -689,7 +689,7 @@
   }
 
   // Contact: quick picks, email, send
-  const MAIL = "raghavmittal595@gmail.com";
+  const MAIL = "raghavmittal.founder@gmail.com";
   // WhatsApp: messages from the site open with "Hey Root Directory Project 👋" and mention the
   // website, so they're easy to spot in your chats while still reading like a normal hello.
   const WA = "917777016553";

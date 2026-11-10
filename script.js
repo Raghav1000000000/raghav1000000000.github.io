@@ -825,21 +825,51 @@
     send.classList.add("sent");
     $(".send-t", send).textContent = "SENDING…";
     buzz(30);
-    const saved = saveLead({ project: idea, email: mail, pick: ($(".quick button.on") || {}).textContent || "", source: "contact form" });
+    const pick = ($(".quick button.on") || {}).textContent || "";
     const url = waLink(`Hey Raghav 👋\nFound you through your website. Here's what I have in mind:\n\n✦ ${idea}\n\nYou can also reach me at ${mail}. Looking forward to it!`);
-    // desktop: open WhatsApp Web in a new tab right away (browsers block pop-ups opened later).
-    // ("noopener" would make window.open return null, which also sent this tab away.)
+    const saved = saveLead({ project: idea, email: mail, pick, source: "contact form" });
+
+    if (saved) {
+      // Sheet is connected: stay on the site and confirm; WhatsApp is optional.
+      typeLog(["> packing your idea ......... ok", `> reply-to: ${mail} ...... ok`, "> sent to Raghav ............ ✓"], () => {
+        $(".send-t", send).textContent = "SENT ✓";
+        showDone(mail, url);
+        buzz([20, 40, 60]);
+        setTimeout(() => { send.classList.remove("sent"); $(".send-t", send).textContent = "SEND IT"; }, 4000);
+      });
+      return;
+    }
+
+    // No sheet set up (or the browser couldn't send): fall back to WhatsApp.
+    // Desktop opens it in a new tab right away (browsers block pop-ups opened later);
+    // "noopener" would make window.open return null, which also sent this tab away.
     let opened = null;
     if (hasMouse) { opened = window.open(url, "_blank"); if (opened) opened.opener = null; }
-    const lines = ["> packing your idea ......... ok", `> reply-to: ${mail} ...... ok`];
-    if (saved) lines.push("> saved to the lead sheet .... ok");
-    lines.push("> opening WhatsApp .......... ✓  hit send there");
-    typeLog(lines, () => {
+    typeLog(["> packing your idea ......... ok", `> reply-to: ${mail} ...... ok`, "> opening WhatsApp .......... ✓  hit send there"], () => {
       if (!opened) location.href = url;
       $(".send-t", send).textContent = "SENT ✓";
       setTimeout(() => { send.classList.remove("sent"); $(".send-t", send).textContent = "SEND IT"; }, 4000);
     });
   });
+
+  // "Got it" card shown after a lead is saved, with an optional WhatsApp nudge
+  const showDone = (mail, url) => {
+    let done = $("#ask-done");
+    if (!done) {
+      done = document.createElement("div");
+      done.id = "ask-done";
+      done.className = "ask-done";
+      done.setAttribute("role", "status");
+      log.insertAdjacentElement("afterend", done);
+    }
+    done.innerHTML = `<b>Got it ✓</b><p>Thanks! Your idea reached Raghav. You'll hear back at <span class="mail"></span> soon.</p>
+      <div class="ask-done-row"><a class="wa-now" href="${url}" target="_blank" rel="noopener">Want to chat now? WhatsApp ↗</a><button type="button" class="again">send another</button></div>`;
+    $(".mail", done).textContent = mail;
+    done.hidden = false;
+    done.classList.remove("pop"); void done.offsetWidth; done.classList.add("pop");
+    q.value = ""; $$(".quick button").forEach((b) => b.classList.remove("on"));
+    $(".again", done).addEventListener("click", () => { done.hidden = true; log.textContent = ""; q.focus(); });
+  };
 
   // copy email tile
   const copyBtn = $("#copy-mail"), copyNote = $("#copy-note");

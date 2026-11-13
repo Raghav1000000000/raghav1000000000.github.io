@@ -3,6 +3,11 @@
 Every update to the site is logged here and published as a [GitHub Release](https://github.com/Raghav1000000000/raghav1000000000.github.io/releases).
 Versions follow [semantic versioning](https://semver.org/): **major** for a redesign, **minor** for new features or sections, **patch** for fixes.
 
+## [2.3.1] - 2026-11-13
+
+### Fixed
+- **Works page now actually goes live.** The deploy step only copied the homepage files, so `/work/` showed "404" after v2.3.0. It now publishes the `work/` folder too.
+
 ## [2.3.0] - 2026-11-13
 
 ### Added

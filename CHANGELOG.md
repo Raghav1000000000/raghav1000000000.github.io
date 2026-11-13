@@ -3,6 +3,15 @@
 Every update to the site is logged here and published as a [GitHub Release](https://github.com/Raghav1000000000/raghav1000000000.github.io/releases).
 Versions follow [semantic versioning](https://semver.org/): **major** for a redesign, **minor** for new features or sections, **patch** for fixes.
 
+## [2.4.0] - 2026-11-13
+
+### Added
+- **Phone and desktop previews on the works page.** Every project has a Phone / Desktop switch: phone screens sit in a phone frame, desktop screens in a browser window. Tap any screen to open it full screen, flip through that app's screens (arrows, arrow keys or swipe), switch Phone / Desktop there too, and close with Close, Esc or a tap outside. Only the chosen view's pictures load.
+- 26 new screenshots in `work/device/`, taken at phone size (412px, sharp at 2x) and desktop size (1440px) from the real apps running locally with fictional demo data, or from the live sites.
+
+### Removed
+- The older single screenshots in `work/shots/` (except the one of this site).
+
 ## [2.3.1] - 2026-11-13
 
 ### Fixed

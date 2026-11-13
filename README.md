@@ -82,6 +82,7 @@ Then open `http://localhost:3000`. (Opening `index.html` directly also works, bu
 ├── styles.css          # design tokens at the top: --hot, --acid, --bg, --ink
 ├── script.js           # every interaction, no dependencies
 ├── favicon.svg
+├── work/               # the works page: index.html + shots/ (project screenshots)
 ├── docs/screens/       # README screenshots
 └── .github/workflows/
     └── pages.yml       # deploys to GitHub Pages on every push to main

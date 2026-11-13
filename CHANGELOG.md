@@ -3,6 +3,14 @@
 Every update to the site is logged here and published as a [GitHub Release](https://github.com/Raghav1000000000/raghav1000000000.github.io/releases).
 Versions follow [semantic versioning](https://semver.org/): **major** for a redesign, **minor** for new features or sections, **patch** for fixes.
 
+## [2.3.0] - 2026-11-13
+
+### Added
+- **Works page at `/work/`.** One page showing eight projects in three groups: cloud software (restaurant order system, records platform, tea delivery bookings), apps (MeetX, ShubhSandesh) and websites (consultancy site, tax documents site, Scent Stories), plus a note on this site itself. Each project has a short intro, real screenshots (apps run locally with fictional demo data, or the live sites), a four-step product flow, an "under the hood" note for developers and a "design call" note for designers. Works on phones (checked at 412px) and desktop.
+
+### Changed
+- **"works" in the top menu now opens the works page** instead of the services popup. The services are still in the footer.
+
 ## [2.2.0] - 2026-11-11
 
 ### Changed

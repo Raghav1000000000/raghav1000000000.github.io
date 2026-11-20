@@ -3,6 +3,24 @@
 Every update to the site is logged here and published as a [GitHub Release](https://github.com/Raghav1000000000/raghav1000000000.github.io/releases).
 Versions follow [semantic versioning](https://semver.org/): **major** for a redesign, **minor** for new features or sections, **patch** for fixes.
 
+## [3.0.0] - 2026-11-20
+
+### Changed
+- **New site: Root Directory.** The homepage is rebuilt from scratch as the studio site for Raghav Mittal (dev) and Aaditya Satam (partner).
+- **A moonlit night behind the whole page.** A tree on a hill under an amber moon, distant ridges with town and data-centre lights, stone ROOT letters and glowing roots in the soil, painted in canvas. Fireflies, falling leaves and light running down the roots move; the mouse adds a gentle parallax. The scene stays fixed and the page slides up over it, dimming it to a faint backdrop.
+- **One root down the page** that draws itself as you scroll and branches to each section heading.
+- **Short, plain sections:** what we do (redesign and fixes, cloud software and automation, websites and apps), how we work (talk, plan, build, launch), recent work, contact.
+- **Work picker:** choose one of eight projects to see its screenshot and a one-line description, with a link to its case study on `/work/`.
+- **Contact:** pick what you need, describe it, leave your email. Leads still go to the Google Sheet, with WhatsApp as the fallback. Lists the free first call, fixed price and one-day reply, and who you'll speak with.
+- **Easier to get in touch:** "Start a project" in the top bar, a free-call strip, a rotating "Taking new projects" badge, and on phones a Start a project + WhatsApp bar that follows you until the form.
+- Phones get their own layout (checked at 412px) and desktop is checked at 1440px.
+
+### Removed
+- The previous homepage (boot screen, rotating headline, work panels, bug-squash game, service cards) and its `styles.css` and `script.js`. It stays in the git history.
+
+### Fixed
+- The works page's "Start a conversation" button now goes to the new contact section.
+
 ## [2.4.0] - 2026-11-13
 
 ### Added

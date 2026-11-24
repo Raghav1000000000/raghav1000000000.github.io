@@ -3,6 +3,11 @@
 Every update to the site is logged here and published as a [GitHub Release](https://github.com/Raghav1000000000/raghav1000000000.github.io/releases).
 Versions follow [semantic versioning](https://semver.org/): **major** for a redesign, **minor** for new features or sections, **patch** for fixes.
 
+## [3.0.2] - 2026-11-24
+
+### Fixed
+- The deploy step waits 20 seconds after the upload. The v3.0.1 deploy failed because GitHub had not listed the upload yet.
+
 ## [3.0.1] - 2026-11-24
 
 ### Fixed

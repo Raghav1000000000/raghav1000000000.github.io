@@ -35,5 +35,9 @@ jobs:
         with:
           path: _site
 
+      # GitHub can take a few seconds to list a fresh upload; deploying at once fails
+      - name: Wait for the upload to be listed
+        run: sleep 20
+
       - id: deployment
         uses: actions/deploy-pages@v4

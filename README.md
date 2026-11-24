@@ -1,33 +1,70 @@
 <div align="center">
 
-# Root Directory
+<a href="https://raghav1000000000.github.io/">
+  <img src="docs/screens/hero.jpg" alt="Raghav Mittal: we redesign, remake and fix your business's existing websites and software" width="100%">
+</a>
 
-**We fix, rebuild and build software for growing businesses.**<br>
-Websites, apps and the tools that run behind them. Raghav Mittal & Aaditya Satam, Bengaluru.
+# `RAGHAV/` `MITTAL.`
 
-[**→ Open the live site**](https://raghav1000000000.github.io/) &nbsp;·&nbsp; [What's inside](#whats-inside) &nbsp;·&nbsp; [Run it](#run-it)
+**We redesign, remake & fix your business's existing websites & software.**<br>
+Plus cloud software, consulting and startup collabs. Tech & automation studio, India first.
 
-![No build step](https://img.shields.io/badge/build-none-eba25a?style=flat-square&labelColor=0b0907)
-![Zero dependencies](https://img.shields.io/badge/dependencies-0-eba25a?style=flat-square&labelColor=0b0907)
-![HTML CSS JS](https://img.shields.io/badge/HTML%20·%20CSS%20·%20JS-vanilla-efe8dc?style=flat-square&labelColor=0b0907)
-![Deploy](https://img.shields.io/github/actions/workflow/status/Raghav1000000000/raghav1000000000.github.io/pages.yml?branch=main&label=deploy&style=flat-square&labelColor=0b0907)
+[**→ Open the live site**](https://raghav1000000000.github.io/) &nbsp;·&nbsp; [What's inside](#-cat-featuresmd) &nbsp;·&nbsp; [Run it](#-npx-serve-)
+
+![No build step](https://img.shields.io/badge/build-none-D7FF3A?style=flat-square&labelColor=0B0B0A)
+![Zero dependencies](https://img.shields.io/badge/dependencies-0-D7FF3A?style=flat-square&labelColor=0B0B0A)
+![Size](https://img.shields.io/badge/size-~80%20KB-FF5B1F?style=flat-square&labelColor=0B0B0A)
+![HTML CSS JS](https://img.shields.io/badge/HTML%20·%20CSS%20·%20JS-vanilla-F1EEE6?style=flat-square&labelColor=0B0B0A)
+![Deploy](https://img.shields.io/github/actions/workflow/status/Raghav1000000000/raghav1000000000.github.io/pages.yml?branch=main&label=deploy&style=flat-square&labelColor=0B0B0A)
+![Made in India](https://img.shields.io/badge/made%20in-India-FF5B1F?style=flat-square&labelColor=0B0B0A)
 
 </div>
 
 ---
 
-## What's inside
+## `$ whoami`
 
-- **A moonlit night that stays behind the page.** A tree on a hill under an amber moon, distant ridges with town and data-centre lights, stone ROOT letters and glowing roots in the soil, all painted in canvas when the page loads (and again only if the width changes). Fireflies, falling leaves and light running down the roots are the only things animated each frame. As you scroll, the page slides up over the scene and it dims to a faint backdrop.
-- **One root down the page.** The tree's root leaves the hero, bends to the left edge and draws itself as you scroll, branching to each section heading.
-- **Short sections:** what we do, how we work (four steps that light up along the root), recent work and contact.
-- **Work picker.** Eight projects in a short list (chips on phones). Pick one to see its screenshot, a one-line description and a link to the full case study on `/work/`.
-- **Made to convert.** "Start a project" in the top bar, a free-call strip after the process, a rotating "Taking new projects" badge, and on phones a Start a project + WhatsApp bar that follows you until you reach the form.
-- **Phones get their own layout,** not a squeezed desktop: the scene is reframed, the copy sits on top, and the picker turns into swipeable chips.
-- **Works on touchscreen laptops:** mouse parallax switches on when a real mouse moves, not from CSS media queries.
-- **Respects reduced motion,** and has no tracking, cookies or framework.
+I'm Raghav Mittal, and I help businesses that are **stuck in 2014**: slow websites, clunky internal software, things held together with tape. I go to the root of it, then redesign, remake or fix it so it works the way business works **today**.
 
-## Run it
+| `ls ./work` | |
+|---|---|
+| **`remake/`** | Old website or software, redesigned and rebuilt for today |
+| **`fix/`** | Broken, slow or buggy, found and fixed |
+| **`web/`** | Websites that load fast and actually sell |
+| **`cloud/`** | Dashboards, SaaS and backends that never sleep |
+| **`automate/`** | Busywork that runs itself |
+| **`consult/`** | Talk to us before you spend a rupee on tech |
+| **`collab/`** | Startups and wild ideas, built together |
+
+## `$ ./preview`
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/screens/work.jpg" alt="Work section: full-screen panels that slide sideways as you scroll"><br><sub><b>Work</b>: panels slide sideways as you scroll, each with its own animated scene.</sub></td>
+    <td width="50%"><img src="docs/screens/bug-game.jpg" alt="Squash the bugs mini game over an old 2000s website"><br><sub><b>Squash the bugs</b>: a mini game with toy-pistol sounds. Win and the old site turns into a new one.</sub></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="docs/screens/doors.jpg" alt="Consult or collab: giant text strips that slide with scroll"><br><sub><b>Choose a path</b>: giant strips slide with scroll. Hover to fill, click to start the conversation.</sub></td>
+    <td width="50%"><img src="docs/screens/contact.jpg" alt="Contact form with one-tap quick picks"><br><sub><b>Let's build</b>: one-tap quick picks, an email field and a big SEND IT button.</sub></td>
+  </tr>
+</table>
+
+## `$ cat features.md`
+
+- **Boot screen**: a quick terminal "upgrade" log plays out before the page appears.
+- **Rotating headline**: cycles through what we do: remakes, websites, cloud software, consulting, startups, pitches.
+- **Work section**: on desktop, scrolling moves five full-screen panels sideways, each locking in place with a CSS-only scene (a 2000s site wiping into a new one, a terminal fixing bugs, servers passing packets, a conveyor belt of tasks). On phones it's a swipe carousel that also moves by itself, so the page never hijacks your scroll.
+- **Service cards**: every service in the nav and footer opens a card explaining it in plain language, with WhatsApp and Gmail buttons. A centred card on desktop, a drag-to-close bottom sheet on phones.
+- **Bug-squash game**: toy-pistol sound effects made in the browser with the Web Audio API (no audio files), "POW!" stickers, recoil and a crosshair cursor.
+- **Scroll reveals**: titles rise word by word, pills pop in, boxes open from the centre.
+- **Desktop hover**: letters dodge the cursor, a custom blend-mode cursor, a magnetic send button, labels that follow the mouse.
+- **Phone motion**: hover is replaced by the gyroscope. Tilt to wobble the headline and slide the bugs, shake to scramble the page.
+- **Works on touchscreen laptops**: mouse effects switch on when a real mouse moves, not from CSS media queries, which many touch laptops get wrong.
+- **Respects reduced motion**: everything stays readable and still for people who turn animation off.
+- **Leads land on WhatsApp**: the contact form opens WhatsApp with a friendly, ready-to-send message that includes the project and email.
+- **No tracking, no cookies, no framework**: one HTML file, one stylesheet, one script.
+
+## `$ npx serve .`
 
 There's nothing to install or build. Serve the folder with any static server:
 
@@ -35,36 +72,41 @@ There's nothing to install or build. Serve the folder with any static server:
 npx serve .
 ```
 
-Then open `http://localhost:3000`.
+Then open `http://localhost:3000`. (Opening `index.html` directly also works, but motion sensors and audio behave best over `http(s)://`.)
 
-## Files
+## `$ tree`
 
 ```text
 .
-├── index.html          # all the content
-├── style.css           # colours at the top: --accent (amber), --ink, --panel
-├── main.js             # scroll dimming, the root line, work picker, menu, contact form
-├── scene.js            # the night scene (canvas layers + fireflies, leaves, root light)
+├── index.html          # all the content (deliberately short)
+├── styles.css          # design tokens at the top: --hot, --acid, --bg, --ink
+├── script.js           # every interaction, no dependencies
 ├── favicon.svg
-├── work/               # case studies page: index.html, device/ (phone + desktop screenshots)
-├── backend/            # Google Apps Script that stores contact-form leads in a Sheet
+├── work/               # the works page: index.html, device/ (phone + desktop screenshots), shots/
+├── docs/screens/       # README screenshots
 └── .github/workflows/
     └── pages.yml       # deploys to GitHub Pages on every push to main
 ```
 
+## `$ vim config`
+
 | Want to change… | Look for |
 |---|---|
-| Accent colour | `--accent` at the top of `style.css` |
-| Projects in the work picker | `work` in `main.js` |
-| Moon position and size | `MX`, `MY`, `MR` at the top of `scene.js` |
-| How many fireflies and falling leaves | `nF` and `falls` in `initFx()` in `scene.js` |
-| How dark the scene gets behind the page | `--dim` in `frame()` in `main.js` |
-| WhatsApp number | `wa.me/…` links in `index.html` and `main.js` |
-| Google Sheet for leads | `<meta name="sheet-endpoint">` in `index.html` |
+| Colours | `--hot` (saffron) and `--acid` (lime) at the top of `styles.css` |
+| Rotating headline messages | `HOOKS` in `script.js` |
+| Typed terminal commands | `words` in `typeLoop()` in `script.js` |
+| Number of bugs in the game | `BUGS` in `script.js` |
+| Game sounds (pitch, length, volume) | the `SFX` block in `script.js` |
+| How sensitive phone tilt is | `SENS` in `script.js` (lower = more sensitive) |
+| WhatsApp number and greeting | `WA` and `WA_HELLO` in `script.js` |
+| Service card text | `SERVICES` in `script.js` |
+| Footer social links | `SOCIALS` in `script.js` (a link shows once its URL is filled in) |
+| Email | `MAIL` in `script.js` |
+| Google Sheet for leads | `<meta name="sheet-endpoint">` in `index.html` (see the backend section) |
 
-## Google Sheets backend
+## `$ cat backend.md`: Google Sheets backend
 
-Every contact form message lands as a row in a Google Sheet (and emails you). It's free and has no server: a small Google Apps Script, [`backend/google-apps-script.gs`](backend/google-apps-script.gs), receives the form. If the Sheet isn't set up, the form opens WhatsApp with the message ready to send.
+Every **SEND IT** can also land as a row in a Google Sheet (and email you), on top of opening WhatsApp. It's free and has no server: a small Google Apps Script, [`backend/google-apps-script.gs`](backend/google-apps-script.gs), receives the form.
 
 **Set it up once (about 5 minutes):**
 
@@ -74,14 +116,27 @@ Every contact form message lands as a row in a Google Sheet (and emails you). It
 4. **Deploy → New deployment →** type **Web app**. *Execute as:* **Me**. *Who has access:* **Anyone**. Press **Deploy** and copy the **Web app URL** (it ends in `/exec`).
 5. In `index.html`, paste it into `<meta name="sheet-endpoint" content="…">` and push.
 
-Each lead row has: time (IST), project, email, which option they picked, source, page, referrer, device and language. A hidden spam-trap field drops bot submissions. If you change the script later, use **Deploy → Manage deployments → Edit → New version** so the URL stays the same.
+Each lead row has: time (IST), project, email, which quick pick they tapped, source, page, referrer, device and language. A hidden spam-trap field drops bot submissions, and anything that looks like a spreadsheet formula is stored as plain text. Turn the email alert off with `NOTIFY_ME = false` in the script. If you change the script later, use **Deploy → Manage deployments → Edit → New version** so the URL stays the same.
 
-## Deploy
+## `$ git push` → live
 
-Every push to `main` deploys to **GitHub Pages** through [`.github/workflows/pages.yml`](.github/workflows/pages.yml). Every update is listed in [CHANGELOG.md](CHANGELOG.md) and published as a [GitHub Release](https://github.com/Raghav1000000000/raghav1000000000.github.io/releases).
+Every push to `main` deploys to **GitHub Pages** through [`.github/workflows/pages.yml`](.github/workflows/pages.yml). It also runs on any static host (Netlify, Vercel, Cloudflare Pages): point it at the repo root, with no build command.
+
+## `$ git log`
+
+Every update is listed in [CHANGELOG.md](CHANGELOG.md) and published as a [GitHub Release](https://github.com/Raghav1000000000/raghav1000000000.github.io/releases).
+
+## `$ uname -a`
+
+Plain HTML, CSS and JavaScript · fonts: [Anton](https://fonts.google.com/specimen/Anton), [JetBrains Mono](https://fonts.google.com/specimen/JetBrains+Mono), [Instrument Serif](https://fonts.google.com/specimen/Instrument+Serif) · tested in Chrome and Edge on desktop and touchscreen laptops, plus phone-sized layouts.
 
 ---
 
 <div align="center">
-<sub>© 2026 Root Directory. The code is public to show how it's made; please don't reuse the site, brand or copy. See <a href="LICENSE">LICENSE</a>.</sub>
+
+**Got an old website, buggy software or a wild idea?**<br>
+[Say hi on the live site →](https://raghav1000000000.github.io/#hello)
+
+<sub>© 2026 Raghav Mittal. All rights reserved. The code is public to show how it's made; please don't reuse the site, brand or copy. See <a href="LICENSE">LICENSE</a>.</sub>
+
 </div>

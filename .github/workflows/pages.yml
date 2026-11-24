@@ -26,7 +26,7 @@ jobs:
       - name: Collect the site files
         run: |
           mkdir _site
-          cp index.html style.css main.js scene.js favicon.svg _site/
+          cp index.html styles.css script.js favicon.svg _site/
           cp -r work _site/
 
       - uses: actions/configure-pages@v5

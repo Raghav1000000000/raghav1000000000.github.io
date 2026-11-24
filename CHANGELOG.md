@@ -3,6 +3,11 @@
 Every update to the site is logged here and published as a [GitHub Release](https://github.com/Raghav1000000000/raghav1000000000.github.io/releases).
 Versions follow [semantic versioning](https://semver.org/): **major** for a redesign, **minor** for new features or sections, **patch** for fixes.
 
+## [3.0.1] - 2026-11-24
+
+### Fixed
+- **The personal site is back.** v3.0.0 replaced this homepage with the Root Directory studio site. Root Directory is a separate site, so the homepage, its styles and script, the README, the works page link and the deploy step are restored exactly as they were in v2.4.0.
+
 ## [3.0.0] - 2026-11-20
 
 ### Changed

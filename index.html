@@ -1,188 +1,341 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-IN">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Root Directory — software studio</title>
-  <meta name="description" content="Root Directory fixes and redesigns existing websites and software, builds cloud tools and automations, and makes new websites and apps. Based in Bengaluru." />
-  <meta name="theme-color" content="#05060b" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Raghav Mittal — Redesign, remake &amp; fix your software</title>
+  <meta name="description" content="Old website? Buggy software? We redesign, remake and fix existing business websites and software — updated for today. Plus cloud software, consulting and startup collabs. India first." />
+  <meta name="theme-color" content="#0B0B0A" />
+  <meta property="og:title" content="Raghav Mittal" />
+  <meta property="og:description" content="We redesign, remake and fix your existing websites and software — updated for today. India first." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://raghav1000000000.github.io/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/Raghav1000000000/raghav1000000000.github.io/main/docs/screens/hero.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <!-- Google Sheets backend: paste your Apps Script web-app URL here (ends in /exec). Empty = WhatsApp only. -->
   <meta name="sheet-endpoint" content="https://script.google.com/macros/s/AKfycbyE0GxLjy0ZiMm1YqJRh_J92Xaho0gQ-yr-drgqC5vN0fP92_o6Ilvw2YV2Fcy6nqdI/exec" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <!-- fonts load without blocking the first paint (the boot screen covers the swap) -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;700&family=Instrument+Serif:ital@1&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;700&family=Instrument+Serif:ital@1&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;700&family=Instrument+Serif:ital@1&display=swap" /></noscript>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-
-<header class="nav">
-  <a class="brand" href="#top" aria-label="Root Directory, back to top">Root Directory</a>
-  <nav class="links" aria-label="Sections">
-    <a href="#services">Services</a>
-    <a href="#process">Process</a>
-    <a href="#work">Work</a>
-    <a class="nav-cta" href="#contact">Start a project</a>
-  </nav>
-  <button class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><i></i><i></i></button>
-</header>
-
-<div class="menu" id="menu" hidden>
-  <a href="#services">Services</a>
-  <a href="#process">Process</a>
-  <a href="#work">Work</a>
-  <a href="#contact">Contact</a>
-</div>
-
-<!-- The night scene stays fixed behind the whole page and dims as you scroll -->
-<div class="hero" aria-hidden="true">
-  <div class="scene">
-    <canvas class="layer" id="c-sky" data-depth="0"></canvas>
-    <canvas class="layer" id="c-moon" data-depth="0.08"></canvas>
-    <div class="layer l-clouds" data-depth="0.12"><canvas id="c-clouds"></canvas></div>
-    <canvas class="layer" id="c-far" data-depth="0.2"></canvas>
-    <canvas class="layer" id="c-tree" data-depth="0.34"></canvas>
-    <canvas class="layer" id="c-word" data-depth="0.46"></canvas>
-    <div class="layer l-mist" data-depth="0.54"><i></i></div>
-    <canvas class="layer" id="c-front" data-depth="0.62"></canvas>
-    <canvas class="layer" id="c-fx" data-depth="0.62"></canvas>
+  <!-- boot screen -->
+  <div class="boot" aria-hidden="true">
+    <pre id="boot-log"></pre>
   </div>
-  <div class="shade"></div>
-  <div class="dim"></div>
-</div>
 
-<main id="top">
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
 
-<section class="intro">
-  <div class="hero-copy">
-    <h1>We fix, rebuild and <em>build</em> software for growing businesses.</h1>
-    <p>Websites, apps and the tools that run behind them.</p>
-    <div class="hero-actions">
-      <a class="btn btn-light" href="#contact">Start a project</a>
-      <a class="btn btn-ghost" href="#work">See our work</a>
+  <header class="top">
+    <a href="#root" class="logo" data-scramble>~/raghav</a>
+    <nav>
+      <a href="work/" class="nav-svc" data-scramble>works</a>
+      <a href="#talk" data-svc="collab" aria-haspopup="dialog" data-scramble>collab</a>
+      <a href="#talk" data-svc="consult" aria-haspopup="dialog" data-scramble>consult</a>
+      <a href="#hello" class="pill" data-scramble>say hi</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="root">
+      <p class="prompt"><span class="u">raghav@india</span>:<span class="p">~</span>$ <span id="typed"></span><span class="caret">▍</span></p>
+
+      <h1 class="mega" aria-label="Raghav Mittal">
+        <span class="line" data-split>RAGHAV/</span>
+        <span class="line outline" data-split>MITTAL<i class="dot">.</i></span>
+      </h1>
+
+      <div class="hero-foot">
+        <div class="hook" id="hook">
+          <p class="hook-big" id="hook-big">We <em>redesign</em>, <em>remake</em> &amp; <em>fix</em> your business's existing websites &amp; software.</p>
+          <p class="hook-year" id="hook-sub">Stuck in <s>2014</s> → updated to <b id="yr-now">2026</b>.</p>
+          <div class="hook-dots" id="hook-dots" role="group" aria-label="Messages"></div>
+        </div>
+        <a href="#ls" class="badge" aria-label="See what we do">
+          <svg viewBox="0 0 200 200" aria-hidden="true">
+            <defs><path id="circ" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs>
+            <text><textPath href="#circ" textLength="486" lengthAdjust="spacing">REMAKE ✶ FIX ✶ WEB ✶ CLOUD ✶ AUTOMATE ✶ </textPath></text>
+          </svg>
+          <span>↓</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- BANDS -->
+    <div class="bands" aria-hidden="true">
+      <div class="band b1"><div class="track">
+        <span>OLD → NEW ✶ REDESIGN ✶ REMAKE ✶ FIX ✶ UPDATE ✶ INDIA FIRST ✶&nbsp;</span><span>OLD → NEW ✶ REDESIGN ✶ REMAKE ✶ FIX ✶ UPDATE ✶ INDIA FIRST ✶&nbsp;</span>
+      </div></div>
+      <div class="band b2"><div class="track rev">
+        <span>rm -rf old-design ✶ git pull --upgrade your-business ✶ fix --all ✶&nbsp;</span><span>rm -rf old-design ✶ git pull --upgrade your-business ✶ fix --all ✶&nbsp;</span>
+      </div></div>
     </div>
-  </div>
-  <a class="badge" href="#contact" aria-label="Taking new projects, start one">
-    <svg viewBox="0 0 120 120" aria-hidden="true"><defs><path id="circ" d="M60 60 m-46 0 a46 46 0 1 1 92 0 a46 46 0 1 1 -92 0" /></defs><text textLength="286" lengthAdjust="spacing"><textPath href="#circ" textLength="286" lengthAdjust="spacing">Taking new projects · Taking new projects ·</textPath></text></svg>
-    <i></i>
-  </a>
-  <div class="scroll-hint" aria-hidden="true"><i></i></div>
-</section>
 
-<div class="flow">
-<svg class="root-line" id="root-line" aria-hidden="true"><defs><filter id="rg" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter></defs></svg>
+    <!-- LS -->
+    <section class="work" id="ls" aria-label="What we do">
+      <div class="work-pin">
+        <div class="work-hud">
+          <span class="cmd">$ cd /root/work/<b id="w-dir">remake</b></span>
+          <span class="w-count"><b id="w-i">01</b>/05</span>
+        </div>
+        <p class="work-swipe">swipe through what we do →</p>
+        <div class="work-bar"><i id="w-bar"></i></div>
 
-<section class="sec" id="services">
-  <div class="wrap">
-    <p class="eyebrow reveal">Services</p>
-    <h2 class="reveal">What we do</h2>
-    <div class="services">
-      <article class="svc reveal">
-        <svg class="ico" viewBox="0 0 40 40" aria-hidden="true"><rect x="5" y="8" width="30" height="22" rx="3" /><path d="M5 14h30M14 36h12M20 30v6" /><path d="M15 22l3 3 7-7" class="ico-hi" /></svg>
-        <h3>Redesign and fixes</h3>
-        <p>Your current website, app or software, made better.</p>
-        <ul><li>Bug fixes and updates</li><li>A new design</li><li>Faster loading</li></ul>
-      </article>
-      <article class="svc reveal" style="--d:1">
-        <svg class="ico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="5" class="ico-hi" /><circle cx="7" cy="9" r="3" /><circle cx="33" cy="9" r="3" /><circle cx="7" cy="31" r="3" /><circle cx="33" cy="31" r="3" /><path d="M9.5 11l6.5 5.5M30.5 11L24 16.5M9.5 29l6.5-5.5M30.5 29L24 23.5" /></svg>
-        <h3>Cloud software and automation</h3>
-        <p>Tools that take repetitive work off your team.</p>
-        <ul><li>Orders, bookings and records</li><li>Dashboards and reports</li><li>Automatic invoices and reminders</li></ul>
-      </article>
-      <article class="svc reveal" style="--d:2">
-        <svg class="ico" viewBox="0 0 40 40" aria-hidden="true"><rect x="3" y="7" width="26" height="19" rx="2.5" /><path d="M3 12h26" /><rect x="25" y="15" width="12" height="21" rx="2.5" class="ico-hi" /><path d="M29.5 32.5h3" /></svg>
-        <h3>Websites and apps</h3>
-        <p>New products, from the first sketch to launch.</p>
-        <ul><li>Business websites</li><li>Web apps</li><li>Android and iOS apps</li></ul>
-      </article>
-    </div>
-  </div>
-</section>
+        <div class="work-track" id="w-track">
+          <!-- 01 remake -->
+          <article class="panel p-remake" data-dir="remake">
+            <span class="ghost" aria-hidden="true">01</span>
+            <div class="p-copy">
+              <h3>REMAKE/</h3>
+              <p>Old website or software? Redesigned &amp; rebuilt for today.</p>
+            </div>
+            <div class="viz" aria-hidden="true">
+              <div class="ba">
+                <div class="old"><b>Welcome to My Website!!</b><u>click here</u><marquee>★ best prices ★</marquee><small>best viewed in IE6</small></div>
+                <div class="new"><b>NEW.</b><span></span><span class="s"></span></div>
+                <div class="split"><i>⇆</i></div>
+              </div>
+            </div>
+          </article>
+          <!-- 02 fix -->
+          <article class="panel p-fix" data-dir="fix">
+            <span class="ghost" aria-hidden="true">02</span>
+            <div class="p-copy">
+              <h3>FIX/</h3>
+              <p>Broken, slow or buggy? Found and fixed.</p>
+            </div>
+            <div class="viz" aria-hidden="true">
+              <div class="term">
+                <p class="e">✗ Error 500: checkout failed</p>
+                <p class="e d2">✗ page load 9.4s</p>
+                <p class="r">$ root fix --all</p>
+                <p class="ok">✓ checkout patched</p>
+                <p class="ok d2">✓ page load 0.8s</p>
+                <span class="bug">🪲</span>
+              </div>
+            </div>
+          </article>
+          <!-- 03 web -->
+          <article class="panel p-web" data-dir="web">
+            <span class="ghost" aria-hidden="true">03</span>
+            <div class="p-copy">
+              <h3>WEB/</h3>
+              <p>Websites that load fast and sell harder.</p>
+            </div>
+            <div class="viz" aria-hidden="true">
+              <div class="browser">
+                <div class="bar"><span></span><span></span><span></span><em>yourbrand.in</em></div>
+                <div class="page">
+                  <div class="h">BIG IDEA.</div>
+                  <div class="ln"></div><div class="ln s"></div>
+                  <div class="cta">BUY NOW</div>
+                  <div class="ptr">↖</div>
+                </div>
+              </div>
+            </div>
+          </article>
+          <!-- 04 cloud -->
+          <article class="panel p-cloud" data-dir="cloud">
+            <span class="ghost" aria-hidden="true">04</span>
+            <div class="p-copy">
+              <h3>CLOUD/</h3>
+              <p>SaaS, dashboards, backends that don't sleep.</p>
+            </div>
+            <div class="viz" aria-hidden="true">
+              <div class="nodes">
+                <svg viewBox="0 0 300 220">
+                  <path class="wire" id="w1" d="M150 40 L50 170" />
+                  <path class="wire" id="w2" d="M150 40 L250 170" />
+                  <path class="wire" id="w3" d="M50 170 L250 170" />
+                  <circle r="5" class="pkt"><animateMotion dur="1.6s" repeatCount="indefinite"><mpath href="#w1"/></animateMotion></circle>
+                  <circle r="5" class="pkt"><animateMotion dur="2s" repeatCount="indefinite" begin=".5s"><mpath href="#w2"/></animateMotion></circle>
+                  <circle r="5" class="pkt"><animateMotion dur="2.4s" repeatCount="indefinite" begin=".2s"><mpath href="#w3"/></animateMotion></circle>
+                </svg>
+                <span class="node n1">api</span><span class="node n2">db</span><span class="node n3">web</span>
+                <span class="region">ap-south-1 · 99.9% up</span>
+              </div>
+            </div>
+          </article>
+          <!-- 05 automate -->
+          <article class="panel p-auto" data-dir="automate">
+            <span class="ghost" aria-hidden="true">05</span>
+            <div class="p-copy">
+              <h3>AUTOMATE/</h3>
+              <p>Busywork that runs itself while you sleep.</p>
+            </div>
+            <div class="viz" aria-hidden="true">
+              <div class="belt">
+                <div class="machine"><span class="gear">✶</span></div>
+                <div class="items"><span>order</span><span>invoice</span><span>gst</span><span>remind</span><span>order</span><span>invoice</span><span>gst</span><span>remind</span></div>
+                <div class="hrs">0 hrs <small>of manual work</small></div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
 
-<section class="sec" id="process">
-  <div class="wrap">
-    <p class="eyebrow reveal">Process</p>
-    <h2 class="reveal">How we work</h2>
-    <ol class="steps reveal">
-      <li><span>1</span><h3>Talk</h3><p>A free call about what you need.</p></li>
-      <li><span>2</span><h3>Plan</h3><p>Screens to click through, a fixed price and a date.</p></li>
-      <li><span>3</span><h3>Build</h3><p>A live link early, progress every week.</p></li>
-      <li><span>4</span><h3>Launch</h3><p>Handover, plus a month of fixes included.</p></li>
-    </ol>
-    <div class="cta-strip reveal">
-      <p>Have something in mind? The first call is free.</p>
-      <a class="btn btn-light" href="#contact">Book a call</a>
-    </div>
-  </div>
-</section>
+    <!-- PROCESS: small and fast -->
+    <section class="proc" id="process" aria-labelledby="proc-h">
+      <div class="proc-head">
+        <p class="cmd">$ how --fast</p>
+        <h2 id="proc-h">From hello to live. <em>No jargon.</em></h2>
+        <p class="proc-sub">Four simple steps. You always know the price, the date and who's working on it.</p>
+      </div>
+      <ol class="flow">
+        <li><b>1</b><span>Say hi<small>a WhatsApp or one line here is enough</small></span></li>
+        <li><b>2</b><span>We take a look<small>free check of your site or software</small></span></li>
+        <li><b>3</b><span>Fixed quote<small>price and date in writing, no surprises</small></span></li>
+        <li><b>4</b><span>We build &amp; launch<small>and stay on for fixes after</small></span></li>
+      </ol>
+    </section>
 
-<section class="sec" id="work">
-  <div class="wrap">
-    <p class="eyebrow reveal">Work</p>
-    <div class="sec-head reveal">
-      <h2>Recent work</h2>
-      <a class="link" href="work/">All case studies →</a>
-    </div>
-    <div class="picker reveal">
-      <div class="pick-list" role="tablist" aria-label="Choose a project" id="pick-list"></div>
-      <div class="pick-view" role="tabpanel" aria-live="polite">
-        <div class="frame"><div class="frame-bar"><i></i><i></i><i></i></div><img id="pick-img" alt="" /></div>
-        <div class="pick-meta"><small id="pick-kind"></small><p id="pick-line"></p><a class="link" id="pick-link" href="work/">View case study →</a></div>
+    <!-- FUN: squash the bugs -->
+    <section class="fun" id="fun" aria-labelledby="fun-h">
+      <p class="cmd">$ root play --bugs</p>
+      <h2 id="fun-h" class="sec-title">SQUASH <em>the bugs.</em></h2>
+      <p class="fun-sub">Tap them all. (Honestly, this is most of our job.) <span class="tilt-hint">Tilt your phone to make them slide.</span></p>
+
+      <div class="arena" id="arena">
+        <div class="site site-old" aria-hidden="true">
+          <b>Welcome to My Shop!!</b>
+          <span class="uc">🚧 under construction 🚧</span>
+          <u>click here for prices</u>
+          <span class="hits">visitors: <i>000137</i></span>
+        </div>
+        <div class="site site-new" aria-hidden="true">
+          <b>MY SHOP.</b>
+          <span class="l"></span><span class="l s"></span>
+          <span class="btn">Shop now →</span>
+        </div>
+        <div class="arena-hud"><span>bugs fixed <b id="bug-n">0</b>/<span id="bug-total">8</span></span><button type="button" class="snd" id="bug-sound" aria-label="Game sound" aria-pressed="true">♪ on</button><span id="bug-t">0.0s</span></div>
+        <div class="arena-win" id="arena-win" hidden>
+          <p>FIXED in <b id="bug-final">0.0s</b>.</p>
+          <div>
+            <button type="button" id="bug-again">play again</button>
+            <a href="#hello">got real bugs? →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONSULT / COLLAB: two doors -->
+    <section class="doors" id="talk" aria-label="Consult or collaborate">
+      <p class="cmd doors-cmd">$ choose --path</p>
+      <a class="door door-a" href="#hello" data-pick="Need tech advice (consultation)">
+        <span class="door-track" aria-hidden="true"><span>THINK FIRST ✶ CONSULT ✶ THINK FIRST ✶ CONSULT ✶&nbsp;</span><span>THINK FIRST ✶ CONSULT ✶ THINK FIRST ✶ CONSULT ✶&nbsp;</span></span>
+        <span class="door-tag">Talk to us before you spend a rupee →</span>
+        <span class="sr">Consult: talk to us before you spend a rupee</span>
+      </a>
+      <div class="or" aria-hidden="true"><span>OR</span></div>
+      <a class="door door-b" href="#hello" data-pick="Collab on a startup idea">
+        <span class="door-track" aria-hidden="true"><span>WILD IDEA? ✶ COLLAB ✶ STARTUPS ✶ WILD IDEA? ✶ COLLAB ✶&nbsp;</span><span>WILD IDEA? ✶ COLLAB ✶ STARTUPS ✶ WILD IDEA? ✶ COLLAB ✶&nbsp;</span></span>
+        <span class="door-tag">Startup or side project? Let's git init it →</span>
+        <span class="sr">Collaborate: startup or side project, let's build it together</span>
+      </a>
+    </section>
+
+
+    <!-- HELLO -->
+    <section class="hello" id="hello">
+      <p class="cmd">$ sudo make it happen</p>
+      <h2 class="mega2"><span data-split>LET'S</span> <em>build.</em></h2>
+
+      <form id="ask" class="ask" novalidate autocomplete="on">
+        <p class="ask-label">&gt; tap one — or type your own <span class="swipe-hint">(swipe →)</span></p>
+        <div class="quick" role="group" aria-label="Quick picks">
+          <button type="button" data-q="Fix my website">fix my website</button>
+          <button type="button" data-q="Redesign my old website">redesign my old site</button>
+          <button type="button" data-q="Remake our old software">remake our software</button>
+          <button type="button" data-q="Build cloud software / a dashboard">cloud software</button>
+          <button type="button" data-q="Need tech advice (consultation)">need advice</button>
+          <button type="button" data-q="Collab on a startup idea">startup collab</button>
+          <button type="button" data-q="Pitch: my small business needs tech">pitch my business</button>
+        </div>
+
+        <label class="field">
+          <span>what are we building?</span>
+          <input id="q" name="q" required placeholder="you imagine, I build…" />
+        </label>
+        <!-- honeypot: hidden from people, bots fill it in -->
+        <input type="text" id="hp-company" name="company" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <label class="field">
+          <span>your email</span>
+          <input id="em" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="you@yourbusiness.in" />
+        </label>
+
+        <button class="send" id="send" type="submit"><span class="send-t">SEND IT</span><span class="send-i" aria-hidden="true">⏎</span></button>
+        <pre class="ask-log" id="ask-log" aria-live="polite"></pre>
+      </form>
+
+      <div class="tiles">
+        <a class="tile t-wa" href="https://wa.me/917777016553" data-wa target="_blank" rel="noopener"><small>fastest reply</small><b>WhatsApp ↗</b></a>
+        <button class="tile t-mail" type="button" id="copy-mail" data-mail="raghavmittal.founder@gmail.com"><small id="copy-note">tap to copy</small><b>raghavmittal.founder@gmail.com</b></button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="foot-grid">
+      <div class="foot-me">
+        <p class="cmd">$ whoami</p>
+        <div class="me">
+          <span class="avatar" aria-hidden="true">R/</span>
+          <div class="me-text">
+            <b>Hi, I'm Raghav Mittal.</b>
+            <p>I'm a developer who sorts out the tech side of businesses, so you can get on with running yours.</p>
+            <p>If your website looks dated, your software keeps breaking, or your team loses hours to copy-paste work, that's what I fix. I redesign and rebuild websites, fix bugs and slow pages, build online tools and dashboards, and automate the repetitive jobs.</p>
+            <p class="me-note">You deal with me directly, in plain language, from the first message to launch and after. Based in India.</p>
+          </div>
+        </div>
+      </div>
+      <nav class="foot-col" aria-label="Services">
+        <p class="cmd">ls ./services</p>
+        <a href="#ls" data-svc="remake" aria-haspopup="dialog">Remake &amp; redesign</a>
+        <a href="#ls" data-svc="fix" aria-haspopup="dialog">Fix bugs &amp; speed</a>
+        <a href="#ls" data-svc="web" aria-haspopup="dialog">Websites</a>
+        <a href="#ls" data-svc="cloud" aria-haspopup="dialog">Cloud software</a>
+        <a href="#ls" data-svc="automate" aria-haspopup="dialog">Automation</a>
+        <a href="#talk" data-svc="consult" aria-haspopup="dialog">Consulting</a>
+        <a href="#talk" data-svc="collab" aria-haspopup="dialog">Startup collabs</a>
+      </nav>
+      <div class="foot-col">
+        <p class="cmd">ls ./contact</p>
+        <a href="https://wa.me/917777016553" data-wa target="_blank" rel="noopener">WhatsApp ↗</a>
+        <a href="#hello">Send a project</a>
+        <span class="foot-note">Mon–Sat · IST</span>
+      </div>
+      <div class="foot-col">
+        <p class="cmd">ls ./social</p>
+        <div id="socials" class="socials"></div>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="sec sec-sky" id="contact">
-  <div class="wrap contact">
-    <div class="reveal">
-      <p class="eyebrow">Contact</p>
-      <h2>Tell us about your project</h2>
-      <ul class="trust"><li>Free first call</li><li>Fixed price in writing</li><li>Reply within one working day</li></ul>
-      <div class="people">
-        <p>You'll speak directly with</p>
-        <ul>
-          <li><span class="av" aria-hidden="true">RM</span><b>Raghav Mittal</b><small>Dev</small></li>
-          <li><span class="av" aria-hidden="true">AS</span><b>Aaditya Satam</b><small>Partner</small></li>
-        </ul>
-      </div>
-      <p class="direct">Prefer to message? <a href="https://wa.me/917777016553" target="_blank" rel="noopener">WhatsApp us</a> or email <a href="mailto:raghavmittal.founder@gmail.com">raghavmittal.founder@gmail.com</a></p>
+    <div class="foot-word" aria-hidden="true">RAGHAV/</div>
+    <div class="foot-row">
+      <span>© <span id="yr"></span> Raghav Mittal</span>
+      <span>Made in India ✶ /root/india</span>
     </div>
-    <form class="form reveal" id="ask" novalidate style="--d:1">
-      <fieldset class="picks">
-        <legend>What do you need?</legend>
-        <button type="button" class="on">Redesign or fixes</button>
-        <button type="button">Cloud software</button>
-        <button type="button">Website or app</button>
-        <button type="button">Not sure yet</button>
-      </fieldset>
-      <label class="field"><span>Tell us a little about it</span><textarea id="q" rows="4"></textarea></label>
-      <label class="field"><span>Your email</span><input id="em" type="email" inputmode="email" autocomplete="email" /></label>
-      <input id="hp-company" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
-      <p class="note" id="note" aria-live="polite"></p>
-      <button class="btn btn-light send" type="submit">Send</button>
-    </form>
+  </footer>
+
+  <!-- service popup: a card on desktop, a bottom sheet on phones (filled by script.js) -->
+  <div class="svc-modal" id="svc-modal" hidden>
+    <div class="svc-backdrop" data-close></div>
+    <div class="svc-sheet" role="dialog" aria-modal="true" aria-labelledby="svc-title" tabindex="-1">
+      <span class="svc-grab" aria-hidden="true"></span>
+      <button type="button" class="svc-x" data-close aria-label="Close">✕</button>
+      <div class="svc-body" id="svc-body"></div>
+    </div>
   </div>
-</section>
-</div>
 
-</main>
+  <button class="motion-btn" id="motion-btn" type="button" hidden>✶ tap to tilt</button>
 
-<footer class="foot">
-  <div class="wrap foot-in">
-    <span>© 2026 Root Directory · Raghav Mittal &amp; Aaditya Satam · Bengaluru</span>
-    <nav><a href="#services">Services</a><a href="#work">Work</a><a href="#contact">Contact</a><a href="https://github.com/Raghav1000000000" target="_blank" rel="noopener">GitHub</a></nav>
-  </div>
-</footer>
-
-<!-- phones: the next step is always one tap away -->
-<div class="float-cta" aria-hidden="true">
-  <a class="btn btn-light" href="#contact" tabindex="-1">Start a project</a>
-  <a class="wa" href="https://wa.me/917777016553" target="_blank" rel="noopener" tabindex="-1" aria-label="WhatsApp">
-    <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.4c.1.2 1.6 2.5 3.9 3.5 1.5.6 2 .7 2.7.6.4-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.4-.2z" /></svg>
-  </a>
-</div>
-
-<script src="scene.js"></script>
-<script src="main.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

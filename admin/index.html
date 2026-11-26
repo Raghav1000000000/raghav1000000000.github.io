@@ -100,7 +100,38 @@ button:disabled { opacity:.5; cursor:default; }
     <p class="note" id="sums"></p>
   </section>
 
-  <div class="grid">
+  <div class="seg" id="modes" role="group" aria-label="What are you writing?"><button type="button" data-m="clients">Client message</button><button type="button" data-m="partners">Partner message</button></div>
+
+  <div class="grid" id="partnerView" hidden>
+    <form id="pf" autocomplete="off">
+      <p class="note">For people who find clients for you. Their cut: a flat 50% of what the client pays for the project, paid once the client pays.</p>
+      <fieldset><legend>Which message?</legend>
+        <div class="seg" data-p="stage"><button type="button" data-v="invite">Ask them to partner</button><button type="button" data-v="nudge">Follow-up</button><button type="button" data-v="forward">For them to forward</button></div></fieldset>
+      <fieldset id="pchanWrap"><legend>Where will you send it?</legend>
+        <div class="seg" data-p="channel"><button type="button" data-v="email">Email</button><button type="button" data-v="whatsapp">WhatsApp</button><button type="button" data-v="dm">Instagram / LinkedIn</button></div></fieldset>
+      <div id="pPeople" class="two">
+        <label><span>Partner's name</span><input id="pname"></label>
+        <label><span id="whoLab">Why them? "Since you …"</span><input id="who"></label>
+      </div>
+      <div id="pContact" class="two">
+        <label><span>Email</span><input id="pemail" type="email" inputmode="email"></label>
+        <label><span>Phone / WhatsApp</span><input id="pphone" inputmode="tel"></label>
+      </div>
+      <fieldset><legend>Send as</legend>
+        <div class="seg" data-p="from"><button type="button" data-v="raghav">Raghav Mittal</button><button type="button" data-v="studio">Root Directory</button></div></fieldset>
+      <fieldset><legend>Language</legend>
+        <div class="seg" data-p="lang"><button type="button" data-v="en">English</button><button type="button" data-v="hi">Hinglish</button></div></fieldset>
+    </form>
+    <section class="out" aria-label="Partner message">
+      <label id="psubjWrap"><span>Subject</span><input id="psubject"></label>
+      <label><span id="pbodyLab">Message</span><textarea id="pbody"></textarea></label>
+      <p class="note" id="pnote"></p>
+      <div class="acts"><button type="button" class="primary" id="pcopy">Copy message</button><a class="btn" id="popen" target="_blank" rel="noopener">Open</a><button type="button" id="pother">Another version</button></div>
+      <p class="note" id="pmsg" role="status"></p>
+    </section>
+  </div>
+
+  <div class="grid" id="clientView">
     <form id="f" autocomplete="off">
       <div class="flag" id="exampleFlag" hidden><span class="note">You're looking at an example lead.</span><button type="button" id="blank">Start blank</button></div>
 
@@ -154,7 +185,7 @@ button:disabled { opacity:.5; cursor:default; }
     </section>
   </div>
 
-  <section class="leads" aria-labelledby="lh">
+  <section class="leads" id="leadsView" aria-labelledby="lh">
     <h2 id="lh">Saved leads</h2>
     <div class="tools">
       <label><span class="lab">Search name, place, number or note</span><input id="q" type="search"></label>
@@ -265,6 +296,38 @@ function openLink(s, subject, body) {
   if (s.channel === "whatsapp") return "https://wa.me/" + digits(s.phone) + "?text=" + encodeURIComponent(body);
   return "";
 }
+/* partner (referral) messages: casual, flat 50% of what the client pays */
+function buildPartner(p) {
+  const hi = p.lang === "hi", email = p.channel === "email", me = FROM[p.from] || FROM.raghav, v = p.v || 0, pick = (a) => a[v % a.length];
+  const name = clean(p.pname), who = clean(p.who).replace(/[.!?]+$/, ""), hey = "Hey" + (name ? " " + name : "") + ",";
+  const sign = email ? `Thanks,\n${me.name}\n+91 77770 16553` : `- ${me.name}`;
+  if (p.stage === "forward") {
+    const body = hi ? pick(["Hi, meri pehchaan mein ek team hai jo websites aur apps banati hai, aur purani websites fix ya redesign karti hai. Kaam accha hai aur pehli call free hai. Aapko unse connect karwaun?",
+                            "Hi, aapke business ke liye ek team ka naam dena tha. Woh websites aur apps banate hain, aur purani websites fix ya redesign karte hain. Pehli call free hai. Aapka number unke saath share karun?"]) + "\n\nUnka kaam: " + me.link
+                    : pick(["Hi, I know a small team that builds websites and apps, and fixes or redesigns old ones. Their work is good and the first call is free. Want me to connect you?",
+                            "Hi, thought of you. I know a team that builds websites and apps, and fixes or redesigns old ones. The first call is free. Shall I share your number with them?"]) + "\n\nTheir work: " + me.link;
+    return { subject: "", body };
+  }
+  let subject, parts;
+  if (p.stage === "invite") {
+    subject = pick(["Flat 50% for every client you send us", "A simple referral offer"]);
+    parts = hi ? [`${hey} ${pick(["ek seedhi baat.", "ek simple offer hai."])}`, who ? `${upper1(who)}, isliye aapka khayal aaya.` : "",
+      "Hum websites aur apps banate hain, aur purani websites fix ya redesign karte hain.",
+      "Agar kisi business ko inmein se kuch chahiye, toh unhe humse milwa do. Project ka flat 50% aapka, jaise hi client pay kare. Koi catch nahi.",
+      "Aapko bas intro dena hai. Baat, kaam aur support hum sambhal lenge.", "Hamara kaam: " + me.link,
+      "Interested ho toh reply karo, hum ek chhota message bhej denge jo aap aage forward kar sakte ho.", sign]
+    : [`${hey} ${pick(["quick one.", "simple offer for you."])}`, who ? `Since you ${lower1(who)}, I thought of you.` : "",
+      "We build websites and apps, and fix or redesign old ones.",
+      "If you know a business that needs any of that, send them our way. You get a flat 50% of what they pay for the project, as soon as they pay. No catch.",
+      "You just make the intro. We do the talking, the work and the support.", "Our work: " + me.link,
+      "In? Reply and I'll send you a short message you can forward.", sign];
+  } else {
+    subject = "Following up: the 50% offer";
+    parts = hi ? [hey, pick(["50% wali baat yaad dilani thi.", "Referral offer ka ek reminder."]), "Kisi ko nayi website, redesign ya fix chahiye? Bas naam aur number bhej do, baaki hum dekh lenge. Client pay kare toh flat 50% aapka.", sign]
+               : [hey, pick(["Following up on the 50% thing.", "Quick reminder about the referral offer."]), "Anyone come to mind who needs a new website, a redesign or a fix? Send me their name and number and I'll take it from there. You still get a flat 50% once they pay.", sign];
+  }
+  return { subject: email ? subject : "", body: parts.filter(Boolean).join("\n\n") };
+}
 function nextDue(sentAt, count) { const d = new Date(sentAt); d.setDate(d.getDate() + (count <= 1 ? 3 : 5)); return d.toISOString(); }
 /* ---------- end of pure part ---------- */
 
@@ -365,7 +428,7 @@ function dash() {
   tiles.forEach(([v, num, lab, cls]) => {
     const t = document.createElement(v ? "button" : "div"), b = document.createElement("b"), s = document.createElement("span");
     t.className = "tile" + (cls && num ? " " + cls : ""); b.textContent = num; s.textContent = lab; t.append(b, s);
-    if (v) { t.type = "button"; t.setAttribute("aria-pressed", String(view === v)); t.onclick = () => { view = view === v && v !== "all" ? "all" : v; $("show").value = view; draw(); $("lh").scrollIntoView({ behavior: "smooth" }); }; }
+    if (v) { t.type = "button"; t.setAttribute("aria-pressed", String(view === v)); t.onclick = () => { setMode("clients"); view =view === v && v !== "all" ? "all" : v; $("show").value = view; draw(); $("lh").scrollIntoView({ behavior: "smooth" }); }; }
     box.append(t);
   });
   const msgs = leads.reduce((a, l) => a + (l.sentCount || 0), 0), kinds = { new: "New website", redesign: "Redesign", fix: "Fix" };
@@ -404,6 +467,39 @@ function draw() {
 }
 $("q").addEventListener("input", draw);
 $("show").onchange = () => { view = $("show").value; draw(); };
+
+/* partner messages */
+const PTEXT = ["pname", "who", "pemail", "pphone"];
+let P = { stage: "invite", channel: "whatsapp", from: "raghav", lang: "en", pname: "", who: "", pemail: "", pphone: "", v: 0 }, mode = "clients";
+try { const d = JSON.parse(localStorage.getItem("opener-partner")); if (d && d.stage) P = { ...P, ...d }; mode = localStorage.getItem("opener-mode") === "partners" ? "partners" : "clients"; } catch (e) {}
+function setMode(m) {
+  mode = m; try { localStorage.setItem("opener-mode", m); } catch (e) {}
+  document.querySelectorAll("#modes button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.m === m)));
+  $("clientView").hidden = $("leadsView").hidden = m !== "clients"; $("partnerView").hidden = m !== "partners";
+}
+function pwrite() {
+  try { localStorage.setItem("opener-partner", JSON.stringify(P)); } catch (e) {}
+  PTEXT.forEach((k) => { if ($(k).value !== P[k]) $(k).value = P[k]; });
+  document.querySelectorAll("[data-p]").forEach((g) => g.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(P[g.dataset.p] === b.dataset.v))));
+  const fwd = P.stage === "forward", m = buildPartner(P);
+  $("pchanWrap").hidden = $("pPeople").hidden = $("pContact").hidden = fwd;
+  $("whoLab").textContent = P.lang === "hi" ? "Why them? \"…, isliye aapka khayal aaya\"" : "Why them? \"Since you …\"";
+  $("who").placeholder = P.lang === "hi" ? "aapki kaafi shop owners se pehchaan hai" : "know a lot of shop owners";
+  $("psubjWrap").hidden = fwd || P.channel !== "email"; $("psubject").value = m.subject; $("pbody").value = m.body;
+  $("pbodyLab").textContent = fwd ? "Message they forward to a business" : { email: "Email", whatsapp: "WhatsApp message", dm: "Direct message" }[P.channel];
+  $("pnote").textContent = fwd ? "Send this to a partner so they can forward it as it is. It's written in their voice." : "Changing any option above rewrites the message, so edit it last.";
+  const link = fwd ? "" : openLink({ channel: P.channel, email: P.pemail, phone: P.pphone }, m.subject, m.body);
+  $("popen").hidden = !link; $("popen").href = link || "#"; $("popen").textContent = P.channel === "email" ? "Open in Gmail" : "Open in WhatsApp";
+}
+document.querySelectorAll("#modes button").forEach((b) => b.onclick = () => setMode(b.dataset.m));
+document.querySelectorAll("[data-p] button").forEach((b) => b.onclick = () => { P[b.parentElement.dataset.p] = b.dataset.v; pwrite(); });
+PTEXT.forEach((k) => $(k).addEventListener("input", () => { P[k] = $(k).value; pwrite(); }));
+$("pf").addEventListener("submit", (e) => e.preventDefault());
+$("pother").onclick = () => { P.v = (P.v || 0) + 1; pwrite(); };
+$("pcopy").onclick = async () => {
+  const t = ($("psubjWrap").hidden ? "" : "Subject: " + $("psubject").value + "\n\n") + $("pbody").value;
+  try { await navigator.clipboard.writeText(t); $("pmsg").textContent = "Copied."; } catch (e) { $("pbody").focus(); $("pbody").select(); $("pmsg").textContent = "Press copy on your keyboard. The message is selected."; }
+};
 
 /* where leads are kept: Claude's database in the artifact, this browser on the site */
 const KEY = "opener-leads";
@@ -461,7 +557,7 @@ async function connectClaude() {
   db = claudeStore(cdb);
   cdb.collection("leads").onSnapshot((s) => { clearTimeout(t); leads = s.docs.map((d) => ({ ...d.data(), id: d.id })); draw(); }, () => { clearTimeout(t); $("empty").hidden = false; $("empty").textContent = "Couldn't load saved leads. Reopen the page to try again."; });
 }
-function start() { $("gate").hidden = true; $("app").hidden = false; $("ai").hidden = true; change(); draw(); SITE ? connectSite() : connectClaude(); }
+function start() { $("gate").hidden = true; $("app").hidden = false; $("ai").hidden = true; change(); draw(); pwrite(); setMode(mode); SITE ? connectSite() : connectClaude(); }
 
 /* PIN screen (site only). The page is public code, so this keeps casual visitors out; it is not encryption. */
 const PIN_HASH = "60fc8970896b42ab3fa4a77765daf8ee63620737976a08986230dd6dba63ae48";

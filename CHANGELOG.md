@@ -3,6 +3,13 @@
 Every update to the site is logged here and published as a [GitHub Release](https://github.com/Raghav1000000000/raghav1000000000.github.io/releases).
 Versions follow [semantic versioning](https://semver.org/): **major** for a redesign, **minor** for new features or sections, **patch** for fixes.
 
+## [3.2.0] - 2026-11-26
+
+### Added
+- **Partner messages in Client Opener (`/admin/`).** A new "Partner message" tab writes casual, direct messages for people who find clients for us, with a flat 50% of what the client pays for the project, paid once the client pays.
+  - Three messages: ask someone to partner, a follow-up, and a short message the partner can forward to a business as it is.
+  - Email, WhatsApp or DM; English or Hinglish; sent as Raghav Mittal or Root Directory; copy, or open it filled in Gmail or WhatsApp.
+
 ## [3.1.0] - 2026-11-26
 
 ### Added

@@ -27,7 +27,7 @@ jobs:
         run: |
           mkdir _site
           cp index.html styles.css script.js favicon.svg _site/
-          cp -r work _site/
+          cp -r work admin _site/
 
       - uses: actions/configure-pages@v5
 

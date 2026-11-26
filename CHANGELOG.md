@@ -3,6 +3,18 @@
 Every update to the site is logged here and published as a [GitHub Release](https://github.com/Raghav1000000000/raghav1000000000.github.io/releases).
 Versions follow [semantic versioning](https://semver.org/): **major** for a redesign, **minor** for new features or sections, **patch** for fixes.
 
+## [3.1.0] - 2026-11-26
+
+### Added
+- **Client Opener at `/admin/`**, a private tool for writing outreach messages to new clients (new website, redesign or fix) by email, WhatsApp or DM, in English or Hinglish, with follow-ups.
+- **A small dashboard** at the top: leads to follow up now, total leads, waiting for a reply, replied, won and reply rate. Tapping a number filters the list.
+- **Search and filter** for saved leads by name, place, number or note, and by status.
+- **PIN screen** before the tool opens. Leads stay in the browser you use; download a backup to move them to another device.
+- The page is not linked from the site and asks search engines not to list it.
+
+### Changed
+- The deploy step now copies the `admin` folder too.
+
 ## [3.0.2] - 2026-11-24
 
 ### Fixed

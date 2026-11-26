@@ -37,7 +37,7 @@ label { display:grid; gap:5px; min-width:0; }
 input, textarea, select { width:100%; min-width:0; font:inherit; font-size:16px; color:var(--ink); background:var(--panel); border:1px solid var(--line); padding:10px 11px; border-radius:0; }
 textarea { resize:vertical; }
 .out input, .out textarea { background:var(--bg); }
-#body { min-height:300px; line-height:1.6; }
+#body, #pbody { min-height:300px; line-height:1.6; }
 .seg { display:flex; flex-wrap:wrap; gap:8px; }
 button, .btn { font:inherit; font-weight:700; color:var(--ink); background:transparent; border:1px solid var(--line); padding:10px 13px; min-height:42px; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; }
 button:hover, .btn:hover { border-color:var(--ink); }
@@ -106,7 +106,7 @@ button:disabled { opacity:.5; cursor:default; }
     <form id="pf" autocomplete="off">
       <p class="note">For people who find clients for you. Their cut: a flat 50% of what the client pays for the project, paid once the client pays.</p>
       <fieldset><legend>Which message?</legend>
-        <div class="seg" data-p="stage"><button type="button" data-v="invite">Ask them to partner</button><button type="button" data-v="nudge">Follow-up</button><button type="button" data-v="forward">For them to forward</button></div></fieldset>
+        <div class="seg" data-p="stage"><button type="button" data-v="invite">Ask them to partner</button><button type="button" data-v="how">How we work</button><button type="button" data-v="nudge">Follow-up</button><button type="button" data-v="forward">For them to forward</button></div></fieldset>
       <fieldset id="pchanWrap"><legend>Where will you send it?</legend>
         <div class="seg" data-p="channel"><button type="button" data-v="email">Email</button><button type="button" data-v="whatsapp">WhatsApp</button><button type="button" data-v="dm">Instagram / LinkedIn</button></div></fieldset>
       <div id="pPeople" class="two">
@@ -309,7 +309,22 @@ function buildPartner(p) {
     return { subject: "", body };
   }
   let subject, parts;
-  if (p.stage === "invite") {
+  if (p.stage === "how") {
+    // what we do and how a referral goes, taken from the personal site (homepage services and the four steps)
+    subject = "How the partner deal works";
+    parts = hi ? [`${hey} yeh raha poora process, taaki pata rahe kya dhoondhna hai.`,
+      "Hum kya karte hain:\n- Purani websites aur software ko redesign ya rebuild\n- Bugs, slow pages aur toote forms fix\n- Shops, clinics, consultants aur service businesses ke liye nayi websites\n- Cloud software: dashboards, booking aur order systems\n- Roz ke repeat kaam ka automation (invoice, reminder, reports)",
+      "Sahi client: jiski website purani ya kharab hai, jiski website hi nahi hai, ya jiski team roz wahi copy-paste karti hai.",
+      "Kaise chalta hai:\n1. Aap unka naam aur number bhejo, ya WhatsApp group mein add kar do.\n2. Baat hum karenge. Pehli call aur unki website ka check free hai.\n3. Unhe fixed price aur date likhkar milegi.\n4. Hum banate hain, launch karte hain, aur baad mein fixes ke liye saath rehte hain.",
+      "Aapka kaam sirf intro tak hai. Selling ya tech samajhna zaroori nahi. Client pay kare toh project ka flat 50% aapka.",
+      "Hamara kaam: " + me.link, sign]
+    : [`${hey} here's how it works, so you know what to look for.`,
+      "What we do:\n- Redesign or rebuild old websites and software\n- Fix bugs, slow pages and broken forms\n- New websites for shops, clinics, consultants and service businesses\n- Cloud software: dashboards, booking and order systems\n- Automation for repeat work (invoices, reminders, reports)",
+      "A good fit: any business with an old or broken website, no website at all, or a team doing the same copy-paste work every day.",
+      "How it goes:\n1. You send us their name and number, or add us to a WhatsApp group with them.\n2. We do the talking. The first call and a look at their website are free.\n3. They get a fixed price and date in writing.\n4. We build, launch and stay on for fixes after.",
+      "Your part ends at the intro. You don't need to sell or know anything about tech. You get a flat 50% of what they pay for the project, as soon as they pay.",
+      "Our work: " + me.link, sign];
+  } else if (p.stage === "invite") {
     subject = pick(["Flat 50% for every client you send us", "A simple referral offer"]);
     parts = hi ? [`${hey} ${pick(["ek seedhi baat.", "ek simple offer hai."])}`, who ? `${upper1(who)}, isliye aapka khayal aaya.` : "",
       "Hum websites aur apps banate hain, aur purani websites fix ya redesign karte hain.",
@@ -483,6 +498,7 @@ function pwrite() {
   document.querySelectorAll("[data-p]").forEach((g) => g.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(P[g.dataset.p] === b.dataset.v))));
   const fwd = P.stage === "forward", m = buildPartner(P);
   $("pchanWrap").hidden = $("pPeople").hidden = $("pContact").hidden = fwd;
+  $("who").closest("label").hidden = P.stage !== "invite";
   $("whoLab").textContent = P.lang === "hi" ? "Why them? \"…, isliye aapka khayal aaya\"" : "Why them? \"Since you …\"";
   $("who").placeholder = P.lang === "hi" ? "aapki kaafi shop owners se pehchaan hai" : "know a lot of shop owners";
   $("psubjWrap").hidden = fwd || P.channel !== "email"; $("psubject").value = m.subject; $("pbody").value = m.body;

@@ -3,6 +3,14 @@
 Every update to the site is logged here and published as a [GitHub Release](https://github.com/Raghav1000000000/raghav1000000000.github.io/releases).
 Versions follow [semantic versioning](https://semver.org/): **major** for a redesign, **minor** for new features or sections, **patch** for fixes.
 
+## [3.3.0] - 2026-11-26
+
+### Added
+- **"How we work" partner message in Client Opener (`/admin/`).** Tells a partner what we do (redesign and rebuild, fixes, new websites, cloud software, automation), which businesses are a good fit, the four steps from intro to launch, that their part ends at the intro, and the flat 50%. In English or Hinglish, by WhatsApp, email or DM.
+
+### Fixed
+- The partner message box is as tall as the client message box.
+
 ## [3.2.0] - 2026-11-26
 
 ### Added

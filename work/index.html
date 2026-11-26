@@ -173,6 +173,22 @@ img { display: block; max-width: 100%; }
   .self { grid-template-columns: 1fr; }
   .self img { height: auto; width: 100%; max-width: 320px; }
 }
+/* demo + GitHub buttons, stack note */
+.links { gap: 10px 12px; align-items: center; margin-top: 6px; }
+.links a { border: 1px solid var(--line); padding: 9px 13px; font-weight: 700; font-size: 12.5px; letter-spacing: .02em; }
+.links a:hover { border-color: var(--ink); color: var(--ink); }
+.links a.go { background: var(--acid); color: var(--bg); border-color: var(--acid); }
+.links a.go:hover { background: var(--hot); border-color: var(--hot); color: var(--bg); }
+.links .note { font-size: 12px; }
+.stack { margin-top: 18px; display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 12.5px; border-top: 1px dashed var(--line); padding-top: 14px; }
+.stack dt { color: var(--dim); white-space: nowrap; }
+.stack dd { color: var(--ink); }
+.stack .st-h { grid-column: 1 / -1; color: var(--acid); font-weight: 700; font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; }
+.demo-note { margin-top: 12px; font-size: 12px; color: var(--soft); border-left: 2px solid var(--acid); padding-left: 10px; }
+.index a.has-demo::after { content: "demo"; margin-left: 8px; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color: var(--bg); background: var(--acid); padding: 1px 5px; }
+.try { margin-top: 22px; font-size: 13px; color: var(--soft); }
+.try b { color: var(--acid); font-weight: 700; }
+
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>
 </head>
@@ -195,14 +211,15 @@ img { display: block; max-width: 100%; }
     <div class="k2"><b>If you build software</b>Architecture, the hard parts, the trade-offs.</div>
     <div><b>If you design</b>Why each screen looks the way it does.</div>
   </div>
+  <p class="try"><b>Try them, don't just look.</b> Every project below opens as a working demo or a live site, with its GitHub code and the stack the real app runs on.</p>
   <nav class="index" aria-label="Projects">
-    <a href="#restaurant"><span>01</span>Restaurant orders</a>
-    <a href="#records"><span>02</span>Records platform</a>
-    <a href="#tea"><span>03</span>Tea delivery</a>
+    <a class="has-demo" href="#restaurant"><span>01</span>Restaurant orders</a>
+    <a class="has-demo" href="#records"><span>02</span>Records platform</a>
+    <a class="has-demo" href="#tea"><span>03</span>Tea delivery</a>
     <a href="#meetx"><span>04</span>MeetX</a>
-    <a href="#shubh"><span>05</span>ShubhSandesh</a>
+    <a class="has-demo" href="#shubh"><span>05</span>ShubhSandesh</a>
     <a href="#consult"><span>06</span>Consultancy site</a>
-    <a href="#tax"><span>07</span>Tax documents site</a>
+    <a class="has-demo" href="#tax"><span>07</span>Tax documents site</a>
     <a href="#scent"><span>08</span>Scent Stories</a>
   </nav>
 </section>
@@ -221,7 +238,7 @@ img { display: block; max-width: 100%; }
     <h3>Restaurant order system</h3>
     <p class="hook">No paper slips. No lost orders. No shouting across the counter.</p>
     <p class="intro">Busy cafés lose money in the gap between the counter and the kitchen. Here, guests order from their own phone, the kitchen sees it the same second, and the owner reads the day's sales without touching a register.</p>
-    <div class="links"><a href="https://github.com/Raghav1000000000/restaurant-order-management">source ↗</a><span class="note">built for a working café</span></div>
+    <div class="links"><a class="go" href="/demos/restaurant/">Open the demo ↗</a><a href="https://github.com/Raghav1000000000/restaurant-order-management" target="_blank" rel="noopener">GitHub ↗</a><span class="note">built for a working café · try the kitchen in a second tab</span></div>
   </div>
   <div class="device" data-p="restaurant" aria-label="App preview"></div>
   <div class="details">
@@ -244,6 +261,7 @@ img { display: block; max-width: 100%; }
         <li>Staff passwords are checked on the server and never ship to the browser.</li>
         <li>Load-tested with k6 scripts for the menu and order paths.</li>
       </ul>
+      <dl class="stack"><dt class="st-h">Real app</dt><dt>Front end</dt><dd>Next.js 15, React 19, Tailwind</dd><dt>Back end</dt><dd>Supabase: Postgres, Realtime, row-level security; a Next.js API route checks staff passwords</dd><dt>Hosting</dt><dd>Vercel</dd><dt>Testing</dt><dd>k6 load tests</dd></dl><p class="demo-note">The demo runs this app's real code in your browser with sample data. Nothing is saved on a server.</p>
     </div>
     <div class="col des">
       <h4>Design call</h4>
@@ -260,7 +278,7 @@ img { display: block; max-width: 100%; }
     <h3>Records platform</h3>
     <p class="hook">Registers and Excel files out. One searchable, audited source of truth in.</p>
     <p class="intro">Institutions keep staff, student and visitor records across spreadsheets and paper registers, and nobody knows who changed what. One system with roles, bulk imports, exports and a full audit trail, in daily production use at an educational institution.</p>
-    <div class="links"><a href="https://github.com/Raghav1000000000/records-management-platform">source ↗</a><span class="note">public demo-safe copy · client version stays private</span></div>
+    <div class="links"><a class="go" href="/demos/records/login/">Open the demo ↗</a><a href="https://github.com/Raghav1000000000/records-management-platform" target="_blank" rel="noopener">GitHub ↗</a><span class="note">demo-safe copy · the client's version stays private</span></div>
   </div>
   <div class="device" data-p="records" aria-label="App preview"></div>
   <div class="details">
@@ -283,6 +301,7 @@ img { display: block; max-width: 100%; }
         <li>Virtualised tables stay smooth with large datasets.</li>
         <li>Soft deletes and an audit log on every write; 25 automated tests.</li>
       </ul>
+      <dl class="stack"><dt class="st-h">Real app</dt><dt>Front end</dt><dd>Next.js 16, React, Tailwind</dd><dt>Back end</dt><dd>Supabase Auth + Postgres with row-level security and SQL functions</dd><dt>Hosting</dt><dd>Vercel</dd><dt>Testing</dt><dd>25 automated tests</dd></dl><p class="demo-note">The demo runs this app's real code in your browser with sample data. Nothing is saved on a server.</p>
     </div>
     <div class="col des">
       <h4>Design call</h4>
@@ -299,7 +318,7 @@ img { display: block; max-width: 100%; }
     <h3>Tea delivery bookings</h3>
     <p class="hook">A tea stall that takes orders like an app company.</p>
     <p class="intro">A mobile tea service was running on phone calls and memory. Customers now book a cup to their spot and see when it's coming; the shop accepts, sets an ETA and opens or closes from one dashboard.</p>
-    <div class="links"><a href="https://github.com/Raghav1000000000/tea-delivery-booking-system">source ↗</a></div>
+    <div class="links"><a class="go" href="/demos/tea/">Open the demo ↗</a><a href="https://github.com/Raghav1000000000/tea-delivery-booking-system" target="_blank" rel="noopener">GitHub ↗</a></div>
   </div>
   <div class="device" data-p="tea" aria-label="App preview"></div>
   <div class="details">
@@ -322,6 +341,7 @@ img { display: block; max-width: 100%; }
         <li>Rate limits, input validation, security headers, salted password hashes.</li>
         <li>Route tests run against an in-memory database stand-in.</li>
       </ul>
+      <dl class="stack"><dt class="st-h">Real app</dt><dt>Front end</dt><dd>HTML, CSS, JavaScript</dd><dt>Back end</dt><dd>Node.js + Express API</dd><dt>Database</dt><dd>MongoDB Atlas (Mongoose)</dd><dt>Hosting</dt><dd>Vercel serverless</dd></dl><p class="demo-note">The demo runs this app's real code in your browser with sample data. Nothing is saved on a server.</p>
     </div>
     <div class="col des">
       <h4>Design call</h4>
@@ -344,7 +364,7 @@ img { display: block; max-width: 100%; }
     <h3>MeetX</h3>
     <p class="hook">From scrolling to sitting across a table, within the hour.</p>
     <p class="intro">Everyone's online, nobody's meeting. MeetX shows who's nearby and free right now: knock with one line, chat briefly, meet over coffee. Launching in Bengaluru.</p>
-    <div class="links"><a href="https://github.com/Raghav1000000000/meetx-social-discovery-cloud">source ↗</a><span class="note">mobile app + admin + API</span></div>
+    <div class="links"><a class="go" href="https://meetx-pilot.onrender.com/" target="_blank" rel="noopener">Launch page ↗</a><a href="https://github.com/Raghav1000000000/meetx-social-discovery-cloud" target="_blank" rel="noopener">GitHub ↗</a><span class="note">mobile app + admin + API · pilot in Bengaluru</span></div>
   </div>
   <div class="device" data-p="meetx" aria-label="App preview"></div>
   <div class="details">
@@ -365,6 +385,7 @@ img { display: block; max-width: 100%; }
         <li>Temporary chats by design: less data kept, less to moderate.</li>
         <li>Admin tools for users, meetups, offers and reports from day one.</li>
       </ul>
+      <dl class="stack"><dt class="st-h">Real app</dt><dt>Front end</dt><dd>Expo (React Native) app, React admin</dd><dt>Back end</dt><dd>Node.js + Express API</dd><dt>Database</dt><dd>MongoDB</dd><dt>Hosting</dt><dd>Render</dd></dl>
     </div>
     <div class="col des">
       <h4>Design call</h4>
@@ -381,7 +402,7 @@ img { display: block; max-width: 100%; }
     <h3>ShubhSandesh</h3>
     <p class="hook">Every customer greeted on Diwali, before the shop even opens.</p>
     <p class="intro">Indian shop owners want to greet every customer on festivals but run out of time. A ready post with their name and logo, a reminder on the festival morning, and one tap per person on WhatsApp.</p>
-    <div class="links"><a href="https://raghav1000000000.github.io/shubhsandesh/prototype/">try the live demo ↗</a><a href="https://github.com/Raghav1000000000/shubhsandesh">source ↗</a></div>
+    <div class="links"><a class="go" href="https://raghav1000000000.github.io/shubhsandesh/prototype/" target="_blank" rel="noopener">Open the demo ↗</a><a href="https://github.com/Raghav1000000000/shubhsandesh" target="_blank" rel="noopener">GitHub ↗</a><span class="note">clickable prototype</span></div>
   </div>
   <div class="device" data-p="shubh" aria-label="App preview"></div>
   <div class="details">
@@ -402,6 +423,7 @@ img { display: block; max-width: 100%; }
         <li>Clickable prototype to validate the idea before building the backend.</li>
         <li>Shipped with a trailer and a printable pamphlet for go-to-market.</li>
       </ul>
+      <dl class="stack"><dt class="st-h">Real app</dt><dt>Front end</dt><dd>HTML, CSS, JavaScript</dd><dt>Back end</dt><dd>none yet: a prototype to test the idea</dd><dt>Hosting</dt><dd>GitHub Pages</dd></dl>
     </div>
     <div class="col des">
       <h4>Design call</h4>
@@ -424,7 +446,7 @@ img { display: block; max-width: 100%; }
     <h3>Consultancy site</h3>
     <p class="hook">A personal brand that books its own calls.</p>
     <p class="intro">A career and MBA consultant needed more than a brochure. Visitors book a free consultation into real open slots; the consultant confirms bookings, blocks dates and edits services and testimonials without calling a developer.</p>
-    <div class="links"><a href="https://manan-mittal-consultancy-main.vercel.app/">visit live site ↗</a></div>
+    <div class="links"><a class="go" href="https://manan-mittal-consultancy-main.vercel.app/" target="_blank" rel="noopener">Visit the live site ↗</a><span class="note">client site · code is private</span></div>
   </div>
   <div class="device" data-p="consult" aria-label="App preview"></div>
   <div class="details">
@@ -444,6 +466,7 @@ img { display: block; max-width: 100%; }
         <li>Data models for appointments, blocked slots, services, testimonials and site preferences.</li>
         <li>Protected admin routes; the public site reads the same API.</li>
       </ul>
+      <dl class="stack"><dt class="st-h">Real app</dt><dt>Front end</dt><dd>React + Vite</dd><dt>Back end</dt><dd>Node.js + Express</dd><dt>Database</dt><dd>MongoDB</dd><dt>Hosting</dt><dd>Vercel</dd></dl>
     </div>
     <div class="col des">
       <h4>Design call</h4>
@@ -460,7 +483,7 @@ img { display: block; max-width: 100%; }
     <h3>Tax documents site</h3>
     <p class="hook">Tax paperwork without the email ping-pong.</p>
     <p class="intro">A tax practice in Canada was chasing clients over email for forms and files. Clients now send their request and documents in one form and sign the engagement consent on screen; the practice sees everything in one dashboard.</p>
-    <div class="links"><a href="https://github.com/Raghav1000000000/Ramika-Tax-Expert">source ↗</a><span class="note">built for a tax practice in Canada</span></div>
+    <div class="links"><a class="go" href="/demos/tax/">Open the demo ↗</a><a href="https://github.com/Raghav1000000000/Ramika-Tax-Expert" target="_blank" rel="noopener">GitHub ↗</a><span class="note">built for a tax practice in Canada</span></div>
   </div>
   <div class="device" data-p="tax" aria-label="App preview"></div>
   <div class="details">
@@ -482,6 +505,7 @@ img { display: block; max-width: 100%; }
         <li>Rate limiting on public endpoints with Redis.</li>
         <li>Admin login and an analytics view for enquiries.</li>
       </ul>
+      <dl class="stack"><dt class="st-h">Real app</dt><dt>Front end</dt><dd>Next.js, Tailwind</dd><dt>Back end</dt><dd>Supabase Postgres + file storage, Upstash Redis for rate limits</dd><dt>Hosting</dt><dd>Vercel</dd></dl><p class="demo-note">The demo runs this app's real code in your browser with sample data. Nothing is saved on a server.</p>
     </div>
     <div class="col des">
       <h4>Design call</h4>
@@ -498,7 +522,7 @@ img { display: block; max-width: 100%; }
     <h3>Scent Stories</h3>
     <p class="hook">Perfume, explained without the snobbery.</p>
     <p class="intro">Buying perfume in India is intimidating for beginners. A gentle illustrated guide: how a perfume is built, the four big scent families, and brands worth trying first.</p>
-    <div class="links"><a href="https://github.com/Raghav1000000000/scent-stories">source ↗</a></div>
+    <div class="links"><a class="go" href="https://raghav1000000000.github.io/scent-stories/" target="_blank" rel="noopener">Open the site ↗</a><a href="https://github.com/Raghav1000000000/scent-stories" target="_blank" rel="noopener">GitHub ↗</a></div>
   </div>
   <div class="device" data-p="scent" aria-label="App preview"></div>
   <div class="details">
@@ -518,6 +542,7 @@ img { display: block; max-width: 100%; }
         <li>No framework, no build step: loads fast on any phone.</li>
         <li>A pause-motion control for people who prefer less animation.</li>
       </ul>
+      <dl class="stack"><dt class="st-h">Real app</dt><dt>Front end</dt><dd>HTML, CSS, JavaScript, JSON content</dd><dt>Back end</dt><dd>none: a static site</dd><dt>Hosting</dt><dd>GitHub Pages</dd></dl>
     </div>
     <div class="col des">
       <h4>Design call</h4>
@@ -544,7 +569,7 @@ img { display: block; max-width: 100%; }
   <a class="btn" href="../#ask">Start a conversation</a>
 </section>
 
-<p class="fine">Screens are from the real apps running locally with fictional demo data, or from the live sites. Use the Phone / Desktop switch on each project, and tap a screen to open it.</p>
+<p class="fine">Demos run each app's real code in your browser with fictional sample data: nothing you type is sent to a server, and "Reset sample data" puts everything back. Screens are from the same demos or the live sites. Use the Phone / Desktop switch on each project, and tap a screen to open it.</p>
 
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-labelledby="lb-t" hidden>
   <div class="lb-top">
@@ -566,11 +591,11 @@ img { display: block; max-width: 100%; }
 (() => {
   // screens per project: [file prefix, caption]; files live in device/<prefix>-phone.jpg and -desktop.jpg
   const P = {
-    restaurant: { name: "Restaurant order system", url: "demo · restaurant-order-management", mode: "phone",
+    restaurant: { name: "Restaurant order system", url: "raghav1000000000.github.io/demos/restaurant", mode: "phone",
       s: [["restaurant-menu", "Guest: menu and cart"], ["restaurant-kitchen", "Kitchen: live order board"]] },
-    records: { name: "Records platform", url: "demo · records-management-platform", mode: "desktop",
+    records: { name: "Records platform", url: "raghav1000000000.github.io/demos/records", mode: "desktop",
       s: [["records-students", "Students: searchable table"], ["records-overview", "Admin overview"]] },
-    tea: { name: "Tea delivery bookings", url: "demo · tea-delivery-booking-system", mode: "phone",
+    tea: { name: "Tea delivery bookings", url: "raghav1000000000.github.io/demos/tea", mode: "phone",
       s: [["tea-customer", "Customer: book and track"], ["tea-dashboard", "Shop: dashboard"]] },
     meetx: { name: "MeetX", url: "meetx · launch page", mode: "phone",
       s: [["meetx-landing", "Launch page"]] },
@@ -578,9 +603,9 @@ img { display: block; max-width: 100%; }
       s: [["shubh-app", "Home: festival reminder"]] },
     consult: { name: "Consultancy site", url: "manan-mittal-consultancy-main.vercel.app", mode: "desktop",
       s: [["consultancy-home", "Homepage"], ["consultancy-services", "Services"]] },
-    tax: { name: "Tax documents site", url: "demo · tax documents site", mode: "desktop",
+    tax: { name: "Tax documents site", url: "raghav1000000000.github.io/demos/tax", mode: "desktop",
       s: [["tax-home", "Homepage"], ["tax-form", "Service request form"]] },
-    scent: { name: "Scent Stories", url: "scent-stories · local copy", mode: "phone",
+    scent: { name: "Scent Stories", url: "raghav1000000000.github.io/scent-stories", mode: "phone",
       s: [["scent-home", "Homepage"]] },
   };
   const src = (file, mode) => `device/${file}-${mode}.jpg`;

@@ -1,0 +1,4 @@
+/* Demo restyle: same calm admin, cleaner type. */
+html body { font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif !important; }
+body h1, body h2 { letter-spacing:-.02em; }
+body table td, body table th { font-variant-numeric:tabular-nums; }

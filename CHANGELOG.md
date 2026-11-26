@@ -3,6 +3,21 @@
 Every update to the site is logged here and published as a [GitHub Release](https://github.com/Raghav1000000000/raghav1000000000.github.io/releases).
 Versions follow [semantic versioning](https://semver.org/): **major** for a redesign, **minor** for new features or sections, **patch** for fixes.
 
+## [3.4.0] - 2026-11-26
+
+### Added
+- **Working demos at `/demos/`** for the four projects that had no public link: restaurant orders, records platform, tea delivery and the tax documents site. Each runs the app's real code in the browser with fictional sample data, so nothing is sent to a server. A "Demo of the app" card says so, gives the demo password (`demo`), links the app's pages and can reset the sample data.
+  - Restaurant: menu, cart, bill, a kitchen board that updates live across tabs, and the admin.
+  - Records: sign-in, modules, searchable tables, add and edit records, imports, audit log.
+  - Tea: booking, tracking, dashboard and today's view.
+  - Tax site: service request with file upload, contact form, on-screen consent and the admin.
+- **A simple restyle of each demo**: cleaner type (DM Sans), one accent colour per app and flatter cards. Only the demo copies change; the projects' own code is untouched.
+
+### Changed
+- **Works page (`/work/`)**: every project now has an "Open the demo" (or live site) button and a GitHub button, and a "Real app" note listing its front end, back end, database and hosting (for example Supabase and Vercel). A line at the top says every project can be tried, and the project index marks the ones with demos.
+- The device previews show the new demos.
+- The deploy step copies the `demos` folder too.
+
 ## [3.3.0] - 2026-11-26
 
 ### Added

@@ -1,0 +1,13 @@
+/* Demo restyle: calmer and more trustworthy. One deep navy accent instead of blue-purple gradients, softer cards, DM Sans. */
+:root { --navy:#1F3A68; --navy-d:#152A4D; --ink:#14213D; --line:#E3E8F0; --paper:#F7F8FB; }
+html body { font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif !important; color:var(--ink); }
+body [class*="bg-gradient-to"][class*="from-blue-6"], body [class*="bg-gradient-to"][class*="from-indigo-6"], body [class*="bg-gradient-to"][class*="from-purple-6"] { background-image:none !important; background-color:var(--navy) !important; }
+body [class*="bg-gradient-to"][class*="from-blue-6"]:hover, body [class*="bg-gradient-to"][class*="from-indigo-6"]:hover { background-color:var(--navy-d) !important; }
+body [class*="bg-clip-text"] { background-image:none !important; -webkit-text-fill-color:var(--navy) !important; color:var(--navy) !important; }
+body .text-blue-600, body .text-indigo-600, body .text-blue-700, body .text-purple-600 { color:var(--navy) !important; }
+body .bg-blue-600, body .bg-indigo-600 { background-color:var(--navy) !important; }
+body .shadow-xl, body .shadow-2xl, body .shadow-lg { box-shadow:0 1px 2px rgba(20,33,61,.06), 0 8px 24px rgba(20,33,61,.06) !important; }
+body .border-gray-100, body .border-gray-200 { border-color:var(--line) !important; }
+body [class*="blur-3xl"] { opacity:.35; }
+body h1, body h2, body h3 { letter-spacing:-.02em; }
+body input, body select, body textarea { border-radius:10px !important; }

@@ -1,0 +1,19 @@
+/* Demo restyle: a cleaner café look. Warm paper background, espresso header, one saffron accent, flat cards. */
+:root { --paper:#FAF6EF; --card:#FFFFFF; --ink:#22170F; --dim:#6F6257; --line:#EADFCF; --accent:#C2550B; --accent-d:#9A4208; --espresso:#24170F; }
+html body { font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif !important; color:var(--ink); background:var(--paper) !important; }
+body [class*="from-gray-50"], body .bg-gray-50, body .bg-stone-50 { background:var(--paper) !important; background-image:none !important; }
+body .bg-stone-700, body .bg-stone-800 { background:var(--espresso) !important; }
+body header, body .border-b-2 { border-color:var(--accent) !important; }
+body .bg-amber-700, body .bg-amber-600 { background:var(--accent) !important; }
+body .hover\:bg-amber-800:hover, body .bg-amber-700:hover, body .bg-amber-600:hover { background:var(--accent-d) !important; }
+body .text-amber-700, body .text-amber-600 { color:var(--accent) !important; }
+body .border-amber-700 { border-color:var(--accent) !important; }
+body .bg-white.shadow-md, body .bg-white.shadow-sm, body .bg-white.shadow-lg { box-shadow:0 1px 0 rgba(34,23,15,.04) !important; border:1px solid var(--line) !important; }
+body .rounded-lg { border-radius:14px !important; }
+body .text-stone-500 { color:var(--dim) !important; }
+body .text-stone-800, body .text-stone-900 { color:var(--ink) !important; }
+body .border-stone-200, body .border-stone-300 { border-color:var(--line) !important; }
+body button.rounded-full { box-shadow:none !important; }
+body [class*="from-stone-100"][class*="to-transparent"] { opacity:.6; }
+body h1, body h2, body h3 { letter-spacing:-.015em; }
+body input, body select, body textarea { border-radius:10px !important; }

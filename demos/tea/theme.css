@@ -1,0 +1,38 @@
+/* Demo restyle: a calmer "chai" look for the tea app. Flat cards, warm paper background, one amber accent, readable in sunlight. */
+:root { --paper:#F6F0E6; --card:#FFFDF8; --ink:#2A1E14; --dim:#6E5F50; --line:#E4D8C6; --chai:#B45F06; --chai-d:#8A4704; --ok:#2F7D4F; --bad:#B3261E; --wait:#A86A00; }
+html body { background:var(--paper) !important; color:var(--ink) !important; font-family:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif !important; }
+body *:not(#rm-demo) { font-family:inherit; }
+.container, .section, .stat-card, .login-box, .closed-message, .notification-form { background:var(--card) !important; border:1px solid var(--line) !important; border-radius:14px !important; box-shadow:none !important; backdrop-filter:none !important; }
+.header { background:transparent !important; color:var(--ink) !important; box-shadow:none !important; border:0 !important; border-bottom:1px solid var(--line) !important; border-radius:0 !important; }
+.header h1, .header-title h1, .header-content h1 { color:var(--ink) !important; -webkit-text-fill-color:var(--ink) !important; background:none !important; font-weight:800 !important; letter-spacing:-.02em; }
+.header p, .header-content p { color:var(--dim) !important; }
+.header h1::before { display:none !important; }
+label, .form-group label, .filter-group label { color:var(--ink) !important; font-weight:600 !important; }
+input, select, textarea, .eta-input { background:#fff !important; border:1.5px solid var(--line) !important; border-radius:10px !important; color:var(--ink) !important; box-shadow:none !important; }
+input:focus, select:focus, textarea:focus { border-color:var(--chai) !important; outline:3px solid rgba(180,95,6,.18) !important; }
+.btn, .btn-primary, .login-box button, .btn-full, .btn-today { background:var(--chai) !important; color:#fff !important; border:0 !important; border-radius:10px !important; box-shadow:none !important; transform:none !important; font-weight:700 !important; }
+.btn:hover, .btn-primary:hover, .btn-full:hover, .btn-today:hover { background:var(--chai-d) !important; }
+.btn::before { display:none !important; }
+.btn-full, .btn-today, .btn-secondary, .btn-clear-filters, .btn-logout, .edit-info-btn { background:transparent !important; color:var(--chai) !important; border:1.5px solid var(--chai) !important; }
+.btn-logout { color:var(--ink) !important; border-color:var(--line) !important; background:var(--card) !important; opacity:1 !important; }
+.btn-accept, .btn-complete { background:var(--ok) !important; color:#fff !important; }
+.btn-reject, .btn-delete { background:transparent !important; color:var(--bad) !important; border:1.5px solid currentColor !important; }
+.stat-card h3 { color:var(--dim) !important; font-size:.8rem !important; letter-spacing:.06em; text-transform:uppercase; }
+.stat-card .number { color:var(--ink) !important; -webkit-text-fill-color:var(--ink) !important; background:none !important; }
+.booking-card, .booking-item, .notification-card, .notification-item { background:var(--card) !important; border:1px solid var(--line) !important; border-left:4px solid var(--line) !important; border-radius:12px !important; box-shadow:none !important; transform:none !important; }
+.booking-card.pending, .booking-item.pending { border-left-color:var(--wait) !important; }
+.booking-card.accepted, .booking-item.accepted { border-left-color:var(--ok) !important; }
+.booking-card.rejected, .booking-item.rejected { border-left-color:var(--bad) !important; }
+.status-badge, .booking-status { border-radius:999px !important; font-weight:700 !important; color:#fff !important; }
+.status-badge.pending, .booking-status.pending { background:var(--wait) !important; }
+.status-badge.accepted, .booking-status.accepted { background:var(--ok) !important; }
+.status-badge.rejected, .booking-status.rejected { background:var(--bad) !important; }
+.status-badge.completed { background:var(--dim) !important; }
+.toggle-btn.open { background:var(--ok) !important; box-shadow:none !important; }
+.toggle-btn.closed { background:var(--bad) !important; box-shadow:none !important; }
+.user-info-banner, .eta-badge { background:#FBEBD5 !important; color:var(--ink) !important; border:1px solid #F0D3AA !important; border-radius:10px !important; }
+.success-message { background:#E5F2EA !important; color:var(--ok) !important; border:1px solid #BFDCC9 !important; border-radius:10px !important; }
+.error-message { background:#FBE7E5 !important; color:var(--bad) !important; border:1px solid #F1C4BF !important; border-radius:10px !important; }
+.login-overlay { background:rgba(42,30,20,.55) !important; backdrop-filter:none !important; }
+.notification-time, .notification-meta, .booking-details, .status-text { color:var(--dim) !important; }
+.confetti { display:none !important; }
